@@ -38,6 +38,8 @@ Grade the student's work for their current lesson.
    - If score is **Good**: Encourage them to fix the gaps, then re-run `/review-lesson`.
    - If score is **Needs Work**: Be encouraging but honest. Point to the most important thing to fix first.
 
+6. If score is above **Needs Work** set lesson status as completed.
+
 ## Rules
 - Never show the full solution unless the score is Excellent OR the student explicitly asks "show me the solution".
 - Never be harsh. The student is learning. Frame problems as opportunities.

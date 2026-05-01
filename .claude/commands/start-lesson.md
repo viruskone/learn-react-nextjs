@@ -9,6 +9,8 @@ Start or advance to a lesson in the React/Next.js course.
 1. Read `todo-app/lesson-progress.json` to get the current state.
    - If the file doesn't exist yet, create it with lesson 1 as `"in_progress"`.
 
+2. Check the current lesson status, if it's `In progress` ask the User about aborting the lesson.  
+
 2. Determine the target lesson:
    - If an argument (number) was provided, use that as the target.
    - Otherwise, use `currentLesson + 1`.
