@@ -1,0 +1,1070 @@
+╭─── Claude Code v2.1.126 ─────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                Welcome back Adrian!                │ started                 │
+│                                                    │ ✔ Run /init to create … │
+│                       ▐▛███▜▌                      │ ─────────────────────── │
+│                      ▝▜█████▛▘                     │ What's new              │
+│                        ▘▘ ▝▝                       │ The `/model` picker no… │
+│   Sonnet 4.6 · Claude Pro ·                        │ - Added `claude projec… │
+│   adrian.kaczmarek.2010@gmail.com's Organization   │ `--dangerously-skip-pe… │
+│            ~/source/learn-react-nextjs             │ /release-notes for more │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+❯ Can you be a my teacher for ReactJS and Next.js ?                             
+
+❯ Operation stopped by hook: **Grammar**                                        
+  - "be a my teacher" → "be my teacher" (remove the article 'a' before the      
+  possessive pronoun)                                                           
+                                                                                
+  **Corrected prompt**                                                          
+  > Can you be my teacher for ReactJS and Next.js?                              
+
+❯ Can you be my teacher for ReactJS and Next.js?                                
+
+● Let me check if I have any context about you saved from previous
+  conversations.
+
+  Recalled 1 memory (ctrl+o to expand)
+
+● No prior context — let's start fresh.
+
+  Absolutely, I can teach you ReactJS and Next.js. To tailor the lessons well, a
+   few quick questions:
+
+  1. Your background — How comfortable are you with JavaScript? Have you used
+  any other frameworks (Vue, Angular, etc.)?
+  2. Your goal — Are you learning for a job, a personal project, or just
+  curiosity?
+  3. Where you are now — Complete beginner to React, or do you have some
+  exposure already?
+
+  Once I know where you're starting from, I'll map out a learning path and we
+  can dive into the first topic.
+
+✻ Baked for 7s
+
+❯ 1. Create proper CLAUDE.md for lessoning repository. 2. Ask user about        
+  expirence 3. Write lessons plan: for example "Lesson 1. Learn about React     
+  components"; "Lesson 2." Span multiple components", ... and more. Each lesson 
+   should have some theoretical informations. 4. Create subagents that oceni    
+  realized tasks: get lesson and check realization. Const: use latest ReactJS,  
+  Next.js. Use typescript. Based tutorial on some real app, TodoApp for         
+  example. At the end, user should know about all fundamential information      
+  about this frameworks                                                         
+
+● Let me explore the repository structure first.
+
+● Explore(Explore repo structure)
+  ⎿  Done (8 tool uses · 19.6k tokens · 14s)
+  (ctrl+o to expand)
+
+● Good — completely blank slate. Now let me ask about your background before
+  finalizing the plan.
+
+● User answered Claude's questions:
+  ⎿  · How would you describe your JavaScript experience? → Intermediate
+     · Have you used React or Next.js before? → Some React long ago, no Next at 
+     all
+     · How comfortable are you with TypeScript? → Know the basics
+     · How much time can you dedicate per lesson, and what pace do you prefer? →
+      Short & focused
+
+● Now I have everything I need. Let me write the plan.
+
+● Updated plan
+  ⎿  /plan to preview
+
+● Plan is ready. Here's the summary:
+  ⎿  Tool use rejected
+
+● Good catch. Let me update the plan to include a lesson progress registry and a
+   /start-lesson command.
+
+● Updated plan
+  ⎿  /plan to preview
+
+● User approved Claude's plan
+  ⎿  Plan saved to: 
+     ~/.claude/plans/1-create-proper-claude-md-crystalline-star.md · /plan to 
+     edit
+     Plan: React/Next.js Learning Repository Setup
+
+     Context
+
+     Adrian is setting up a structured self-paced learning repo for React +
+     Next.js.
+     - JS level: Intermediate (ES6+, async/await comfortable)
+     - React: Used it briefly a long time ago — needs refreshing, not a complete
+      beginner
+     - Next.js: Zero experience
+     - TypeScript: Knows the basics (types, interfaces, generics surface level)
+     - Pace: Short & focused (30–45 min sessions, lots of hand-holding)
+
+     The goal is to teach all fundamentals through a real Todo App built
+     progressively lesson by lesson, ending in a fully working Next.js +
+     TypeScript + React app.
+
+     ---
+     Repository Structure to Create
+
+     /home/adrian/source/learn-react-nextjs/
+     ├── CLAUDE.md                         # AI teacher instructions & repo
+     guide
+     ├── .claude/
+     │   └── commands/
+     │       └── review-lesson.md          # /review-lesson slash command
+     (grading agent)
+     ├── lessons/
+     │   ├── lesson-01/
+     │   │   ├── README.md                 # Theory + step-by-step instructions
+     │   │   └── task.md                   # Concrete coding task to complete
+     │   ├── lesson-02/ ... lesson-20/
+     │   └── ...
+     └── todo-app/                         # The Next.js project built across
+     all lessons
+         └── (bootstrapped with create-next-app, TypeScript, Tailwind, App
+     Router)
+
+     ---
+     Files to Create
+
+     1. CLAUDE.md (root)
+
+     Content should include:
+     - Who the student is: Intermediate JS, rusty React, no Next.js, basic TS
+     - Lesson format: Each lesson has a README.md (theory) and task.md
+     (exercise)
+     - How to teach: Short sessions, explain WHY before HOW, use Todo App as
+     context
+     - Grading: Student runs /review-lesson after completing a task
+     - Lesson list (all 20, see below)
+     - Rules for Claude: Don't give away solutions unprompted; ask questions
+     first; give hints before full code; celebrate progress
+     - Stack: Next.js 15, React 19, TypeScript 5, Tailwind CSS 4, App Router
+
+     2. .claude/commands/review-lesson.md (custom slash command)
+
+     This is the grading subagent. When the student runs /review-lesson, Claude
+     should:
+     1. Detect the current lesson (ask if unclear) by reading
+     lessons/lesson-XX/task.md
+     2. Read the student's code in todo-app/
+     3. Compare against the task requirements
+     4. Output a structured report:
+       - ✅ What was done correctly
+       - ❌ What's missing or wrong
+       - 💡 One concrete improvement hint (not the full solution)
+       - 🎯 Score: Needs work / Good / Excellent
+     5. Only show the solution if the student explicitly asks or scores
+     "Excellent"
+
+     3. lessons/lesson-XX/README.md + task.md for all 20 lessons
+
+     ---
+     Lesson Plan (20 lessons, ~30–45 min each)
+
+     All lessons build the Todo App progressively.
+
+     Phase 1 — React + TypeScript Refresher (Lessons 1–4)
+
+     #: 01
+     Title: Project Setup & First Component
+     Theory: What is React, JSX vs TSX, functional components, the render tree
+     Task: Bootstrap todo-app with create-next-app. Create a <TodoApp />
+     component
+       that renders a heading
+     ────────────────────────────────────────
+     #: 02
+     Title: Props & TypeScript Interfaces
+     Theory: Props = component inputs, typing with interface, React.FC vs plain
+       functions
+     Task: Add a <TodoItem /> component that accepts title: string and
+     completed: 
+       boolean as props
+     ────────────────────────────────────────
+     #: 03
+     Title: State & Event Handling
+     Theory: useState hook, immutability, synthetic events, typing state
+     Task: Add a checkbox to <TodoItem /> that toggles completed state locally
+     ────────────────────────────────────────
+     #: 04
+     Title: Lists & Keys
+     Theory: Rendering arrays with .map(), the key prop, conditional rendering
+     Task: Render a hardcoded list of todos from an array in <TodoList />
+
+     Phase 2 — React Intermediate (Lessons 5–8)
+
+     ┌─────┬──────────────┬─────────────────────────┬─────────────────────────┐
+     │  #  │    Title     │         Theory          │          Task           │
+     ├─────┼──────────────┼─────────────────────────┼─────────────────────────┤
+     │     │              │ Single source of truth, │ Move todo list state up │
+     │ 05  │ Lifting      │  data flows down /      │  to <TodoApp /> and     │
+     │     │ State Up     │ events bubble up        │ pass it down to         │
+     │     │              │                         │ <TodoList />            │
+     ├─────┼──────────────┼─────────────────────────┼─────────────────────────┤
+     │     │ Forms &      │ Controlled vs           │ Add an <AddTodoForm />  │
+     │ 06  │ Controlled   │ uncontrolled inputs,    │ that appends a new todo │
+     │     │ Inputs       │ onChange, onSubmit,     │  to the list            │
+     │     │              │ preventing defaults     │                         │
+     ├─────┼──────────────┼─────────────────────────┼─────────────────────────┤
+     │     │ useEffect &  │ When/why to use         │ Persist todos to        │
+     │ 07  │ Side Effects │ useEffect, dependency   │ localStorage and        │
+     │     │              │ array, cleanup          │ restore them on mount   │
+     ├─────┼──────────────┼─────────────────────────┼─────────────────────────┤
+     │     │              │ Extracting logic into   │ Extract all todo logic  │
+     │ 08  │ Custom Hooks │ reusable hooks, naming  │ into a useTodos custom  │
+     │     │              │ convention (useTodos)   │ hook                    │
+     └─────┴──────────────┴─────────────────────────┴─────────────────────────┘
+
+     Phase 3 — Next.js Fundamentals (Lessons 9–13)
+
+     #: 09
+     Title: Intro to Next.js & App Router
+     Theory: What Next.js adds over React, file-based routing, app/ directory
+       structure
+     Task: Understand the bootstrapped project; create a /about page
+     ────────────────────────────────────────
+     #: 10
+     Title: Layouts & Navigation
+     Theory: layout.tsx, nested layouts, <Link>, useRouter
+     Task: Add a persistent navbar with links to / and /about
+     ────────────────────────────────────────
+     #: 11
+     Title: Server vs Client Components
+     Theory: RSC vs Client Components, "use client", when to use which
+     Task: Refactor: make <TodoList /> a client component, keep the page as a
+     server
+       component
+     ────────────────────────────────────────
+     #: 12
+     Title: Data Fetching
+     Theory: fetch in server components, async/await pages, loading.tsx
+     Task: Replace hardcoded todos with a fetch from a free JSON placeholder API
+     ────────────────────────────────────────
+     #: 13
+     Title: Route Handlers (API Routes)
+     Theory: app/api/ Route Handlers, GET/POST/DELETE, NextRequest/NextResponse
+     Task: Create /api/todos GET and POST route handlers with in-memory storage
+
+     Phase 4 — Full-Stack Todo App (Lessons 14–17)
+
+     ┌─────┬───────────────┬─────────────────────────┬─────────────────────────┐
+     │  #  │     Title     │         Theory          │          Task           │
+     ├─────┼───────────────┼─────────────────────────┼─────────────────────────┤
+     │     │ Connecting    │ Client-side fetch,      │ Wire <AddTodoForm /> to │
+     │ 14  │ Frontend to   │ optimistic updates,     │  POST /api/todos;       │
+     │     │ API           │ error states            │ display todos from GET  │
+     │     │               │                         │ /api/todos              │
+     ├─────┼───────────────┼─────────────────────────┼─────────────────────────┤
+     │     │               │ PATCH/DELETE route      │ Add DELETE and PATCH    │
+     │ 15  │ Delete &      │ handlers, UI for        │ handlers; add delete    │
+     │     │ Update        │ toggling/deleting       │ button and toggle to    │
+     │     │               │                         │ the UI                  │
+     ├─────┼───────────────┼─────────────────────────┼─────────────────────────┤
+     │     │ Error         │                         │ Add proper loading      │
+     │ 16  │ Handling &    │ error.tsx, loading.tsx, │ spinners and error      │
+     │     │ Loading UI    │  try/catch in actions   │ boundaries to the todo  │
+     │     │               │                         │ page                    │
+     ├─────┼───────────────┼─────────────────────────┼─────────────────────────┤
+     │     │ Styling with  │ Utility-first CSS,      │ Style the entire Todo   │
+     │ 17  │ Tailwind CSS  │ responsive classes,     │ App to look polished    │
+     │     │               │ dark mode               │ using Tailwind          │
+     └─────┴───────────────┴─────────────────────────┴─────────────────────────┘
+
+     Phase 5 — Advanced & Production (Lessons 18–20)
+
+     ┌─────┬────────────────┬───────────────────────────┬──────────────────────┐
+     │  #  │     Title      │          Theory           │         Task         │
+     ├─────┼────────────────┼───────────────────────────┼──────────────────────┤
+     │     │                │ What are Server Actions,  │ Replace fetch calls  │
+     │ 18  │ Server Actions │ "use server", forms       │ with Server Actions  │
+     │     │                │ without JS                │ for add/delete       │
+     ├─────┼────────────────┼───────────────────────────┼──────────────────────┤
+     │     │ Environment    │ .env.local, NEXT_PUBLIC_  │ Add a configurable   │
+     │ 19  │ Variables &    │ prefix, next.config.ts    │ API base URL via env │
+     │     │ Config         │                           │  vars                │
+     ├─────┼────────────────┼───────────────────────────┼──────────────────────┤
+     │     │                │ Vercel deployment, build  │ Deploy the app to    │
+     │ 20  │ Deployment     │ output, static vs dynamic │ Vercel and verify it │
+     │     │                │  routes, performance      │  works in production │
+     │     │                │ basics                    │                      │
+     └─────┴────────────────┴───────────────────────────┴──────────────────────┘
+
+     ---
+     Lesson Progress Registry
+
+     A JSON file at todo-app/lesson-progress.json tracks the student's current
+     position.
+
+     {
+       "currentLesson": 1,
+       "lessons": {
+         "1":  { "status": "in_progress", "startedAt": "2026-05-01" },
+         "2":  { "status": "not_started" }
+       }
+     }
+
+     Statuses: "not_started" | "in_progress" | "completed"
+
+     This file lives inside todo-app/ so it travels with the project. It is
+     committed to git so progress is persisted across sessions.
+
+     New slash command: /start-lesson
+
+     File: .claude/commands/start-lesson.md
+
+     When the student runs /start-lesson [N] (or just /start-lesson to advance
+     to next):
+     1. Read todo-app/lesson-progress.json
+     2. Mark the current lesson as "completed" (if it was "in_progress")
+     3. Set the target lesson to "in_progress" with today's date
+     4. Write the updated JSON back
+     5. Print the lesson title, theory summary, and task from
+     lessons/lesson-NN/README.md + task.md
+
+     When the student runs /review-lesson, the grading agent reads currentLesson
+      from the registry automatically — no need to ask which lesson.
+
+     ---
+     Critical Files to Create
+
+     ┌───────────────────────────────────┬──────────────────────────────────────
+     ┐
+     │               File                │               Purpose
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ CLAUDE.md                         │ Teacher persona, student profile,
+     │
+     │                                   │ lesson list, behavior rules
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ .claude/commands/review-lesson.md │ /review-lesson grading slash command
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ .claude/commands/start-lesson.md  │ /start-lesson lesson navigation
+     │
+     │                                   │ command
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ todo-app/lesson-progress.json     │ Registry tracking current lesson &
+     │
+     │                                   │ statuses
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ lessons/lesson-01/README.md       │ Theory for lesson 1
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ lessons/lesson-01/task.md         │ Task for lesson 1
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ ... (repeat for all 20 lessons)   │
+     │
+     ├───────────────────────────────────┼──────────────────────────────────────
+     ┤
+     │ todo-app/                         │ Bootstrapped in Lesson 1 by the
+     │
+     │                                   │ student
+     │
+     └───────────────────────────────────┴──────────────────────────────────────
+     ┘
+
+     ---
+     Execution Order
+
+     1. Create CLAUDE.md
+     2. Create .claude/commands/review-lesson.md
+     3. Create .claude/commands/start-lesson.md
+     4. Create todo-app/lesson-progress.json (lesson 1 set to "in_progress")
+     5. Create all 20 lessons/lesson-XX/README.md and task.md files
+     6. Commit everything with a meaningful message
+
+     The todo-app/ Next.js project is NOT bootstrapped by Claude — the student
+     does it as part of Lesson 1 (but lesson-progress.json is pre-created inside
+      the future todo-app/ folder).
+
+     ---
+     Verification
+
+     After implementation:
+     - Run find . -name "*.md" | sort to verify all 42 lesson files exist (20
+     READMEs + 20 tasks + CLAUDE.md + review-lesson.md)
+     - Read CLAUDE.md to confirm it accurately reflects the student profile
+     - Run /review-lesson mentally: read .claude/commands/review-lesson.md and
+     confirm the grading logic is clear and actionable
+
+● Plan approved. Let me build everything now. I'll create the main files and all
+   lesson directories in parallel.
+
+● Bash(mkdir -p /home/adrian/source/learn-react-nextjs/.claude/commands && mkdir
+       -p /home/adrian/source/learn-react-nextjs/todo-app && for i in $(seq -w
+      01 20); do mkd…)  ⎿  Directories created
+
+● Write(CLAUDE.md)
+  ⎿  Wrote 94 lines to CLAUDE.md
+       2 # React + Next.js Learning Repository
+       3 ## About This Repo
+       4 
+       5 This is a structured self-paced course to learn React 19 and Nex
+         t.js 15 with TypeScript.
+         ssons.udent builds a real **Todo App** step by step across 20 le
+       7 
+       8 ---
+       9 
+      10 ## Student Profile
+     … +104 lines (ctrl+o to expand)
+
+● Write(.claude/commands/start-lesson.md)
+  ⎿  Wrote 45 lines to .claude/commands/start-lesson.md
+       2 Start or advance to a lesson in the React/Next.js course.
+       3 ## Usage
+       4 - `/start-lesson` — advance to the next lesson (mark current as 
+       5 - `/start-lesson 5` — jump to a specific lesson number
+       6 
+       7 ## Steps
+       9 1. Read `todo-app/lesson-progress.json` to get the current state
+         .
+      10    - If the file doesn't exist yet, create it with lesson 1 as `
+         "in_progress"`.
+     … +43 lines (ctrl+o to expand)
+
+● Write(.claude/commands/review-lesson.md)
+  ⎿  Wrote 45 lines to .claude/commands/review-lesson.md
+       2 Grade the student's work for their current lesson.
+       3 ## Steps
+       4 
+       5 1. Read `todo-app/lesson-progress.json`.
+       6    - Get `currentLesson` to know which lesson to grade.
+         y're on.the file doesn't exist, ask the student which lesson the
+       8 
+       9 2. Read `lessons/lesson-NN/task.md` to get the exact requirement
+         s.
+      10    - NN = zero-padded current lesson number.
+     … +50 lines (ctrl+o to expand)
+
+● Write(todo-app/lesson-progress.json)
+  ⎿  Wrote 25 lines to todo-app/lesson-progress.json
+       2   "currentLesson": 1,
+       3   "lessons": {
+       4     "1":  { "status": "in_progress", "startedAt": "2026-05-01" }
+         ,
+       5     "2":  { "status": "not_started" },
+       6     "3":  { "status": "not_started" },
+       7     "4":  { "status": "not_started" },
+       8     "5":  { "status": "not_started" },
+       9     "6":  { "status": "not_started" },
+      10     "7":  { "status": "not_started" },
+     … +15 lines (ctrl+o to expand)
+
+● Now let me create all 20 lesson files. I'll do them in batches in parallel.
+
+● Write(lessons/lesson-01/README.md)
+  ⎿  Wrote 98 lines to lessons/lesson-01/README.md
+      2 # Lesson 1 — Project Setup & First Component
+      3 ## What is React?
+      5 React is a JavaScript library for building user interfaces. Inste
+        ad of manually manipulating the DOM (`document.getElementById`, `
+        innerHTML`, etc.), you describe **what the UI should look like** 
+        r you.unction of your data, and React handles updating the DOM fo
+      6 
+        at receives data and returns a description of the UI. function th
+      8 
+      9 ## What is Next.js?
+     … +104 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-01/task.md)
+  ⎿  Wrote 73 lines to lessons/lesson-01/task.md
+      1 # Lesson 1 Task — Project Setup & First Component
+      2 
+      3 ## Goal
+      4 
+      5 Bootstrap the Next.js project and create your first React compone
+        nt.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Bootstrap the project
+     … +70 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-02/README.md)
+  ⎿  Wrote 98 lines to lessons/lesson-02/README.md
+       2 # Lesson 2 — Props & TypeScript Interfaces
+       3 ## What are Props?
+       4 
+       5 Props (short for "properties") are how you pass data **into** a 
+         component. They work like function arguments.
+       6 
+       7 ```tsx
+       8 // Parent passes data to child via props
+       9 <TodoItem title="Buy milk" completed={false} />
+      10 ```
+     … +97 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-02/task.md)
+  ⎿  Wrote 55 lines to lessons/lesson-02/task.md
+      1 # Lesson 2 Task — Props & TypeScript Interfaces
+      2 
+      3 ## Goal
+      4 
+      5 Create a `<TodoItem />` component with typed props and use it in 
+        your app.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create the TodoItem component
+     … +52 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-03/README.md)
+  ⎿  Wrote 94 lines to lessons/lesson-03/README.md
+      2 # Lesson 3 — State & Event Handling
+      3 ## What is State?
+      4 
+      5 Props are data passed in from outside. State is data that lives *
+        *inside** a component and can change over time.
+      7 When state changes, React automatically re-renders the component 
+        to reflect the new value. This is the magic of React — you update
+         state and the UI updates itself.
+      8 
+      9 ## useState Hook
+     … +96 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-03/task.md)
+  ⎿  Wrote 60 lines to lessons/lesson-03/task.md
+      1 # Lesson 3 Task — State & Event Handling
+      2 
+      3 ## Goal
+      4 
+      5 Make `TodoItem` interactive — clicking a checkbox should toggle i
+        ts `completed` state locally.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Add local state to TodoItem
+     … +62 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-04/README.md)
+  ⎿  Wrote 94 lines to lessons/lesson-04/README.md
+       2 # Lesson 4 — Lists & Keys
+       3 ## Rendering Arrays
+       4 
+       5 In React, you render lists by calling `.map()` on an array and r
+         eturning JSX for each item:
+       6 
+       7 ```tsx
+       8 const fruits = ["apple", "banana", "cherry"];
+       9 
+      10 function FruitList() {
+     … +94 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-04/task.md)
+  ⎿  Wrote 67 lines to lessons/lesson-04/task.md
+      1 # Lesson 4 Task — Lists & Keys
+      2 
+      3 ## Goal
+      4 
+      5 Replace the hardcoded `<TodoItem />` components with a dynamic li
+        st rendered from an array.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create the Todo type
+     … +62 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-05/README.md)
+  ⎿  Wrote 69 lines to lessons/lesson-05/README.md
+      2 # Lesson 5 — Lifting State Up
+      3 ## The Problem
+      5 In Lesson 3, each `TodoItem` managed its own `isCompleted` state.
+         That worked for toggling the visual state, but it means the pare
+        nt has no idea whether a todo is actually completed. If you want 
+        ked inside each `TodoItem`.ed todos", you can't — the data is loc
+      6 
+        ed to share state**.ct problem: **sibling or parent components ne
+      8 
+      9 ## The Solution: Lift State Up
+     … +76 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-05/task.md)
+  ⎿  Wrote 57 lines to lessons/lesson-05/task.md
+      1 # Lesson 5 Task — Lifting State Up
+      2 
+      3 ## Goal
+      4 
+      5 Move the todo state up to `TodoApp` and wire up toggle callbacks 
+        so the whole component tree shares one source of truth.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Move state to TodoApp
+     … +58 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-06/README.md)
+  ⎿  Wrote 87 lines to lessons/lesson-06/README.md
+      2 # Lesson 6 — Forms & Controlled Inputs
+      3 ## Controlled vs Uncontrolled Inputs
+      4 
+      5 In HTML, an input manages its own value internally. In React, you
+         can take control of that value by tying it to state — this is ca
+        lled a **controlled input**.
+      6 
+      7 ```tsx
+      8 // Uncontrolled: React doesn't know the value
+      9 <input type="text" />
+     … +86 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-06/task.md)
+  ⎿  Wrote 55 lines to lessons/lesson-06/task.md
+      1 # Lesson 6 Task — Forms & Controlled Inputs
+      2 
+      3 ## Goal
+      4 
+      5 Add a form that lets the user type a new todo title and add it to
+         the list.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create AddTodoForm component
+     … +50 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-07/README.md)
+  ⎿  Wrote 95 lines to lessons/lesson-07/README.md
+      2 # Lesson 7 — useEffect & Side Effects
+      3 ## What is a Side Effect?
+      4 
+        tside of that — network requests, timers, DOM manipulation, readi
+        ng/writing localStorage — is a **side effect**.
+      6 
+        the body runs on every render. `useEffect` is the hook that lets 
+        you run side-effect code at the right time.
+      8 
+      9 ## useEffect Basics
+     … +96 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-07/task.md)
+  ⎿  Wrote 64 lines to lessons/lesson-07/task.md
+      1 # Lesson 7 Task — useEffect & Side Effects
+      2 
+      3 ## Goal
+      4 
+      5 Persist todos to `localStorage` so they survive page reloads.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Initialize state from localStorage
+     … +63 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-08/README.md)
+  ⎿  Wrote 73 lines to lessons/lesson-08/README.md
+      2 # Lesson 8 — Custom Hooks
+      3 ## What is a Custom Hook?
+      4 
+      5 A custom hook is a regular JavaScript function whose name starts 
+        with `use` and that calls other hooks inside it. That's the whole
+      6  definition — no magic.
+      7 Custom hooks let you **extract and reuse stateful logic** across 
+        components, without duplicating code or using inheritance.
+      8 
+      9 ## When to Write One
+     … +79 lines (ctrl+o to expand)
+● Write(lessons/lesson-08/task.md)
+  ⎿  Wrote 56 lines to lessons/lesson-08/task.md
+      1 # Lesson 8 Task — Custom Hooks
+      2 
+      3 ## Goal
+      4 
+      5 Extract all todo state management logic from `TodoApp` into a cus
+        tom `useTodos` hook.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create the hook
+     … +52 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-09/README.md)
+  ⎿  Wrote 82 lines to lessons/lesson-09/README.md
+       2 # Lesson 9 — Intro to Next.js & App Router
+       3 ## What Next.js Adds Over React
+       4 
+       5 React is a UI library — it only handles rendering components. Ne
+         xt.js is a full-stack framework that adds:
+       6 
+       7 | Feature | React alone | Next.js |
+       8 |---------|-------------|---------|
+       9 | Routing | Need React Router | Built-in (file-based) |
+      10 | Server rendering | Manual setup | Built-in (SSR, SSG, RSC) |
+     … +87 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-09/task.md)
+  ⎿  Wrote 71 lines to lessons/lesson-09/task.md
+      1 # Lesson 9 Task — Intro to Next.js & App Router
+      2 
+      3 ## Goal
+      4 
+      5 Explore the Next.js project structure and create a new `/about` p
+        age.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Explore the project structure
+     … +70 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-10/README.md)
+  ⎿  Wrote 97 lines to lessons/lesson-10/README.md
+       2 # Lesson 10 — Layouts & Navigation
+       3 ## Nested Layouts
+       4 
+       5 Layouts in Next.js App Router are hierarchical. The root `app/la
+         yout.tsx` wraps everything. You can add more layouts for specifi
+       6 c sections:
+       7 ```
+       8 app/
+       9   layout.tsx         ← wraps the entire app
+      10   page.tsx
+     … +100 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-10/task.md)
+  ⎿  Wrote 53 lines to lessons/lesson-10/task.md
+      1 # Lesson 10 Task — Layouts & Navigation
+      2 
+      3 ## Goal
+      4 
+      5 Add a persistent navbar that uses `<Link>` for navigation and hig
+        hlights the active page.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create the Navbar component
+     … +52 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-11/README.md)
+  ⎿  Wrote 85 lines to lessons/lesson-11/README.md
+      2 # Lesson 11 — Server vs Client Components
+      3 ## The Big Idea
+      4 
+      5 Next.js App Router introduces **React Server Components (RSC)**. 
+        This changes the fundamental mental model of React.
+      7 **Before RSC**: All React components ran in the browser.
+      8 
+      9 **With RSC**: Components can run on the server. They render to HT
+        ML and stream to the client — no JavaScript bundle sent for the c
+        omponent itself.
+     … +88 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-11/task.md)
+  ⎿  Wrote 74 lines to lessons/lesson-11/task.md
+      2 # Lesson 11 Task — Server vs Client Components
+      3 ## Goal
+      4 
+      5 Refactor the app so that only components that actually need inter
+        activity are Client Components, keeping pages as Server Component
+        s.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Audit your current components
+     … +75 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-12/README.md)
+  ⎿  Wrote 82 lines to lessons/lesson-12/README.md
+       2 # Lesson 12 — Data Fetching
+       3 ## Fetching in Server Components
+       4 
+         etch directly in the component body — no `useEffect`, no loading
+          state:
+       6 
+       8 // app/posts/page.tsx
+       9 export default async function PostsPage() {
+      10   const res = await fetch("https://jsonplaceholder.typicode.com/
+         posts");
+     … +82 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-12/task.md)
+  ⎿  Wrote 82 lines to lessons/lesson-12/task.md
+      2 # Lesson 12 Task — Data Fetching
+      3 ## Goal
+      4 
+        public API using Next.js server-side data fetching.s data from a 
+      6 
+      7 ## Background
+      9 This lesson runs parallel to the main Todo App to teach the data 
+        fetching pattern without breaking the existing localStorage-based
+         todos. You'll integrate API-fetched todos into the main app in L
+        esson 14.
+     … +83 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-13/README.md)
+  ⎿  Wrote 98 lines to lessons/lesson-13/README.md
+       2 # Lesson 13 — Route Handlers (API Routes)
+       3 ## What are Route Handlers?
+       4 
+       5 Route Handlers let you create HTTP API endpoints inside your Nex
+         t.js app. They live in `app/api/` and are defined in files named
+       6  `route.ts`:
+       7 ```
+       8 app/
+       9   api/
+      10     todos/
+     … +94 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-13/task.md)
+  ⎿  Wrote 78 lines to lessons/lesson-13/task.md
+      1 # Lesson 13 Task — Route Handlers (API Routes)
+      2 
+      3 ## Goal
+      4 
+      5 Create a REST API for todos using Next.js Route Handlers.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create the todos collection endpoint
+     … +79 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-14/README.md)
+  ⎿  Wrote 84 lines to lessons/lesson-14/README.md
+      2 # Lesson 14 — Connecting Frontend to API
+      3 ## Replacing localStorage with the API
+      4 
+      5 So far, todos are stored in `localStorage` via the `useTodos` hoo
+        k. Now we'll replace that with calls to our Route Handlers. The d
+      6 ata source changes but the component tree stays the same.
+      7 ## Client-Side Fetch Pattern
+      8 
+      9 In a Client Component, use `useEffect` to fetch data on mount and
+         update state:
+     … +83 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-14/task.md)
+  ⎿  Wrote 98 lines to lessons/lesson-14/task.md
+      1 # Lesson 14 Task — Connecting Frontend to API
+      2 
+      3 ## Goal
+      4 
+      5 Update `useTodos` to fetch from and write to `/api/todos` instead
+         of `localStorage`.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Refactor useTodos to use the API
+     … +96 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-15/README.md)
+  ⎿  Wrote 69 lines to lessons/lesson-15/README.md
+       2 # Lesson 15 — Delete & Update
+       3 ## Adding Delete
+       4 
+         ady done) and a DELETE for removing.d a PATCH for toggling (alre
+       6 
+       7 The DELETE endpoint returns 204 No Content — there's no body to 
+         r a successful response:remove the todo from state directly afte
+       8 
+       9 ```tsx
+      10 async function deleteTodo(id: string) {
+     … +70 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-15/task.md)
+  ⎿  Wrote 59 lines to lessons/lesson-15/task.md
+      1 # Lesson 15 Task — Delete & Update
+      2 
+      3 ## Goal
+      4 
+      5 Add the ability to delete todos, wiring it from the API through t
+        o the UI.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Add deleteTodo to useTodos
+     … +59 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-16/README.md)
+  ⎿  Wrote 98 lines to lessons/lesson-16/README.md
+       2 # Lesson 16 — Error Handling & Loading UI
+       3 ## loading.tsx — Automatic Suspense Boundary
+       4 
+       5 When a page (or segment) is loading, Next.js shows `loading.tsx`
+          automatically. You don't need to wire this up — just create the
+       6  file:
+       7 ```tsx
+       8 // app/loading.tsx
+       9 export default function Loading() {
+      10   return (
+     … +95 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-16/task.md)
+  ⎿  Wrote 69 lines to lessons/lesson-16/task.md
+      1 # Lesson 16 Task — Error Handling & Loading UI
+      2 
+      3 ## Goal
+      4 
+      5 Add proper loading states, error boundaries, and a 404 page to th
+        e app.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create a root loading.tsx
+     … +67 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-17/README.md)
+  ⎿  Wrote 102 lines to lessons/lesson-17/README.md
+       2 # Lesson 17 — Styling with Tailwind CSS
+       3 ## What is Tailwind CSS?
+       4 
+         S classes like `.button { background: blue; padding: 8px; }`, yo
+         u apply pre-defined utility classes directly in your HTML/JSX:
+       6 
+       8 <button className="bg-blue-500 text-white px-4 py-2 rounded hove
+         r:bg-blue-600">
+       9   Click me
+      10 </button>
+     … +99 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-17/task.md)
+  ⎿  Wrote 76 lines to lessons/lesson-17/task.md
+      1 # Lesson 17 Task — Styling with Tailwind CSS
+      2 
+      3 ## Goal
+      4 
+      5 Style the entire Todo App to look clean and polished using Tailwi
+        nd CSS.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Install clsx
+     … +76 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-18/README.md)
+  ⎿  Wrote 107 lines to lessons/lesson-18/README.md
+       2 # Lesson 18 — Server Actions
+       3 ## What are Server Actions?
+       4 
+         t can be called from a Client Component. They let you handle for
+         m submissions and mutations without writing a separate API route
+         .
+       7 Mark a function with `"use server"` to make it a Server Action:
+       8 
+       9 ```tsx
+      10 // Can be defined in a separate file
+     … +103 lines (ctrl+o to expand)
+● Write(lessons/lesson-18/task.md)
+  ⎿  Wrote 73 lines to lessons/lesson-18/task.md
+      1 # Lesson 18 Task — Server Actions
+      2 
+      3 ## Goal
+      4 
+      5 Create a Server Actions file and use it to add and delete todos, 
+        replacing the direct `fetch` calls in `useTodos`.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create the actions file
+     … +79 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-19/README.md)
+  ⎿  Wrote 90 lines to lessons/lesson-19/README.md
+       2 # Lesson 19 — Environment Variables & Config
+       3 ## Why Environment Variables?
+       4 
+         ectly in code is a bad practice:, API keys, or feature flags dir
+       6 - Different environments (dev, staging, production) need differe
+         nt values
+       8 - Changing a value requires a code change and redeploy
+       9 
+      10 Environment variables solve this by moving configuration outside
+          the code.
+     … +91 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-19/task.md)
+  ⎿  Wrote 73 lines to lessons/lesson-19/task.md
+      1 # Lesson 19 Task — Environment Variables & Config
+      2 
+      3 ## Goal
+      4 
+      5 Extract the hardcoded API base URL into an environment variable a
+        nd create a centralized env config.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Create .env.local
+     … +71 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-20/README.md)
+  ⎿  Wrote 77 lines to lessons/lesson-20/README.md
+      1 # Lesson 20 — Deployment
+      2 
+      3 ## What Happens at Build Time
+      4 
+      5 When you run `npm run build`, Next.js:
+      6 1. Compiles TypeScript → JavaScript
+      7 2. Bundles client-side code
+      8 3. Pre-renders pages that can be static (no dynamic data)
+      9 4. Generates the `.next/` output folder
+     … +80 lines (ctrl+o to expand)
+
+● Write(lessons/lesson-20/task.md)
+  ⎿  Wrote 90 lines to lessons/lesson-20/task.md
+      1 # Lesson 20 Task — Deployment
+      2 
+      3 ## Goal
+      4 
+      5 Run a production build locally, fix any build errors, and deploy 
+        the Todo App to Vercel.
+      6 
+      7 ## Steps
+      8 
+      9 ### 1. Run the production build
+     … +89 lines (ctrl+o to expand)
+
+● Now let me verify everything was created correctly.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● All 44 files created. Let me save your profile to memory now.
+
+  Wrote 2 memories (ctrl+o to expand)
+
+● Everything is set up. Here's what was created:
+
+  Repository structure:
+  - CLAUDE.md — your profile, the lesson list, and teaching rules for me to
+  follow
+  - .claude/commands/start-lesson.md — /start-lesson command to load any lesson
+  - .claude/commands/review-lesson.md — /review-lesson command to grade your
+  work
+  - todo-app/lesson-progress.json — progress registry (you're on Lesson 1, in
+  progress)
+  - lessons/lesson-01/ through lessons/lesson-20/ — 40 files total (README.md +
+  task.md each)
+
+  The 20 lessons are grouped into 5 phases:
+  1. React + TypeScript refresher (L1–4): components, props, state, lists
+  2. React intermediate (L5–8): lifting state, forms, useEffect, custom hooks
+  3. Next.js fundamentals (L9–13): routing, layouts, Server/Client components,
+  data fetching, API routes
+  4. Full-stack Todo App (L14–17): connecting frontend to API, delete/update,
+  error handling, Tailwind styling
+  5. Advanced & production (L18–20): Server Actions, env vars, deployment
+
+  To start: run /start-lesson and I'll walk you through Lesson 1 — bootstrapping
+   the project and creating your first component.
+
+✻ Cogitated for 10m 20s
+
+❯ /effort high                                                                  
+  ⎿  Set effort level to high: Comprehensive implementation with extensive
+     testing and documentation · burns fastest — medium handles most tasks
+
+❯ /effort                                                                       
+  ⎿  Set effort level to high: Comprehensive implementation with extensive
+     testing and documentation · burns fastest — medium handles most tasks
+
+❯ /effort high                                                                  
+  ⎿  Set effort level to high: Comprehensive implementation with extensive
+     testing and documentation · burns fastest — medium handles most tasks
+
+❯ /advisor                                                                      
+  ⎿  Advisor set to Opus 4.7
