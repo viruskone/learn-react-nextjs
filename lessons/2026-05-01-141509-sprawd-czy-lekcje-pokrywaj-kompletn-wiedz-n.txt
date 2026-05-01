@@ -1,0 +1,1054 @@
+ ▐▛███▜▌   Claude Code v2.1.126
+▝▜█████▛▘  Sonnet 4.6 · Claude Pro
+  ▘▘ ▝▝    ~/source/learn-react-nextjs/lessons
+
+❯ Sprawdź, czy lekcje pokrywają  kompletną wiedzę na temat ReactJS and Next.js  
+
+❯ Operation stopped by hook: **Polish words**                                   
+  - `Sprawdź` → Check                                                           
+  - `czy` → whether/if                                                          
+  - `lekcje` → lessons                                                          
+  - `pokrywają` → cover                                                         
+  - `kompletną` → complete                                                      
+  - `wiedzę` → knowledge                                                        
+  - `na temat` → about                                                          
+                                                                                
+  **Grammar**                                                                   
+  - Missing article: "the complete knowledge" → "complete knowledge" or "all    
+  the knowledge"                                                                
+  - Inconsistent language mix: Polish sentence with English terms (ReactJS,     
+  Next.js)                                                                      
+                                                                                
+  **Polish translation**                                                        
+  > Sprawdź, czy lekcje pokrywają kompletną wiedzę na temat ReactJS i Next.js   
+                                                                                
+  **Corrected prompt**                                                          
+  > Check whether the lessons cover complete knowledge about ReactJS and        
+  Next.js                                                                       
+
+❯ Check whatever the lesson cover complete knowledge about ReactJS and Next.js  
+
+❯ Operation stopped by hook: **Grammar**                                        
+  - "Check whatever the lesson cover" → "Check whether the lesson covers" or    
+  "Check if the lesson covers"                                                  
+  - "complete knowledge about ReactJS" → "comprehensive knowledge of ReactJS"   
+  (more natural phrasing)                                                       
+                                                                                
+  **Corrected prompt**                                                          
+  > Check whether the lesson covers comprehensive knowledge about ReactJS and   
+  Next.js                                                                       
+
+❯ Check whetever the lessons covers comprehensive knowledge about ReactJS and   
+  Next.js                                                                       
+
+❯ Operation stopped by hook: **Grammar**                                        
+  - whetever → whether                                                          
+  - covers comprehensive knowledge → covers comprehensive knowledge about       
+  (consider: "covers all comprehensive aspects" or "provides comprehensive      
+  coverage")                                                                    
+                                                                                
+  **Corrected prompt**                                                          
+  > Check whether the lessons cover comprehensive knowledge about ReactJS and   
+  Next.js                                                                       
+
+❯ Check whether the lessons cover comprehensive knowledge about ReactJS and     
+  Next.js                                                                       
+
+● Let me look at the existing lesson content to assess coverage.
+
+  Listed 1 directory (ctrl+o to expand)
+
+● Bash(for d in /home/adrian/source/learn-react-nextjs/lessons/lesson-*/; do
+      echo "=== $(basename $d) ==="; ls "$d" 2>/dev/null; done)
+  ⎿  === lesson-01 ===
+     README.md
+     task.md
+     … +57 lines (ctrl+o to expand)
+
+● Bash(for d in /home/adrian/source/learn-react-nextjs/lessons/lesson-*/; do
+      echo "=== $(basename $d) ==="; head -5 "$d/README.md" 2>/dev/null; echo;
+      done)
+  ⎿  === lesson-01 ===
+     # Lesson 1 — Project Setup & First Component
+     … +63 lines (ctrl+o to expand)
+
+● Here's a coverage assessment of the 20 lessons:
+
+  What's well covered
+
+  React (Lessons 1–8)
+  - Components, JSX, props, TypeScript interfaces
+  - State, event handling, controlled forms
+  - Lists/keys, lifting state, side effects (useEffect)
+  - Custom hooks
+
+  Next.js (Lessons 9–20)
+  - App Router, layouts, navigation
+  - Server vs. Client Components
+  - Data fetching, Route Handlers, Server Actions
+  - Error/loading UI, Tailwind, env vars, deployment
+
+  ---
+  Notable gaps
+
+  React
+  - useContext / Context API — no global state management covered
+  - useReducer — complex state patterns
+  - useMemo / useCallback / React.memo — performance optimization
+  - useRef — DOM refs, persistent values
+  - useTransition / startTransition — React 19 concurrent features
+  - useOptimistic — React 19 optimistic updates
+
+  Next.js
+  - Dynamic routes ([id], [...slug]) — a core Next.js primitive
+  - Static vs. dynamic rendering (SSG, ISR, SSR distinctions)
+  - Caching — fetch cache, revalidate, unstable_cache
+  - Middleware — auth guards, redirects
+  - Metadata API — SEO (generateMetadata)
+  - next/image — image optimization
+  - Authentication — NextAuth / Auth.js basics
+  - Testing — not touched at all
+
+  ---
+  Verdict
+
+  The course gives solid fundamentals for a Todo-app-level project. The biggest
+  practical gaps are dynamic routes (almost every real app needs them) and
+  caching/rendering strategies (critical for understanding Next.js performance).
+   The React gaps (context, useReducer, useMemo) matter more once the app grows
+  beyond a simple list.
+
+  Would you like to add any of these topics as bonus lessons or extend existing
+  ones?
+
+✻ Cogitated for 30s
+
+❯ Yes, add missing lessons. Decide when I need to learn it - DON'T add it at    
+  the end as default.                                                           
+
+● I'll explore the existing lesson structure before designing the plan.
+
+● 2 Explore agents finished (ctrl+o to expand)
+   ├ Explore lesson format and structure · 6 tool uses · 16.6k tokens
+   │ ⎿  Done
+   └ Explore progress tracking and CLAUDE.md slash commands · 4 tool uses · 16.6k tokens
+     ⎿  Done
+
+● Now I have enough to design the plan. Let me write it.
+
+● Updated plan
+  ⎿  /plan to preview
+  ⎿  Tool use rejected
+
+● Let me read the CLAUDE.md lesson list section to assess its necessity.
+
+  Read 1 file (ctrl+o to expand)
+
+● My assessment: The ## Lesson List section in CLAUDE.md is a maintenance
+  liability. It's a static snapshot that duplicates information already in the
+  lessons/ directory (the real source of truth). Every time a lesson is added or
+   renumbered, this table and the "20 lessons" mention on line 6 both need
+  manual updates — and they will drift out of sync.
+
+  Decision: remove it. Claude can always inspect lessons/lesson-NN/README.md
+  directly when context is needed. The Teaching Rules section (which is what
+  actually matters in CLAUDE.md) doesn't depend on it.
+
+  Updating the plan:
+
+● Updated plan
+  ⎿  /plan to preview  ⎿  Tool use rejected
+
+● Good point — the Todo App is just the polygon, not the goal. Comprehensive
+  framework coverage takes priority. Let me revise the plan to include all
+  missing fundamentals.
+
+● Updated plan
+  ⎿  /plan to preview
+
+● User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/yes-add-missing-lessons-misty-shell.md · 
+     /plan to edit
+     Plan: Add Missing Lessons to React/Next.js Course
+
+     Context
+
+     The current 20-lesson course has gaps in core React and Next.js
+     fundamentals. Coverage priority is comprehensive framework knowledge — the
+     Todo App is the polygon for practice, not the deciding factor for what to
+     include. 12 new lessons are added, bringing the total to 32.
+
+     ---
+     Final Lesson Map: 32 Lessons (12 added)
+
+     Phase 1: React + TS Refresher (unchanged)
+
+     ┌─────┬─────────────────────────────────┬──────────┐
+     │  #  │              Title              │  Status  │
+     ├─────┼─────────────────────────────────┼──────────┤
+     │ 01  │ Project Setup & First Component │ existing │
+     ├─────┼─────────────────────────────────┼──────────┤
+     │ 02  │ Props & TypeScript Interfaces   │ existing │
+     ├─────┼─────────────────────────────────┼──────────┤
+     │ 03  │ State & Event Handling          │ existing │
+     ├─────┼─────────────────────────────────┼──────────┤
+     │ 04  │ Lists & Keys                    │ existing │
+     └─────┴─────────────────────────────────┴──────────┘
+
+     Phase 2: React Intermediate (expanded from 4 → 8 lessons)
+
+     ┌─────┬───────────────────────────┬─────────────────┐
+     │  #  │           Title           │     Status      │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 05  │ Lifting State Up          │ existing        │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 06  │ Forms & Controlled Inputs │ existing        │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 07  │ useEffect & Side Effects  │ existing        │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 08  │ useRef & DOM Refs         │ NEW             │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 09  │ Custom Hooks              │ shifted from 08 │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 10  │ useReducer                │ NEW             │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 11  │ useContext                │ NEW             │
+     ├─────┼───────────────────────────┼─────────────────┤
+     │ 12  │ Performance & Memoization │ NEW             │
+     └─────┴───────────────────────────┴─────────────────┘
+
+     Placement rationale:
+     - useRef after useEffect — same hook chapter; enables DOM access (e.g.
+     auto-focus input)
+     - useReducer before useContext — teach complex state in one component
+     first, then show how to distribute it via context (the useContext + 
+     useReducer pattern)
+     - Performance & Memoization after all hooks are known — students need to
+     understand state/effects before worrying about re-renders
+
+     Phase 3: Next.js Fundamentals (expanded from 5 → 8 lessons)
+
+     ┌─────┬────────────────────────────────┬─────────────────┐
+     │  #  │             Title              │     Status      │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 13  │ Intro to Next.js & App Router  │ shifted from 09 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 14  │ Layouts & Navigation           │ shifted from 10 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 15  │ Dynamic Routes                 │ NEW             │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 16  │ Server vs Client Components    │ shifted from 11 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 17  │ Data Fetching                  │ shifted from 12 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 18  │ Rendering Strategies & Caching │ NEW             │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 19  │ Route Handlers (API Routes)    │ shifted from 13 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 20  │ Middleware                     │ NEW             │
+     └─────┴────────────────────────────────┴─────────────────┘
+
+     Placement rationale:
+     - Dynamic Routes after Layouts — students know basic routing, add
+     parameterised routes next; adds /todos/[id] detail page
+     - Rendering Strategies immediately after Data Fetching — they're tightly
+     coupled; explains Next.js 15 caching defaults
+     - Middleware after Route Handlers — students understand request lifecycle;
+     middleware intercepts before routes
+
+     Phase 4: Full-Stack Todo App (unchanged)
+
+     ┌─────┬─────────────────────────────┬─────────────────┐
+     │  #  │            Title            │     Status      │
+     ├─────┼─────────────────────────────┼─────────────────┤
+     │ 21  │ Connecting Frontend to API  │ shifted from 14 │
+     ├─────┼─────────────────────────────┼─────────────────┤
+     │ 22  │ Delete & Update             │ shifted from 15 │
+     ├─────┼─────────────────────────────┼─────────────────┤
+     │ 23  │ Error Handling & Loading UI │ shifted from 16 │
+     └─────┴─────────────────────────────┴─────────────────┘
+
+     Phase 5: Styling (expanded from 1 → 2 lessons)
+
+     ┌─────┬────────────────────────────────┬─────────────────┐
+     │  #  │             Title              │     Status      │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 24  │ Styling with Tailwind CSS      │ shifted from 17 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 25  │ Next.js Built-in Optimizations │ NEW             │
+     └─────┴────────────────────────────────┴─────────────────┘
+
+     Placement rationale:
+     - next/image + next/font are presentational/UI concerns → natural fit after
+      Tailwind
+
+     Phase 6: Advanced & Production (expanded from 3 → 7 lessons)
+
+     ┌─────┬────────────────────────────────┬─────────────────┐
+     │  #  │             Title              │     Status      │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 26  │ Server Actions                 │ shifted from 18 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 27  │ useOptimistic                  │ NEW             │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 28  │ Environment Variables & Config │ shifted from 19 │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 29  │ Metadata & SEO                 │ NEW             │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 30  │ Authentication (Auth.js)       │ NEW             │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 31  │ Testing (intro)                │ NEW             │
+     ├─────┼────────────────────────────────┼─────────────────┤
+     │ 32  │ Deployment                     │ shifted from 20 │
+     └─────┴────────────────────────────────┴─────────────────┘
+
+     Placement rationale:
+     - useOptimistic directly after Server Actions — React 19 hook designed for
+     SA mutation patterns
+     - Metadata & SEO before Deployment — production readiness
+     - Authentication & Testing before Deployment — both are production concerns
+      students must know before shipping
+
+     ---
+     New Lesson Content Outlines
+
+     Lesson 08 — useRef & DOM Refs
+
+     - README: What is useRef? | DOM refs vs mutable values | useRef vs useState
+      (no re-render) | forwardRef brief mention
+     - Task: Auto-focus the Add Todo <input> after each submission using useRef
+
+     Lesson 10 — useReducer
+
+     - README: When useState isn't enough | Reducer pattern |
+     useReducer(reducer, initialState) | Action types | Comparison to useState
+     - Task: Rewrite useTodos to use useReducer instead of multiple useState
+     calls
+
+     Lesson 11 — useContext
+
+     - README: The prop drilling problem | createContext | Provider | useContext
+      | useContext + useReducer pattern (global store without Redux)
+     - Task: Create TodoContext + TodoProvider using the reducer from Lesson 10;
+      consume with useContext in child components
+
+     Lesson 12 — Performance & Memoization
+
+     - README: Why React re-renders | React.memo | useMemo | useCallback | When
+     NOT to memoize (premature optimisation)
+     - Task: Wrap TodoItem in React.memo; memoize the toggle callback with
+     useCallback; observe re-render behaviour in React DevTools
+
+     Lesson 15 — Dynamic Routes
+
+     - README: [id] segment syntax | params prop | generateStaticParams |
+     notFound() | Linking to dynamic routes
+     - Task: Create app/todos/[id]/page.tsx showing individual todo detail; link
+      to it from the list
+
+     Lesson 18 — Rendering Strategies & Caching
+
+     - README: Static vs dynamic rendering | SSG / ISR / SSR | How Next.js 15
+     changed default caching | revalidatePath / revalidateTag | force-dynamic
+     - Task: Add revalidatePath('/todos') to mutation handlers; observe
+     behaviour with/without it using hard refresh
+
+     Lesson 20 — Middleware
+
+     - README: What middleware does | middleware.ts at root | Matcher config |
+     Reading/writing cookies & headers | Common use: redirects, auth guards
+     - Task: Add middleware that logs every request (dev only) and redirects /
+     to /todos
+
+     Lesson 25 — Next.js Built-in Optimizations
+
+     - README: next/image (why: LCP, lazy load, formats) | next/font
+     (self-hosting, no layout shift) | next/script
+     - Task: Add the app logo with <Image> and load a Google Font via next/font;
+      verify in Lighthouse
+
+     Lesson 27 — useOptimistic
+
+     - README: What is optimistic UI? | useOptimistic hook | Integration with
+     Server Actions | Error rollback
+     - Task: Wrap add/toggle Server Actions with useOptimistic so changes feel
+     instant before server confirms
+
+     Lesson 29 — Metadata & SEO
+
+     - README: Why metadata matters | Static export const metadata |
+     generateMetadata function | Open Graph | Route-level overrides
+     - Task: Add metadata to root layout and generateMetadata to the /todos/[id]
+      detail page
+
+     Lesson 30 — Authentication (Auth.js)
+
+     - README: Why auth is hard | Auth.js (NextAuth v5) concepts | OAuth vs
+     credentials | Session strategy | Protecting routes with middleware
+     - Task: Add GitHub OAuth login; protect the /todos route so only logged-in
+     users can access it
+
+     Lesson 31 — Testing (intro)
+
+     - README: Why test | Testing pyramid | Vitest + React Testing Library setup
+      | Writing a component test | Snapshot vs behaviour tests | Brief
+     Playwright mention for E2E
+     - Task: Write unit tests for TodoItem and useTodos; run npm test to confirm
+      passing
+
+     ---
+     Implementation Steps
+
+     1. Rename existing lesson directories (reverse order)
+
+     lesson-20 → lesson-32
+     lesson-19 → lesson-28
+     lesson-18 → lesson-26
+     lesson-17 → lesson-24
+     lesson-16 → lesson-23
+     lesson-15 → lesson-22
+     lesson-14 → lesson-21
+     lesson-13 → lesson-19
+     lesson-12 → lesson-17
+     lesson-11 → lesson-16
+     lesson-10 → lesson-14
+     lesson-09 → lesson-13
+     lesson-08 → lesson-09
+
+     2. Create 12 new lesson directories (each with README.md and task.md)
+
+     lessons/lesson-08/   ← useRef
+     lessons/lesson-10/   ← useReducer
+     lessons/lesson-11/   ← useContext
+     lessons/lesson-12/   ← Performance & Memoization
+     lessons/lesson-15/   ← Dynamic Routes
+     lessons/lesson-18/   ← Rendering Strategies & Caching
+     lessons/lesson-20/   ← Middleware
+     lessons/lesson-25/   ← Next.js Built-in Optimizations
+     lessons/lesson-27/   ← useOptimistic
+     lessons/lesson-29/   ← Metadata & SEO
+     lessons/lesson-30/   ← Authentication
+     lessons/lesson-31/   ← Testing
+
+     3. Update cross-references in shifted lessons
+
+     Grep all README.md and task.md for Lesson N references; update lesson
+     numbers to new values.
+
+     4. Update todo-app/lesson-progress.json
+
+     - Add 12 new lesson entries with "not_started" status
+     - Update the existing lesson keys to their new numbers
+     - Total entries: "1" through "32"
+
+     5. Update CLAUDE.md
+
+     - Remove the ## Lesson List section entirely (maintenance liability —
+     duplicates lessons/ directory)
+     - Line 6: remove hardcoded "across 20 lessons" → "across lessons"
+     - Repository layout: update lesson-02/ ... lesson-20/ → lesson-02/ ... 
+     lesson-32/
+
+     ---
+     Critical Files
+
+     - lessons/lesson-01/ through lessons/lesson-20/ — 13 need renaming
+     - todo-app/lesson-progress.json — lesson registry (1–32)
+     - CLAUDE.md — remove Lesson List, fix two stale references
+     - .claude/commands/start-lesson.md — uses zero-padded lesson-NN paths (no
+     change needed)
+
+     ---
+     Verification
+
+     1. ls lessons/ | wc -l → 32
+     2. /start-lesson 8 → loads useRef lesson
+     3. /start-lesson 10 → loads useReducer lesson
+     4. /start-lesson 15 → loads Dynamic Routes lesson
+     5. /start-lesson 26 → loads Server Actions (old Lesson 18)
+     6. /start-lesson 32 → loads Deployment (old Lesson 20)
+     7. lesson-progress.json has entries "1" through "32"
+
+● Starting with the directory renames.
+
+● Bash(cd /home/adrian/source/learn-react-nextjs/lessons && \
+      mv lesson-20 lesson-32 && \…)
+  ⎿  lesson-01
+     lesson-02
+     lesson-03
+     … +17 lines (ctrl+o to expand)
+
+● Now update CLAUDE.md and lesson-progress.json in parallel.
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(~/source/learn-react-nextjs/todo-app/lesson-progress.json)
+  ⎿  Added 13 lines, removed 1 line
+      20      "17": { "status": "not_started" },
+      21      "18": { "status": "not_started" },
+      22      "19": { "status": "not_started" },
+      23 -    "20": { "status": "not_started" }                          
+      23 +    "20": { "status": "not_started" },                         
+      24 +    "21": { "status": "not_started" },                         
+      25 +    "22": { "status": "not_started" },                         
+      26 +    "23": { "status": "not_started" },                         
+      27 +    "24": { "status": "not_started" },                         
+      28 +    "25": { "status": "not_started" },                         
+      29 +    "26": { "status": "not_started" },                         
+      30 +    "27": { "status": "not_started" },                         
+      31 +    "28": { "status": "not_started" },                         
+      32 +    "29": { "status": "not_started" },                         
+      33 +    "30": { "status": "not_started" },                         
+      34 +    "31": { "status": "not_started" },                         
+      35 +    "32": { "status": "not_started" }                          
+      36    }
+      37  }
+
+● Update(~/source/learn-react-nextjs/CLAUDE.md)
+  ⎿  Added 1 line, removed 1 line
+      3  ## About This Repo
+      4  
+      5  This is a structured self-paced course to learn React 19 and Nex
+         t.js 15 with TypeScript.
+      6 -The student builds a real **Todo App** step by step across 20 le
+        -ssons.                                                          
+      6 +The student builds a real **Todo App** step by step across lesso
+        +ns.                                                             
+      7  
+      8  ---
+      9  
+
+● Update(~/source/learn-react-nextjs/CLAUDE.md)
+  ⎿  Added 1 line, removed 1 line
+      33    lesson-01/
+      34      README.md   ← theory + explanations for this lesson
+      35      task.md     ← concrete coding task to complete
+      36 -  lesson-02/ ... lesson-20/                                    
+      36 +  lesson-02/ ... lesson-32/                                    
+      37  
+      38  todo-app/
+      39    lesson-progress.json   ← tracks current lesson and completion
+           status
+
+● Update(~/source/learn-react-nextjs/CLAUDE.md)  ⎿  Removed 27 lines
+      55  
+      56  ---
+      57  
+      58 -## Lesson List                                                 
+      59 -                                                               
+      60 -| # | Title | Phase |                                          
+      61 -|---|-------|-------|                                          
+      62 -| 01 | Project Setup & First Component | React + TS Refresher |
+      63 -| 02 | Props & TypeScript Interfaces | React + TS Refresher |  
+      64 -| 03 | State & Event Handling | React + TS Refresher |         
+      65 -| 04 | Lists & Keys | React + TS Refresher |                   
+      66 -| 05 | Lifting State Up | React Intermediate |                 
+      67 -| 06 | Forms & Controlled Inputs | React Intermediate |        
+      68 -| 07 | useEffect & Side Effects | React Intermediate |         
+      69 -| 08 | Custom Hooks | React Intermediate |                     
+      70 -| 09 | Intro to Next.js & App Router | Next.js Fundamentals |  
+      71 -| 10 | Layouts & Navigation | Next.js Fundamentals |           
+      72 -| 11 | Server vs Client Components | Next.js Fundamentals |    
+      73 -| 12 | Data Fetching | Next.js Fundamentals |                  
+      74 -| 13 | Route Handlers (API Routes) | Next.js Fundamentals |    
+      75 -| 14 | Connecting Frontend to API | Full-Stack Todo App |      
+      76 -| 15 | Delete & Update | Full-Stack Todo App |                 
+      77 -| 16 | Error Handling & Loading UI | Full-Stack Todo App |     
+      78 -| 17 | Styling with Tailwind CSS | Full-Stack Todo App |       
+      79 -| 18 | Server Actions | Advanced & Production |                
+      80 -| 19 | Environment Variables & Config | Advanced & Production |
+      81 -| 20 | Deployment | Advanced & Production |                    
+      82 -                                                               
+      83 ----                                                            
+      84 -                                                               
+      58  ## Teaching Rules (Claude must follow these)
+      59  
+      60  1. **Don't give away solutions unprompted.** If the student is 
+          stuck, give a targeted hint first. Only show full code if they 
+          explicitly ask or have already solved it.
+
+● Now creating all 12 new lessons. Starting with the React hooks block (08, 10,
+  11, 12) in parallel.
+
+● Bash(mkdir -p /home/adrian/source/learn-react-nextjs/lessons/lesson-08
+      /home/adrian/source/learn-react-nextjs/lessons/lesson-10
+      /home/adrian/source/learn-react-nextj…)
+  ⎿  Done
+
+● Write(lesson-08/README.md)
+  ⎿  Wrote 131 lines to lesson-08/README.md
+       2 # Lesson 8 — useRef & DOM Refs
+       3 ## What is useRef?
+       4 
+       5 `useRef` gives you a mutable object that persists across renders
+          — but changing it **does not trigger a re-render**. That's the 
+       6 key difference from `useState`.
+       7 ```tsx
+       8 const ref = useRef(initialValue)
+       9 // ref.current holds the value
+      10 ```
+     … +142 lines (ctrl+o to expand)
+
+● Write(lesson-08/task.md)
+  ⎿  Wrote 64 lines to lesson-08/task.md
+      1 # Task — Lesson 8: useRef & DOM Refs
+      2 
+      3 ## Goal
+      4 
+      5 Improve the Add Todo form's UX: after the user adds a todo, auto-
+        focus the text input so they can immediately type the next one.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +64 lines (ctrl+o to expand)
+
+● Write(lesson-10/README.md)
+  ⎿  Wrote 124 lines to lesson-10/README.md
+       2 # Lesson 10 — useReducer
+       3 ## When useState Isn't Enough
+       5 `useState` works great for simple, independent pieces of state. 
+         But when you have multiple related state values that change toge
+         ther — or when the next state depends on the current state in co
+         sy.ex ways — managing it with multiple `useState` calls gets mes
+       6 
+       8 // Multiple useState calls that are conceptually linked
+       9 const [todos, setTodos] = useState<Todo[]>([])
+      10 const [loading, setLoading] = useState(false)
+     … +131 lines (ctrl+o to expand)
+
+● Write(lesson-10/task.md)
+  ⎿  Wrote 87 lines to lesson-10/task.md
+      2 # Task — Lesson 10: useReducer
+      3 ## Goal
+      4 
+      5 Rewrite the `useTodos` custom hook to use `useReducer` instead of
+         multiple `useState` calls. The hook's public interface stays the
+         same — components using it don't need to change.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +95 lines (ctrl+o to expand)
+
+● Write(lesson-11/README.md)
+  ⎿  Wrote 155 lines to lesson-11/README.md
+       2 # Lesson 11 — useContext
+       3 ## The Prop Drilling Problem
+       4 
+         uation: a piece of state lives at the top, but a deeply nested c
+         omponent needs it. The only way to pass it down is through every
+          component in between — even ones that don't use it at all.
+       7 ```
+       8 TodoApp (has todos)
+       9   └── MainSection
+      10         └── TodoList
+     … +167 lines (ctrl+o to expand)
+
+● Write(lesson-11/task.md)
+  ⎿  Wrote 56 lines to lesson-11/task.md
+      2 # Task — Lesson 11: useContext
+      3 ## Goal
+      4 
+      5 Lift the todo state out of `useTodos` and into a `TodoContext` + 
+        `TodoProvider`. Any component in the tree can then access todos a
+        nd actions via `useTodoContext()` — no prop drilling needed.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +67 lines (ctrl+o to expand)
+
+● Write(lesson-12/README.md)
+  ⎿  Wrote 127 lines to lesson-12/README.md
+       2 # Lesson 12 — Performance & Memoization
+       3 ## Why React Re-renders
+       4 
+       6 1. Its **state** changesnent whenever:
+       7 2. Its **props** change
+       8 3. Its **parent** re-renders (even if the props haven't changed)
+      10 Point 3 is the source of most "unnecessary" renders. When `TodoA
+         pp` re-renders (say, a new todo was added), every child componen
+         t re-renders too — including ones that received the exact same p
+         rops as before.
+     … +146 lines (ctrl+o to expand)
+
+● Write(lesson-12/task.md)
+  ⎿  Wrote 73 lines to lesson-12/task.md
+      2 # Task — Lesson 12: Performance & Memoization
+      3 ## Goal
+      4 
+      5 Apply `React.memo`, `useCallback`, and `useMemo` to the Todo App.
+         Then use React DevTools Profiler to verify that memoized `TodoIt
+        led.components no longer re-render when an unrelated todo is togg
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +76 lines (ctrl+o to expand)
+
+● Now the Next.js block — lessons 15, 18, 20.
+
+● Write(lesson-15/README.md)
+  ⎿  Wrote 139 lines to lesson-15/README.md
+       2 # Lesson 15 — Dynamic Routes
+       3 ## Static vs Dynamic Routes
+       4 
+       5 So far all your routes have been **static** — the URL is fixed:
+       6 - `/` → `app/page.tsx`
+       8 - `/todos` → `app/todos/page.tsx`
+       9 **Dynamic routes** match a variable segment in the URL. A single
+          file handles many URLs:
+      10 - `/todos/1`, `/todos/2`, `/todos/abc` → `app/todos/[id]/page.ts
+         x`
+     … +139 lines (ctrl+o to expand)
+
+● Write(lesson-15/task.md)
+  ⎿  Wrote 106 lines to lesson-15/task.md
+      2 # Task — Lesson 15: Dynamic Routes
+      3 ## Goal
+      4 
+      5 Add a todo detail page at `/todos/[id]`. Clicking a todo in the l
+        ist navigates to its detail page. If the ID doesn't exist, show a
+         proper 404 page.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +111 lines (ctrl+o to expand)
+
+● Write(lesson-18/README.md)
+  ⎿  Wrote 149 lines to lesson-18/README.md
+      2 # Lesson 18 — Rendering Strategies & Caching
+      3 ## The Big Picture
+      4 
+      5 Next.js can render pages in different ways. Understanding which s
+        trategy applies (and when) is one of the most important mental mo
+        dels for writing correct Next.js apps.
+      6 
+      7 ---
+      8 
+      9 ## Static Rendering (SSG)
+     … +159 lines (ctrl+o to expand)
+
+● Write(lesson-18/task.md)
+  ⎿  Wrote 71 lines to lesson-18/task.md
+      2 # Task — Lesson 18: Rendering Strategies & Caching
+      3 ## Goal
+      4 
+      5 Add `revalidatePath` to your Route Handlers so the `/todos` page 
+        cache is invalidated after every mutation. Then observe the diffe
+        rence between cached and uncached fetches.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +76 lines (ctrl+o to expand)
+
+● Write(lesson-20/README.md)
+  ⎿  Wrote 153 lines to lesson-20/README.md
+       2 # Lesson 20 — Middleware
+       3 ## What is Middleware?
+       4 
+         efore a page renders, before a Route Handler executes, before st
+         atic files are served. It sits at the edge of your application.
+       6 
+       8 - Redirect unauthenticated users to `/login`
+       9 - A/B testing (serve different content based on a cookie)
+      10 - Localisation (redirect to `/en` or `/fr` based on browser lang
+         uage)
+     … +156 lines (ctrl+o to expand)
+
+● Write(lesson-20/task.md)
+  ⎿  Wrote 85 lines to lesson-20/task.md
+      1 # Task — Lesson 20: Middleware
+      2 
+      3 ## Goal
+      4 
+      5 Add middleware that:
+      6 1. Logs every incoming request (dev only)
+      7 2. Redirects `/` to `/todos`
+      8 
+      9 ---
+     … +88 lines (ctrl+o to expand)
+
+● Now the Advanced & Production block — lessons 25, 27, 29, 30, 31.
+
+● Write(lesson-25/README.md)
+  ⎿  Wrote 167 lines to lesson-25/README.md
+       2 # Lesson 25 — Next.js Built-in Optimizations
+       3 ## Why Next.js Provides These
+       4 
+       5 Browsers need to handle images, fonts, and scripts efficiently —
+          but doing it correctly by hand is tedious:
+         /AVIF), and layout stabilitycorrect sizing, modern formats (WebP
+       7 - Fonts need self-hosting to avoid GDPR issues and layout shifts
+       8 - Third-party scripts need to load without blocking the page
+       9 
+      10 Next.js ships components that handle all of this automatically.
+     … +172 lines (ctrl+o to expand)
+● Write(lesson-25/task.md)
+  ⎿  Wrote 83 lines to lesson-25/task.md
+      1 # Task — Lesson 25: Next.js Built-in Optimizations
+      2 
+      3 ## Goal
+      4 
+      5 Add a font via `next/font` and an image via `next/image` to the T
+        odo App. Then run Lighthouse to verify the Core Web Vitals score.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +90 lines (ctrl+o to expand)
+
+● Write(lesson-27/README.md)
+  ⎿  Wrote 140 lines to lesson-27/README.md
+       2 # Lesson 27 — useOptimistic
+       3 ## What is Optimistic UI?
+       4 
+       5 When the user clicks "Add Todo", the app currently:
+       6 1. Sends the request to the server
+       7 2. Waits for the response (100–500ms)
+       8 3. Updates the UI
+       9 
+      10 The user sees a delay — the button is unresponsive, or there's a
+          spinner. For a fast app, this is jarring.
+     … +153 lines (ctrl+o to expand)
+
+● Write(/home/admiral/source/learn-react-nextjs/lessons/lesson-27/task.md)
+  ⎿  Error: EACCES: permission denied, mkdir '/home/admiral'
+
+● Write(lesson-27/task.md)
+  ⎿  Wrote 77 lines to lesson-27/task.md
+      2 # Task — Lesson 27: useOptimistic
+      3 ## Goal
+      4 
+      5 Wrap the "add todo" Server Action with `useOptimistic` so the new
+         item appears in the list instantly — before the server confirms 
+        the save.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +84 lines (ctrl+o to expand)
+
+● Write(lesson-29/README.md)
+  ⎿  Wrote 162 lines to lesson-29/README.md
+       2 # Lesson 29 — Metadata & SEO
+       3 ## Why Metadata Matters
+       4 
+         wsers read to understand your page:cial media platforms, and bro
+       6 - The tab title and browser history entry
+       7 - The preview card when you share a link on Twitter/Slack/WhatsA
+       8 - What Google indexes and shows in search results
+       9 
+      10 Next.js has a first-class Metadata API that generates all of thi
+         s from TypeScript — no manual `<head>` manipulation needed.
+     … +165 lines (ctrl+o to expand)
+
+● Write(lesson-29/task.md)
+  ⎿  Wrote 86 lines to lesson-29/task.md
+      2 # Task — Lesson 29: Metadata & SEO
+      3 ## Goal
+      4 
+      5 Add proper metadata to the Todo App: a title template in the root
+         layout, static metadata on the todos list page, and dynamic meta
+        data on the todo detail page.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +92 lines (ctrl+o to expand)
+
+● Write(lesson-30/README.md)
+  ⎿  Wrote 196 lines to lesson-30/README.md
+       1 # Lesson 30 — Authentication (Auth.js)
+       2 
+       3 ## Why Authentication is Hard
+       4 
+       5 Building auth from scratch means:
+       6 - Securely hashing and storing passwords
+       7 - Managing sessions or JWTs
+       8 - Implementing OAuth flows (GitHub, Google login)
+       9 - Handling CSRF, timing attacks, token rotation
+      10 - Keeping up with security vulnerabilities
+     … +199 lines (ctrl+o to expand)
+
+● Write(lesson-30/task.md)
+  ⎿  Wrote 118 lines to lesson-30/task.md
+      2 # Task — Lesson 30: Authentication (Auth.js)
+      3 ## Goal
+      4 
+      5 Add GitHub OAuth login to the Todo App. Protect the `/todos` rout
+        e so only logged-in users can access it. Show the user's name and
+         a sign-out button in the navbar.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +126 lines (ctrl+o to expand)
+
+● Write(lesson-31/README.md)
+  ⎿  Wrote 202 lines to lesson-31/README.md
+       2 # Lesson 31 — Testing (Intro)
+       3 ## Why Test?
+       5 Tests give you confidence that your code does what you expect — 
+         now and after future changes. Without tests, every refactor is a
+       6  guessing game.
+       7 The three main benefits:
+         g else; tests tell you immediatelye in one place breaks somethin
+       9 2. **Document behaviour** — good test names describe what the co
+      10 3. **Enable refactoring** — you can restructure code freely if t
+         ests stay green
+     … +210 lines (ctrl+o to expand)
+
+● Write(lesson-31/task.md)
+  ⎿  Wrote 94 lines to lesson-31/task.md
+      1 # Task — Lesson 31: Testing (Intro)
+      2 
+      3 ## Goal
+      4 
+      5 Set up Vitest and React Testing Library. Write unit tests for `To
+        doItem` and the `todoReducer`.
+      6 
+      7 ---
+      8 
+      9 ## Steps
+     … +97 lines (ctrl+o to expand)
+
+● Now find and update all cross-references in the shifted lesson files.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Now I'll fix the headings and cross-references. Let me do the heading fixes
+  efficiently with sed for each shifted lesson.
+
+● Update($L/lesson-09/README.md)
+  ⎿  sed: $L/lesson-09/README.md: No such file or directory
+     Exit code 1
+
+● Bash(cd /home/adrian/source/learn-react-nextjs/lessons…)
+  ⎿  Done
+
+● Now check there are no more stale "Lesson N" references in the existing
+  lessons (1-7) that might reference old numbers.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Those references (lessons 2→5, 5→3) are in the original 1–7 range and still
+  valid. Let me do a final verification pass.
+
+● Bash(echo "=== Lesson count ===" && ls | wc -l && echo "" && echo "=== H1
+      headings of all README files ===" && for d in $(ls -d lesson-*/); do
+      n=$(echo $d | tr -d '/…)
+  ⎿  === Lesson count ===
+     32
+     … +24 lines (ctrl+o to expand)
+
+● All 32 lessons, all headings correct. Let me verify the progress JSON and
+  CLAUDE.md are clean too.
+● Bash(echo "=== lesson-progress.json keys ===" && python3 -c "import json;
+      d=json.load(open('/home/adrian/source/learn-react-nextjs/todo-app/lesson-p
+      rogress.json'));…)
+  ⎿  === lesson-progress.json keys ===
+     Total lessons: 32
+     Keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+     … +2 lines (ctrl+o to expand)
+
+● Everything is in order. Here's what was done:
+
+  32 lessons total (was 20, added 12):
+
+  ┌──────┬─────────────────────────┬────────────────────────────────────────┐
+  │ New  │          Topic          │          Placement rationale           │
+  │  #   │                         │                                        │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 08   │ useRef & DOM Refs       │ After useEffect — same hooks chapter   │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 10   │ useReducer              │ Before useContext — teach complex      │
+  │      │                         │ local state first                      │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 11   │ useContext              │ Combines with useReducer for the full  │
+  │      │                         │ global state pattern                   │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 12   │ Performance &           │ After all hooks are known, before      │
+  │      │ Memoization             │ moving to Next.js                      │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 15   │ Dynamic Routes          │ Right after Layouts — adds /todos/[id] │
+  │      │                         │  detail page                           │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 18   │ Rendering Strategies &  │ Immediately after Data Fetching —      │
+  │      │ Caching                 │ tightly coupled                        │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 20   │ Middleware              │ After Route Handlers — students        │
+  │      │                         │ understand request lifecycle           │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 25   │ Next.js Built-in        │ After Tailwind — next/image +          │
+  │      │ Optimizations           │ next/font                              │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 27   │ useOptimistic           │ Directly after Server Actions —        │
+  │      │                         │ designed for that pattern              │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 29   │ Metadata & SEO          │ Before Deployment — production         │
+  │      │                         │ readiness                              │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 30   │ Authentication          │ Before Deployment — GitHub OAuth +     │
+  │      │ (Auth.js)               │ route protection                       │
+  ├──────┼─────────────────────────┼────────────────────────────────────────┤
+  │ 31   │ Testing (Intro)         │ Before Deployment — Vitest + RTL setup │
+  └──────┴─────────────────────────┴────────────────────────────────────────┘
+
+  Also updated:
+  - CLAUDE.md — removed the stale Lesson List table (maintenance liability),
+  fixed "20 lessons" and lesson-20 references
+  - lesson-progress.json — expanded from 20 to 32 entries
+  - All 13 shifted lesson headings corrected to their new numbers
+  - Cross-references within lesson files updated
+
+✻ Brewed for 15m 37s
+
+※ recap: Added 12 new lessons to the course expanding it from 20 to 32 total, covering useRef, useReducer, useContext, memoization, dynamic routes, caching, middleware, next/image, useOptimistic, metadata, auth, and testing. Ready to start Lesson 1 whenever you are. (disable recaps in /config)
+
+❯ /model haiku                                                                  
+  ⎿  Set model to Haiku 4.5
+
+❯ /effort medium                                                                
+  ⎿  Set effort level to medium: Balanced approach with standard implementation
+     and testing
+
+❯ Add .gitignore to todoApp that is suitable for React and next.js app          
+
+  Read 1 file, listed 2 directories (ctrl+o to expand)
+
+● Write(~/source/learn-react-nextjs/.gitignore)
+  ⎿  Wrote 64 lines to ../.gitignore
+       1 # Dependencies
+       2 node_modules/
+       3 /.pnp
+       4 .pnp.js
+       5 
+       6 # Testing
+       7 /coverage
+       8 .nyc_output/
+       9 
+      10 # Next.js build artifacts
+     … +55 lines (ctrl+o to expand)
+
+● Created a comprehensive .gitignore for the Next.js/React project at the root.
+  It covers:
+
+  - node_modules and package manager files
+  - .next build artifacts and production builds
+  - Environment files (.env.local, etc. — never commit secrets)
+  - IDE/Editor configs (VS Code, IntelliJ, Sublime, etc.)
+  - Logs (npm, yarn, pnpm debug logs)
+  - OS files (.DS_Store, Thumbs.db)
+  - Test coverage and build directories
+  - Build tools (Turbopack, Vitest)
+
+  The file is ready — students won't accidentally commit sensitive data or build
+   artifacts when they start working on the todo-app.
+
+✻ Crunched for 14s
+
+※ recap: Expanded the React/Next.js course from 20 to 32 lessons with strategic placement of missing topics (useRef, useReducer, useContext, Performance, Dynamic Routes, Rendering, Middleware, Auth, Testing). All lesson directories renamed, cross-references fixed, and .gitignore created—lessons ready for student. (disable recaps in /config)
