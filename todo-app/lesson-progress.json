@@ -3,7 +3,7 @@
   "lessons": {
     "1":  { "status": "completed", "startedAt": "2026-05-01", "completedAt": "2026-05-02" },
     "2":  { "status": "completed", "startedAt": "2026-05-02", "completedAt": "2026-05-02" },
-    "3":  { "status": "in_progress", "startedAt": "2026-05-02" },
+    "3":  { "status": "completed", "startedAt": "2026-05-02", "completedAt": "2026-05-02" },
     "4":  { "status": "not_started" },
     "5":  { "status": "not_started" },
     "6":  { "status": "not_started" },
