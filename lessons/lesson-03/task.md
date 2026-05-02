@@ -12,9 +12,14 @@ Update `src/components/TodoItem.tsx`.
 
 Add a `useState` hook that tracks `isCompleted` locally, initialized from the `completed` prop:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 const [isCompleted, setIsCompleted] = useState(completed);
 ```
+
+</details>
 
 ### 2. Add a checkbox
 
@@ -29,11 +34,16 @@ When `isCompleted` is true, apply a strikethrough style to the title.
 You can use a Tailwind class: `line-through` or inline style `{ textDecoration: 'line-through' }`.
 
 Use a ternary or conditional class:
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 <span className={isCompleted ? "line-through" : ""}>
   {title}
 </span>
 ```
+
+</details>
 
 ### 4. Verify in the browser
 

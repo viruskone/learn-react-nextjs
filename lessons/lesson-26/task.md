@@ -10,6 +10,9 @@ Create a Server Actions file and use it to add and delete todos, replacing the d
 
 Create `src/actions/todos.ts`:
 
+<details>
+<summary>Show hint</summary>
+
 ```ts
 "use server";
 
@@ -40,6 +43,8 @@ export async function toggleTodoAction(id: string, completed: boolean): Promise<
   return res.json();
 }
 ```
+
+</details>
 
 Note: Server Actions need an absolute URL when calling their own app's API routes in development. Use `process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"` as the base URL.
 

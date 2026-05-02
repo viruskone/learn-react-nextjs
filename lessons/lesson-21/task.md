@@ -11,13 +11,21 @@ Update `useTodos` to fetch from and write to `/api/todos` instead of `localStora
 Update `src/hooks/useTodos.ts`. Replace the `useState` + `useEffect` localStorage logic with:
 
 **State:**
+<details>
+<summary>Show hint</summary>
+
 ```ts
 const [todos, setTodos] = useState<Todo[]>([]);
 const [isLoading, setIsLoading] = useState(true);
 const [error, setError] = useState<string | null>(null);
 ```
 
+</details>
+
 **Fetch on mount:**
+<details>
+<summary>Show hint</summary>
+
 ```ts
 useEffect(() => {
   fetch("/api/todos")
@@ -31,7 +39,12 @@ useEffect(() => {
 }, []);
 ```
 
+</details>
+
 **addTodo:**
+<details>
+<summary>Show hint</summary>
+
 ```ts
 async function addTodo(title: string) {
   const res = await fetch("/api/todos", {
@@ -44,7 +57,12 @@ async function addTodo(title: string) {
 }
 ```
 
+</details>
+
 **toggleTodo:**
+<details>
+<summary>Show hint</summary>
+
 ```ts
 async function toggleTodo(id: string) {
   const todo = todos.find((t) => t.id === id);
@@ -59,11 +77,16 @@ async function toggleTodo(id: string) {
 }
 ```
 
+</details>
+
 Return `{ todos, isLoading, error, addTodo, toggleTodo }`.
 
 ### 2. Update TodoApp to handle loading/error
 
 Update `src/components/TodoApp.tsx` to destructure and use `isLoading` and `error`:
+
+<details>
+<summary>Show hint</summary>
 
 ```tsx
 const { todos, isLoading, error, addTodo, toggleTodo } = useTodos();
@@ -71,6 +94,8 @@ const { todos, isLoading, error, addTodo, toggleTodo } = useTodos();
 if (isLoading) return <p>Loading todos...</p>;
 if (error) return <p className="text-red-500">Error: {error}</p>;
 ```
+
+</details>
 
 ### 3. Verify in the browser
 

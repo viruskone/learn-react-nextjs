@@ -10,12 +10,17 @@ Add the ability to delete todos, wiring it from the API through to the UI.
 
 Update `src/hooks/useTodos.ts`:
 
+<details>
+<summary>Show hint</summary>
+
 ```ts
 async function deleteTodo(id: string) {
   await fetch(`/api/todos/${id}`, { method: "DELETE" });
   setTodos((prev) => prev.filter((t) => t.id !== id));
 }
 ```
+
+</details>
 
 Return it: `{ todos, isLoading, error, addTodo, toggleTodo, deleteTodo }`.
 

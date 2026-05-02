@@ -77,10 +77,15 @@ Rewrite the `useTodos` custom hook to use `useReducer` instead of multiple `useS
 ## Bonus (optional)
 
 Export `todoReducer` and write a few plain unit tests for it (no React needed):
+<details>
+<summary>Show hint</summary>
+
 ```ts
 const newState = todoReducer([], { type: 'ADD_TODO', payload: 'Buy milk' })
 console.assert(newState.length === 1)
 ```
+
+</details>
 
 ---
 

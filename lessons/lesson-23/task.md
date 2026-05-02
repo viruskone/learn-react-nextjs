@@ -30,6 +30,9 @@ Update `src/components/TodoApp.tsx`:
 - Render 3 skeleton rows using `animate-pulse`
 
 Example skeleton row:
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 function TodoSkeleton() {
   return (
@@ -44,6 +47,8 @@ function TodoSkeleton() {
   );
 }
 ```
+
+</details>
 
 ### 5. Add error handling to API calls in useTodos
 

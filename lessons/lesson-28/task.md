@@ -10,13 +10,21 @@ Extract the hardcoded API base URL into an environment variable and create a cen
 
 Create `todo-app/.env.local` (this file already goes in `.gitignore` from `create-next-app`):
 
+<details>
+<summary>Show hint</summary>
+
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
+</details>
+
 ### 2. Create a centralized env config
 
 Create `src/env.ts`:
+
+<details>
+<summary>Show hint</summary>
 
 ```ts
 export const env = {
@@ -24,16 +32,23 @@ export const env = {
 } as const;
 ```
 
+</details>
+
 ### 3. Update all hardcoded base URLs
 
 Search for any hardcoded `http://localhost:3000` in your codebase (especially in `src/actions/todos.ts` and any fetch calls).
 
 Replace them with:
+<details>
+<summary>Show hint</summary>
+
 ```ts
 import { env } from "@/env";
 
 fetch(`${env.apiUrl}/api/todos`, ...)
 ```
+
+</details>
 
 ### 4. Verify it works
 
@@ -48,10 +63,15 @@ The app should work exactly as before.
 
 Create `todo-app/.env.example` (this CAN be committed — it's a template with no real secrets):
 
+<details>
+<summary>Show hint</summary>
+
 ```
 # API base URL for fetching todos
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
+
+</details>
 
 This helps other developers know what env vars are needed.
 

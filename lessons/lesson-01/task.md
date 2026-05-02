@@ -31,6 +31,9 @@ Open `http://localhost:3000` in your browser. You should see the default Next.js
 
 Open `src/app/page.tsx`. Delete everything inside the returned JSX and replace it with a simple heading:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 export default function Home() {
   return (
@@ -40,6 +43,8 @@ export default function Home() {
   );
 }
 ```
+
+</details>
 
 ### 4. Create your first component
 

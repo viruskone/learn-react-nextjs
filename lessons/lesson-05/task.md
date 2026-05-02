@@ -33,9 +33,14 @@ Update `src/components/TodoItem.tsx`:
 
 In `TodoApp`, compute and display how many todos are completed:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 const completedCount = todos.filter((t) => t.completed).length;
 ```
+
+</details>
 
 Display it: `"You have {completedCount} of {todos.length} todos completed."`
 

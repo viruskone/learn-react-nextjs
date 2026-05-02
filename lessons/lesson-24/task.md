@@ -50,11 +50,16 @@ Update `src/components/Navbar.tsx`:
 ### 7. Add a background to the page
 
 Update `src/app/page.tsx` to give the page a background:
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 <div className="min-h-screen bg-gray-50 p-4">
   <TodoApp />
 </div>
 ```
+
+</details>
 
 ## Success Criteria
 

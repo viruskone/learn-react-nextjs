@@ -12,6 +12,9 @@ Create `src/app/api/todos/route.ts`.
 
 At the top of the file, define in-memory storage:
 
+<details>
+<summary>Show hint</summary>
+
 ```ts
 import type { Todo } from "@/types/todo";
 
@@ -20,6 +23,8 @@ let todos: Todo[] = [
   { id: "2", title: "Read a book", completed: true },
 ];
 ```
+
+</details>
 
 Implement:
 - `GET` — return all todos as JSON (status 200)

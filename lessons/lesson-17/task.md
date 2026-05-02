@@ -15,11 +15,19 @@ This lesson runs parallel to the main Todo App to teach the data fetching patter
 Create `src/app/posts/page.tsx` as an **async Server Component**.
 
 Fetch data from JSONPlaceholder:
+<details>
+<summary>Show hint</summary>
+
 ```
 https://jsonplaceholder.typicode.com/posts?_limit=10
 ```
 
+</details>
+
 Define a `Post` interface:
+<details>
+<summary>Show hint</summary>
+
 ```ts
 interface Post {
   id: number;
@@ -28,11 +36,16 @@ interface Post {
 }
 ```
 
+</details>
+
 Render the posts in a list — show the title prominently and the body in smaller text.
 
 ### 2. Add a loading state
 
 Create `src/app/posts/loading.tsx`:
+
+<details>
+<summary>Show hint</summary>
 
 ```tsx
 export default function Loading() {
@@ -44,9 +57,14 @@ export default function Loading() {
 }
 ```
 
+</details>
+
 ### 3. Add error handling
 
 Add a try/catch in the page to handle fetch failures:
+
+<details>
+<summary>Show hint</summary>
 
 ```tsx
 try {
@@ -58,6 +76,8 @@ try {
   return <p className="text-red-500">Failed to load posts. Try again later.</p>;
 }
 ```
+
+</details>
 
 ### 4. Add a link in the Navbar
 

@@ -26,6 +26,9 @@ Create `src/components/TodoList.tsx`.
 
 For now, hardcode 3 `<TodoItem />` components inside a `<ul>`:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 <ul>
   <TodoItem title="Buy milk" completed={false} />
@@ -33,6 +36,8 @@ For now, hardcode 3 `<TodoItem />` components inside a `<ul>`:
   <TodoItem title="Go for a walk" completed={false} />
 </ul>
 ```
+
+</details>
 
 ### 3. Wire it up
 

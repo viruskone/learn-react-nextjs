@@ -29,6 +29,9 @@ Current expected breakdown:
 
 `src/app/page.tsx` should NOT have `"use client"`. It's just:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 import TodoApp from "@/components/TodoApp";
 
@@ -37,11 +40,16 @@ export default function Home() {
 }
 ```
 
+</details>
+
 The page itself is a server component — it just renders a Client Component tree.
 
 ### 3. Add a static footer
 
 Create `src/components/Footer.tsx` — a Server Component (no `"use client"`):
+
+<details>
+<summary>Show hint</summary>
 
 ```tsx
 export default function Footer() {
@@ -52,6 +60,8 @@ export default function Footer() {
   );
 }
 ```
+
+</details>
 
 Import it in `src/app/layout.tsx` and render it after `<main>`.
 

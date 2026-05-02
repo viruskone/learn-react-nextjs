@@ -22,6 +22,9 @@ Open each one and read it. You don't need to understand every line — just get 
 
 Open `src/app/page.tsx` and add a metadata export:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 import type { Metadata } from "next";
 
@@ -30,6 +33,8 @@ export const metadata: Metadata = {
   description: "A simple todo app built with Next.js and React",
 };
 ```
+
+</details>
 
 Check the browser tab — it should now show "Todo App".
 
@@ -47,9 +52,14 @@ Visit `http://localhost:3000/about` directly in the browser. You should see your
 
 If you open the browser console, you may see errors about hooks not working in Server Components. Add `"use client"` at the very top of `src/components/TodoApp.tsx`:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 "use client";
 ```
+
+</details>
 
 This makes the component (and its children that use hooks) run on the client.
 

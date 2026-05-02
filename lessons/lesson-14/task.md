@@ -24,9 +24,14 @@ Update `src/app/layout.tsx`:
 
 Wrap the `{children}` in a `<main>` tag with some Tailwind padding, e.g.:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 <main className="max-w-2xl mx-auto p-4">{children}</main>
 ```
+
+</details>
 
 This centers the content and gives it breathing room.
 

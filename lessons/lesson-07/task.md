@@ -12,6 +12,9 @@ Update `src/components/TodoApp.tsx`.
 
 Change the `useState` call to use a lazy initializer:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 const [todos, setTodos] = useState<Todo[]>(() => {
   if (typeof window === "undefined") return [];
@@ -19,6 +22,8 @@ const [todos, setTodos] = useState<Todo[]>(() => {
   return raw ? (JSON.parse(raw) as Todo[]) : [];
 });
 ```
+
+</details>
 
 This replaces your hardcoded array — but you can keep 3–4 hardcoded items as the fallback for when `localStorage` is empty.
 
@@ -28,11 +33,16 @@ Alternatively, seed `localStorage` with those items if nothing is stored yet.
 
 Add a `useEffect` that writes to `localStorage` whenever `todos` changes:
 
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 useEffect(() => {
   localStorage.setItem("todos", JSON.stringify(todos));
 }, [todos]);
 ```
+
+</details>
 
 ### 3. Verify persistence
 

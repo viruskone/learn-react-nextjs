@@ -10,6 +10,9 @@ Replace the hardcoded `<TodoItem />` components with a dynamic list rendered fro
 
 Create `src/types/todo.ts`:
 
+<details>
+<summary>Show hint</summary>
+
 ```ts
 export interface Todo {
   id: string;
@@ -17,6 +20,8 @@ export interface Todo {
   completed: boolean;
 }
 ```
+
+</details>
 
 ### 2. Update TodoList to accept an array prop
 
@@ -36,17 +41,27 @@ Update `src/components/TodoApp.tsx`:
 ### 4. Handle the empty state
 
 In `TodoList`, if the `todos` array is empty, render:
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 <p>No todos yet!</p>
 ```
+
+</details>
 instead of the `<ul>`.
 
 ### 5. Update the count in TodoApp
 
 Update the text to show the real count:
+<details>
+<summary>Show hint</summary>
+
 ```tsx
 <p>You have {todos.length} todos.</p>
 ```
+
+</details>
 
 ## Success Criteria
 
