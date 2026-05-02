@@ -1,11 +1,15 @@
 import TodoItem from "@/components/TodoItem";
+import type {Todo} from "@/types/todo";
 
-export default function TodoList() {
+export interface TodoListProps {
+    todos: Todo[];
+}
+
+export default function TodoList({todos}: TodoListProps) {
     return (
-        <ul>
-            <TodoItem title="Buy milk" completed={false}/>
-            <TodoItem title="Read a book" completed={true}/>
-            <TodoItem title="Go for a walk" completed={false}/>
-        </ul>
+        todos.length > 0 ?
+            <ul>
+                {todos.map(todo => (<TodoItem key={todo.id} title={todo.title} completed={todo.completed}/>))}
+            </ul> : <p>No todos yet!</p>
     )
 }
