@@ -16,7 +16,7 @@ Start or advance to a lesson in the React/Next.js course.
    - Otherwise, use `currentLesson + 1`.
 
 3. Update the registry:
-   - Mark the old `currentLesson` as `"completed"` (only if its status was `"in_progress"`).
+   - Mark the old `currentLesson` as `"aborted"` (only if its status was `"in_progress"`).
    - Set `currentLesson` to the target lesson number.
    - Set the target lesson's status to `"in_progress"` with `startedAt` = today's date (ISO format).
    - Add entries for any lessons not yet in the registry with `"not_started"`.
