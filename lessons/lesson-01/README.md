@@ -43,15 +43,15 @@ JSX/TSX is NOT HTML. It gets compiled down to `React.createElement()` calls. The
 A React component is just a function that returns JSX. The name must start with a capital letter.
 
 ```tsx
-function TodoApp() {
+function Greeting() {
   return (
     <div>
-      <h1>My Todos</h1>
+      <h1>Hello, world!</h1>
     </div>
   );
 }
 
-export default TodoApp;
+export default Greeting;
 ```
 
 That's it. No classes, no lifecycle methods — just a function.
@@ -61,11 +61,11 @@ That's it. No classes, no lifecycle methods — just a function.
 When React runs your app, it builds a tree of components. The root is usually `<App />` (or in Next.js, the root `layout.tsx`). Each component can contain other components, forming a tree:
 
 ```
-<TodoApp>
-  └── <TodoList>
-        ├── <TodoItem />
-        ├── <TodoItem />
-        └── <TodoItem />
+<BlogApp>
+  └── <PostList>
+        ├── <PostCard />
+        ├── <PostCard />
+        └── <PostCard />
 ```
 
 React re-renders parts of this tree when data changes — but only the parts that need to update.

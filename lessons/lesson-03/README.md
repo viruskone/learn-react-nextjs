@@ -84,11 +84,11 @@ React state must be treated as immutable — you never modify it directly, you a
 
 ```tsx
 // Wrong: mutating an array directly
-todos.push(newTodo);
-setTodos(todos);
+items.push(newItem);
+setItems(items);
 
 // Correct: create a new array
-setTodos([...todos, newTodo]);
+setItems([...items, newItem]);
 ```
 
 This is important because React uses reference equality to detect changes. If you mutate the original, React sees the same reference and skips re-rendering.

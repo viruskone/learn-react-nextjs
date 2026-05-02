@@ -7,10 +7,10 @@ Route Handlers let you create HTTP API endpoints inside your Next.js app. They l
 ```
 app/
   api/
-    todos/
-      route.ts     → GET /api/todos, POST /api/todos
+    notes/
+      route.ts     → GET /api/notes, POST /api/notes
       [id]/
-        route.ts   → GET /api/todos/123, PATCH /api/todos/123, DELETE /api/todos/123
+        route.ts   → GET /api/notes/123, PATCH /api/notes/123, DELETE /api/notes/123
 ```
 
 ## Defining Handlers
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
 ## Dynamic Route Segments
 
-For routes like `/api/todos/[id]`, the second argument contains the route params:
+For routes like `/api/notes/[id]`, the second argument contains the route params:
 
 ```ts
 export async function DELETE(
@@ -53,7 +53,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  // delete the todo with this id
+  // delete the item with this id
   return NextResponse.json({ deleted: id });
 }
 ```
@@ -67,8 +67,8 @@ Since we don't have a database yet, use a module-level variable:
 ```ts
 // This persists across requests in development (module singleton)
 // It resets on server restart
-let todos: Todo[] = [
-  { id: "1", title: "Buy milk", completed: false },
+let notes: Note[] = [
+  { id: "1", title: "Meeting agenda", content: "Discuss Q4 goals" },
 ];
 ```
 

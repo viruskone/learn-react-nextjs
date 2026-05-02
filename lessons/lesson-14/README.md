@@ -10,8 +10,8 @@ app/
   page.tsx
   about/
     page.tsx
-  todos/
-    layout.tsx       ← wraps all /todos/* pages only
+  blog/
+    layout.tsx       ← wraps all /blog/* pages only
     page.tsx
 ```
 

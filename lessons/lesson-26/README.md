@@ -10,10 +10,10 @@ Mark a function with `"use server"` to make it a Server Action:
 // Can be defined in a separate file
 "use server";
 
-export async function addTodoAction(formData: FormData) {
-  const title = formData.get("title") as string;
+export async function createCommentAction(formData: FormData) {
+  const text = formData.get("text") as string;
   // This runs on the server — can access databases, etc.
-  console.log("Adding:", title);
+  console.log("Creating comment:", text);
 }
 ```
 
@@ -22,13 +22,13 @@ export async function addTodoAction(formData: FormData) {
 ### 1. In a `<form>` action attribute (no JS required)
 
 ```tsx
-import { addTodoAction } from "@/actions/todos";
+import { createCommentAction } from "@/actions/comments";
 
-export default function AddTodoForm() {
+export default function CommentForm() {
   return (
-    <form action={addTodoAction}>
-      <input name="title" placeholder="Add a todo..." />
-      <button type="submit">Add</button>
+    <form action={createCommentAction}>
+      <input name="text" placeholder="Write a comment..." />
+      <button type="submit">Post</button>
     </form>
   );
 }
@@ -41,11 +41,11 @@ The form works even with JavaScript disabled. The action runs on the server.
 ```tsx
 "use client";
 
-import { addTodoAction } from "@/actions/todos";
+import { createCommentAction } from "@/actions/comments";
 
 function MyComponent() {
   async function handleSubmit() {
-    await addTodoAction(new FormData(...));
+    await createCommentAction(new FormData(...));
   }
 }
 ```
@@ -58,11 +58,11 @@ Like `"use client"`, it goes at the top of a file or at the top of an individual
 // File-level: all exports in this file are server actions
 "use server";
 
-export async function addTodo(...) { ... }
-export async function deleteTodo(...) { ... }
+export async function createComment(...) { ... }
+export async function deleteComment(...) { ... }
 
 // Or function-level (inside a Server Component):
-async function handleAdd(formData: FormData) {
+async function handleSubmit(formData: FormData) {
   "use server";
   // ...
 }
@@ -75,16 +75,16 @@ React 19 adds hooks for Server Action state:
 ```tsx
 "use client";
 import { useActionState } from "react";
-import { addTodoAction } from "@/actions/todos";
+import { createCommentAction } from "@/actions/comments";
 
-export function AddTodoForm() {
-  const [state, action, isPending] = useActionState(addTodoAction, null);
+export function CommentForm() {
+  const [state, action, isPending] = useActionState(createCommentAction, null);
 
   return (
     <form action={action}>
-      <input name="title" disabled={isPending} />
+      <input name="text" disabled={isPending} />
       <button disabled={isPending}>
-        {isPending ? "Adding..." : "Add"}
+        {isPending ? "Posting..." : "Post"}
       </button>
     </form>
   );
@@ -99,9 +99,9 @@ After a Server Action mutates data, you need to tell Next.js to refresh the data
 "use server";
 import { revalidatePath } from "next/cache";
 
-export async function addTodoAction(formData: FormData) {
-  const title = formData.get("title") as string;
+export async function createCommentAction(formData: FormData) {
+  const text = formData.get("text") as string;
   // ... add to database ...
-  revalidatePath("/"); // re-fetch data for the home page
+  revalidatePath("/posts"); // re-fetch data for the posts page
 }
 ```

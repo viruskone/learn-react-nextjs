@@ -22,10 +22,10 @@ app/
   page.tsx          → /
   about/
     page.tsx        → /about
-  todos/
-    page.tsx        → /todos
-    [id]/
-      page.tsx      → /todos/123 (dynamic segment)
+  blog/
+    page.tsx        → /blog
+    [slug]/
+      page.tsx      → /blog/my-post (dynamic segment)
 ```
 
 No route configuration files. No imports. Just files.
@@ -68,8 +68,8 @@ Next.js has a built-in metadata API for setting `<title>` and `<meta>` tags:
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "My Todo App",
-  description: "A simple todo app built with Next.js",
+  title: "My Blog",
+  description: "A blog built with Next.js",
 };
 ```
 
@@ -79,4 +79,4 @@ export const metadata: Metadata = {
 
 Components that need interactivity must opt into being **Client Components** with `"use client"` at the top of the file. You'll explore this in depth in Lesson 16.
 
-For now: your interactive Todo components will need `"use client"`. Your pages (which just compose components) can stay as server components.
+For now: your interactive components will need `"use client"`. Your pages (which just compose components) can stay as server components.

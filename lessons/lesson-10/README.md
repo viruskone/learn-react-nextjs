@@ -6,10 +6,10 @@
 
 ```tsx
 // Multiple useState calls that are conceptually linked
-const [todos, setTodos] = useState<Todo[]>([])
-const [loading, setLoading] = useState(false)
-const [error, setError] = useState<string | null>(null)
-// updating all three in a single operation becomes error-prone
+const [count, setCount] = useState(0)
+const [step, setStep] = useState(1)
+const [history, setHistory] = useState<number[]>([])
+// coordinating all three in a single operation becomes error-prone
 ```
 
 `useReducer` solves this by centralising all state transitions in one place.
@@ -28,18 +28,18 @@ This pattern comes from Redux (and before that, from functional programming). Re
 
 ```tsx
 type Action =
-  | { type: 'ADD_TODO'; payload: string }
-  | { type: 'TOGGLE_TODO'; payload: string }
-  | { type: 'DELETE_TODO'; payload: string }
+  | { type: 'INCREMENT' }
+  | { type: 'DECREMENT' }
+  | { type: 'RESET' }
 
-function todoReducer(state: Todo[], action: Action): Todo[] {
+function counterReducer(state: number, action: Action): number {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [...state, { id: crypto.randomUUID(), text: action.payload, completed: false }]
-    case 'TOGGLE_TODO':
-      return state.map(t => t.id === action.payload ? { ...t, completed: !t.completed } : t)
-    case 'DELETE_TODO':
-      return state.filter(t => t.id !== action.payload)
+    case 'INCREMENT':
+      return state + 1
+    case 'DECREMENT':
+      return state - 1
+    case 'RESET':
+      return 0
     default:
       return state
   }
@@ -53,19 +53,16 @@ function todoReducer(state: Todo[], action: Action): Todo[] {
 ```tsx
 import { useReducer } from 'react'
 
-function TodoApp() {
-  const [todos, dispatch] = useReducer(todoReducer, [])
-
-  function addTodo(text: string) {
-    dispatch({ type: 'ADD_TODO', payload: text })
-  }
-
-  function toggleTodo(id: string) {
-    dispatch({ type: 'TOGGLE_TODO', payload: id })
-  }
+function CounterApp() {
+  const [count, dispatch] = useReducer(counterReducer, 0)
 
   return (
-    // ... render todos, call addTodo/toggleTodo
+    <div>
+      <p>{count}</p>
+      <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
+      <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+      <button onClick={() => dispatch({ type: 'RESET' })}>Reset</button>
+    </div>
   )
 }
 ```
@@ -96,10 +93,10 @@ Defining action types as a TypeScript union gives you:
 
 ```tsx
 type Action =
-  | { type: 'ADD_TODO'; payload: string }
-  | { type: 'TOGGLE_TODO'; payload: string }
+  | { type: 'INCREMENT' }
+  | { type: 'DECREMENT' }
 
-// TypeScript will error if you handle the wrong payload type
+// TypeScript will error if you dispatch an unknown action type
 ```
 
 ---
@@ -109,10 +106,10 @@ type Action =
 `useReducer(reducer, initialState)` — the second argument is the initial value:
 
 ```tsx
-const [todos, dispatch] = useReducer(todoReducer, [])
+const [count, dispatch] = useReducer(counterReducer, 0)
 
 // With a lazy initializer (for expensive setup):
-const [todos, dispatch] = useReducer(todoReducer, null, () => loadFromStorage())
+const [count, dispatch] = useReducer(counterReducer, 0, () => loadFromStorage())
 ```
 
 The lazy initializer (third argument) runs only once on mount — same idea as lazy `useState`.

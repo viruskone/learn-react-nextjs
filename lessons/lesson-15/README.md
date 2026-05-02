@@ -4,12 +4,12 @@
 
 So far all your routes have been **static** — the URL is fixed:
 - `/` → `app/page.tsx`
-- `/todos` → `app/todos/page.tsx`
+- `/posts` → `app/posts/page.tsx`
 
 **Dynamic routes** match a variable segment in the URL. A single file handles many URLs:
-- `/todos/1`, `/todos/2`, `/todos/abc` → `app/todos/[id]/page.tsx`
+- `/posts/1`, `/posts/2`, `/posts/react-hooks` → `app/posts/[slug]/page.tsx`
 
-The `[id]` in the folder name is the segment parameter.
+The `[slug]` in the folder name is the segment parameter.
 
 ---
 
@@ -17,10 +17,10 @@ The `[id]` in the folder name is the segment parameter.
 
 ```
 app/
-  todos/
-    page.tsx          ← /todos (list of all todos)
-    [id]/
-      page.tsx        ← /todos/:id (single todo detail)
+  posts/
+    page.tsx          ← /posts (list of all posts)
+    [slug]/
+      page.tsx        ← /posts/:slug (single post detail)
 ```
 
 ---
@@ -30,18 +30,18 @@ app/
 The `params` prop contains the dynamic segment values. In Next.js 15, `params` is a **Promise** — you must await it:
 
 ```tsx
-// app/todos/[id]/page.tsx
+// app/posts/[slug]/page.tsx
 type Props = {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string }>
 }
 
-export default async function TodoDetailPage({ params }: Props) {
-  const { id } = await params
+export default async function PostDetailPage({ params }: Props) {
+  const { slug } = await params
 
-  // fetch the specific todo using id
-  const todo = await getTodoById(id)
+  // fetch the specific post using slug
+  const post = await getPostBySlug(slug)
 
-  return <div>{todo.text}</div>
+  return <div>{post.title}</div>
 }
 ```
 
@@ -49,26 +49,26 @@ export default async function TodoDetailPage({ params }: Props) {
 
 ## notFound()
 
-If the requested ID doesn't exist, call `notFound()` to render the nearest `not-found.tsx`:
+If the requested slug doesn't exist, call `notFound()` to render the nearest `not-found.tsx`:
 
 ```tsx
 import { notFound } from 'next/navigation'
 
-export default async function TodoDetailPage({ params }: Props) {
-  const { id } = await params
-  const todo = await getTodoById(id)
+export default async function PostDetailPage({ params }: Props) {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
 
-  if (!todo) notFound()
+  if (!post) notFound()
 
-  return <div>{todo.text}</div>
+  return <div>{post.title}</div>
 }
 ```
 
-Create `app/todos/[id]/not-found.tsx` (or `app/not-found.tsx` as a fallback):
+Create `app/posts/[slug]/not-found.tsx` (or `app/not-found.tsx` as a fallback):
 
 ```tsx
 export default function NotFound() {
-  return <p>Todo not found.</p>
+  return <p>Post not found.</p>
 }
 ```
 
@@ -81,9 +81,9 @@ Use `<Link>` with a dynamic `href`:
 ```tsx
 import Link from 'next/link'
 
-{todos.map(todo => (
-  <Link key={todo.id} href={`/todos/${todo.id}`}>
-    {todo.text}
+{posts.map(post => (
+  <Link key={post.id} href={`/posts/${post.slug}`}>
+    {post.title}
   </Link>
 ))}
 ```
@@ -92,17 +92,17 @@ import Link from 'next/link'
 
 ## generateStaticParams (Optional Optimisation)
 
-For a statically built site, you can tell Next.js all the possible IDs at build time so it pre-renders each page:
+For a statically built site, you can tell Next.js all the possible slugs at build time so it pre-renders each page:
 
 ```tsx
-// app/todos/[id]/page.tsx
+// app/posts/[slug]/page.tsx
 export async function generateStaticParams() {
-  const todos = await getAllTodos()
-  return todos.map(todo => ({ id: todo.id }))
+  const posts = await getAllPosts()
+  return posts.map(post => ({ slug: post.slug }))
 }
 ```
 
-Without this, the page is rendered on-demand (dynamically) the first time it's requested. For a Todo App backed by a database, dynamic rendering is fine.
+Without this, the page is rendered on-demand (dynamically) the first time it's requested. For a blog backed by a database, dynamic rendering is fine.
 
 ---
 
@@ -119,7 +119,7 @@ app/docs/[...slug]/page.tsx
 
 `params.slug` will be an array: `['react', 'hooks']`.
 
-You'll use this in larger apps for documentation sites, file explorers, etc. Not needed for the Todo App but good to know.
+You'll use this in larger apps for documentation sites, file explorers, etc. Not needed for most apps but good to know.
 
 ---
 

@@ -16,15 +16,15 @@ Next.js has a first-class Metadata API that generates all of this from TypeScrip
 Export a `metadata` object from any page or layout:
 
 ```tsx
-// app/todos/page.tsx
+// app/posts/page.tsx
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'My Todos',
-  description: 'Manage your todo list',
+  title: 'Latest Posts',
+  description: 'Browse all articles',
 }
 
-export default function TodosPage() {
+export default function PostsPage() {
   return <main>...</main>
 }
 ```
@@ -41,14 +41,14 @@ Set a title template in the root layout so every page automatically gets the app
 // app/layout.tsx
 export const metadata: Metadata = {
   title: {
-    template: '%s | Todo App',
-    default: 'Todo App',
+    template: '%s | My Blog',
+    default: 'My Blog',
   },
-  description: 'A simple todo app built with Next.js',
+  description: 'A blog built with Next.js',
 }
 ```
 
-Now when a page exports `title: 'My Todos'`, the browser tab shows **"My Todos | Todo App"**. The `default` is used when a page doesn't set a title.
+Now when a page exports `title: 'Latest Posts'`, the browser tab shows **"Latest Posts | My Blog"**. The `default` is used when a page doesn't set a title.
 
 ---
 
@@ -57,26 +57,26 @@ Now when a page exports `title: 'My Todos'`, the browser tab shows **"My Todos |
 For pages where the metadata depends on data (like a detail page), use `generateMetadata`:
 
 ```tsx
-// app/todos/[id]/page.tsx
+// app/posts/[slug]/page.tsx
 import type { Metadata } from 'next'
 
 type Props = {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params
-  const todo = await getTodoById(id)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
 
-  if (!todo) return { title: 'Not Found' }
+  if (!post) return { title: 'Not Found' }
 
   return {
-    title: todo.text,
-    description: `Todo: ${todo.text} — ${todo.completed ? 'completed' : 'pending'}`,
+    title: post.title,
+    description: `Published: ${post.published ? 'Yes' : 'Draft'}`,
   }
 }
 
-export default async function TodoDetailPage({ params }: Props) {
+export default async function PostDetailPage({ params }: Props) {
   // ...
 }
 ```
@@ -89,19 +89,19 @@ Open Graph tags control how your page looks when shared on social media:
 
 ```tsx
 export const metadata: Metadata = {
-  title: 'My Todos',
-  description: 'Manage your todo list',
+  title: 'Latest Posts',
+  description: 'Browse all articles',
   openGraph: {
-    title: 'My Todos',
-    description: 'Manage your todo list',
-    url: 'https://my-todo-app.vercel.app/todos',
-    siteName: 'Todo App',
+    title: 'Latest Posts',
+    description: 'Browse all articles',
+    url: 'https://my-blog.vercel.app/posts',
+    siteName: 'My Blog',
     images: [
       {
-        url: 'https://my-todo-app.vercel.app/og-image.png',
+        url: 'https://my-blog.vercel.app/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Todo App preview',
+        alt: 'My Blog preview',
       },
     ],
     type: 'website',
@@ -117,9 +117,9 @@ export const metadata: Metadata = {
 export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
-    title: 'My Todos',
-    description: 'Manage your todo list',
-    images: ['https://my-todo-app.vercel.app/og-image.png'],
+    title: 'Latest Posts',
+    description: 'Browse all articles',
+    images: ['https://my-blog.vercel.app/og-image.png'],
   },
 }
 ```
@@ -150,7 +150,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://my-todo-app.vercel.app/todos',
+    canonical: 'https://my-blog.vercel.app/posts',
   },
 }
 ```

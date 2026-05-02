@@ -79,24 +79,24 @@ Storing the interval ID in state would cause a pointless re-render on start/stop
 
 ## Auto-Focus Pattern
 
-A common UX improvement: after a form submission, auto-focus the input so the user can type the next item immediately.
+A common UX improvement: after a form submission, auto-focus the input so the user can keep typing immediately.
 
 ```tsx
-function AddTodo() {
+function SearchForm() {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [text, setText] = useState('')
+  const [query, setQuery] = useState('')
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    // ... add the todo
-    setText('')
+    // ... process the search
+    setQuery('')
     inputRef.current?.focus()  // ← put cursor back in the box
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input ref={inputRef} value={text} onChange={e => setText(e.target.value)} />
-      <button type="submit">Add</button>
+      <input ref={inputRef} value={query} onChange={e => setQuery(e.target.value)} />
+      <button type="submit">Search</button>
     </form>
   )
 }

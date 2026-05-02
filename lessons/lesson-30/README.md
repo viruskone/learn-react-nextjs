@@ -163,11 +163,11 @@ Use Auth.js middleware to redirect unauthenticated users:
 export { auth as middleware } from '@/auth'
 
 export const config = {
-  matcher: ['/todos/:path*'],
+  matcher: ['/dashboard/:path*'],
 }
 ```
 
-This is the simplest form — it protects all `/todos/*` routes. Unauthenticated users are redirected to the sign-in page automatically.
+This is the simplest form — it protects all `/dashboard/*` routes. Unauthenticated users are redirected to the sign-in page automatically.
 
 ---
 

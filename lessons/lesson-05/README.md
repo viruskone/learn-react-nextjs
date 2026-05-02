@@ -2,7 +2,7 @@
 
 ## The Problem
 
-In Lesson 3, each `TodoItem` managed its own `isCompleted` state. That worked for toggling the visual state, but it means the parent has no idea whether a todo is actually completed. If you want to show "You have 2 completed todos", you can't — the data is locked inside each `TodoItem`.
+Imagine each item in a list manages its own `isSelected` state locally. That works for toggling a visual highlight, but the parent has no idea what's selected. If you want to show "3 items selected", you can't — the data is locked inside each child.
 
 This is a common React problem: **sibling or parent components need to share state**.
 
@@ -12,14 +12,14 @@ Move the state to the **closest common ancestor** of the components that need it
 
 ```
 Before:
-  <TodoApp>
-    <TodoList>
-      <TodoItem> [isCompleted state lives here] </TodoItem>
+  <ShopApp>
+    <ProductList>
+      <CartItem> [isSelected state lives here] </CartItem>
 
 After:
-  <TodoApp> [todos state lives here]
-    <TodoList todos={todos} onToggle={handleToggle}>
-      <TodoItem completed={todo.completed} onToggle={() => handleToggle(todo.id)}>
+  <ShopApp> [items state lives here]
+    <ProductList items={items} onSelect={handleSelect}>
+      <CartItem selected={item.selected} onSelect={() => handleSelect(item.id)}>
 ```
 
 ## Passing Callbacks as Props
@@ -27,22 +27,22 @@ After:
 A child component can't modify the parent's state directly. Instead, the parent passes down a function, and the child calls it when something happens:
 
 ```tsx
-interface TodoItemProps {
+interface CartItemProps {
   id: string;
-  title: string;
-  completed: boolean;
-  onToggle: (id: string) => void;  // callback
+  name: string;
+  selected: boolean;
+  onSelect: (id: string) => void;  // callback
 }
 
-function TodoItem({ id, title, completed, onToggle }: TodoItemProps) {
+function CartItem({ id, name, selected, onSelect }: CartItemProps) {
   return (
     <li>
       <input
         type="checkbox"
-        checked={completed}
-        onChange={() => onToggle(id)}
+        checked={selected}
+        onChange={() => onSelect(id)}
       />
-      <span className={completed ? "line-through" : ""}>{title}</span>
+      <span className={selected ? "font-bold" : ""}>{name}</span>
     </li>
   );
 }
@@ -53,17 +53,17 @@ function TodoItem({ id, title, completed, onToggle }: TodoItemProps) {
 When toggling an item in an array, you can't mutate the array. Create a new one:
 
 ```tsx
-function handleToggle(id: string) {
-  setTodos(
-    todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+function handleSelect(id: string) {
+  setItems(
+    items.map((item) =>
+      item.id === id ? { ...item, selected: !item.selected } : item
     )
   );
 }
 ```
 
-The spread `{ ...todo }` copies all properties, then `completed: !todo.completed` overrides just the one you need.
+The spread `{ ...item }` copies all properties, then `selected: !item.selected` overrides just the one you need.
 
 ## Single Source of Truth
 
-The state now lives in one place (`TodoApp`). Every component that needs the data reads it from props. This makes the data flow predictable and easy to debug — you always know where to look.
+The state now lives in one place (`ShopApp`). Every component that needs the data reads it from props. This makes the data flow predictable and easy to debug — you always know where to look.

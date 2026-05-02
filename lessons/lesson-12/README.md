@@ -7,7 +7,7 @@ React re-renders a component whenever:
 2. Its **props** change
 3. Its **parent** re-renders (even if the props haven't changed)
 
-Point 3 is the source of most "unnecessary" renders. When `TodoApp` re-renders (say, a new todo was added), every child component re-renders too — including ones that received the exact same props as before.
+Point 3 is the source of most "unnecessary" renders. When a parent component re-renders (say, new data arrived), every child component re-renders too — including ones that received the exact same props as before.
 
 For small apps this is completely fine. React is fast. **Don't optimise prematurely.** But once you start seeing jank or have long lists, memoisation is the fix.
 
@@ -18,14 +18,14 @@ For small apps this is completely fine. React is fast. **Don't optimise prematur
 `React.memo` wraps a component. If the parent re-renders but the wrapped component's props haven't changed (by shallow comparison), React skips re-rendering it.
 
 ```tsx
-// Without memo: re-renders every time TodoApp re-renders
-function TodoItem({ todo, onToggle }: Props) {
-  return <li onClick={() => onToggle(todo.id)}>{todo.text}</li>
+// Without memo: re-renders every time ShopApp re-renders
+function ProductCard({ product, onSelect }: Props) {
+  return <li onClick={() => onSelect(product.id)}>{product.name}</li>
 }
 
-// With memo: only re-renders if todo or onToggle changes
-const TodoItem = React.memo(function TodoItem({ todo, onToggle }: Props) {
-  return <li onClick={() => onToggle(todo.id)}>{todo.text}</li>
+// With memo: only re-renders if product or onSelect changes
+const ProductCard = React.memo(function ProductCard({ product, onSelect }: Props) {
+  return <li onClick={() => onSelect(product.id)}>{product.name}</li>
 })
 ```
 
@@ -35,17 +35,17 @@ const TodoItem = React.memo(function TodoItem({ todo, onToggle }: Props) {
 
 ## The Callback Problem
 
-If `TodoApp` passes `onToggle={toggleTodo}` to `TodoItem`, and `toggleTodo` is defined inside the component:
+If `ShopApp` passes `onSelect={selectProduct}` to `ProductCard`, and `selectProduct` is defined inside the component:
 
 ```tsx
-function TodoApp() {
+function ShopApp() {
   // This function is recreated on every render → new reference → memo is useless
-  function toggleTodo(id: string) { ... }
-  return <TodoItem onToggle={toggleTodo} />
+  function selectProduct(id: string) { ... }
+  return <ProductCard onSelect={selectProduct} />
 }
 ```
 
-Every render creates a new `toggleTodo` function reference. Even with `React.memo`, `TodoItem` sees a changed prop and re-renders.
+Every render creates a new `selectProduct` function reference. Even with `React.memo`, `ProductCard` sees a changed prop and re-renders.
 
 ---
 
@@ -56,16 +56,16 @@ Every render creates a new `toggleTodo` function reference. Even with `React.mem
 ```tsx
 import { useCallback } from 'react'
 
-function TodoApp() {
-  const toggleTodo = useCallback((id: string) => {
-    dispatch({ type: 'TOGGLE_TODO', payload: id })
+function ShopApp() {
+  const selectProduct = useCallback((id: string) => {
+    dispatch({ type: 'SELECT_PRODUCT', payload: id })
   }, [dispatch]) // recreate only if dispatch changes (it never does with useReducer)
 
-  return <TodoItem onToggle={toggleTodo} />
+  return <ProductCard onSelect={selectProduct} />
 }
 ```
 
-Now `toggleTodo` has a stable reference → `React.memo` on `TodoItem` works correctly.
+Now `selectProduct` has a stable reference → `React.memo` on `ProductCard` works correctly.
 
 ---
 
@@ -76,17 +76,17 @@ Now `toggleTodo` has a stable reference → `React.memo` on `TodoItem` works cor
 ```tsx
 import { useMemo } from 'react'
 
-function TodoApp() {
-  const completedCount = useMemo(
-    () => todos.filter(t => t.completed).length,
-    [todos]
+function ShopApp() {
+  const inStockCount = useMemo(
+    () => products.filter(p => p.inStock).length,
+    [products]
   )
 
-  return <p>{completedCount} completed</p>
+  return <p>{inStockCount} in stock</p>
 }
 ```
 
-Without `useMemo`, `todos.filter(...)` runs on every render. For 10 todos it's irrelevant. For 10,000 todos it might matter. For a derived value used in multiple places, it also avoids redundant computation.
+Without `useMemo`, `products.filter(...)` runs on every render. For 10 items it's irrelevant. For 10,000 it might matter. For a derived value used in multiple places, it also avoids redundant computation.
 
 ---
 

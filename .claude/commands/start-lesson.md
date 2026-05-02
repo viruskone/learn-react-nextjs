@@ -37,7 +37,11 @@ Start or advance to a lesson in the React/Next.js course.
 [Paste the full README.md content here]
 
 ### Your Task
-[Paste the full task.md content here]
+[Paste the task.md content here without details]
+
+### See in browser
+Theory: [Build link by template: https://github.com/viruskone/learn-react-nextjs/blob/main/lessons/lesson-NN/README.md where NN is zero-padden lesson number]
+Theory: [Build link by template: https://github.com/viruskone/learn-react-nextjs/blob/main/lessons/lesson-NN/task.md where NN is zero-padden lesson number]
 
 ---
 Good luck! When you're done, run `/review-lesson` to get feedback.

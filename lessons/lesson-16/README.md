@@ -80,6 +80,6 @@ Ask: "Does this component need to react to user interaction or browser state?"
 
 Examples:
 - `<Navbar>` with `usePathname` → Client Component
-- `<TodoList>` that renders interactive checkboxes → Client Component
+- `<SearchBar>` that manages text input and filters results → Client Component
 - `<Page>` that just fetches data and lays out components → Server Component
 - `<Footer>` with static links → Server Component

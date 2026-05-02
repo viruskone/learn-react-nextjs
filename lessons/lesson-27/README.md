@@ -2,7 +2,7 @@
 
 ## What is Optimistic UI?
 
-When the user clicks "Add Todo", the app currently:
+When the user clicks "Post Comment", the app currently:
 1. Sends the request to the server
 2. Waits for the response (100–500ms)
 3. Updates the UI
@@ -25,48 +25,48 @@ React 19 ships `useOptimistic` specifically for this pattern. It's designed to p
 ```tsx
 import { useOptimistic } from 'react'
 
-const [optimisticTodos, addOptimistic] = useOptimistic(
-  todos,        // the real state (from server)
-  (state, newTodo: Todo) => [...state, newTodo]  // how to apply the optimistic update
+const [optimisticComments, addOptimistic] = useOptimistic(
+  comments,        // the real state (from server)
+  (state, newComment: Comment) => [...state, newComment]  // how to apply the optimistic update
 )
 ```
 
-- `optimisticTodos` — the displayed list: real todos + any pending optimistic additions
-- `addOptimistic(newTodo)` — triggers the optimistic update immediately
+- `optimisticComments` — the displayed list: real comments + any pending optimistic additions
+- `addOptimistic(newComment)` — triggers the optimistic update immediately
 - When the server action completes, React merges the real server state back in
 
 ---
 
-## Full Example: Optimistic Add Todo
+## Full Example: Optimistic Add Comment
 
 ```tsx
 'use client'
-import { useOptimistic, useTransition } from 'react'
-import { addTodoAction } from './actions'
+import { useOptimistic, useState } from 'react'
+import { addCommentAction } from './actions'
 
-type Todo = { id: string; text: string; completed: boolean }
+type Comment = { id: string; text: string; author: string }
 
-export function TodoList({ initialTodos }: { initialTodos: Todo[] }) {
-  const [todos, setTodos] = useState(initialTodos)
-  const [optimisticTodos, addOptimistic] = useOptimistic(
-    todos,
+export function CommentList({ initialComments }: { initialComments: Comment[] }) {
+  const [comments, setComments] = useState(initialComments)
+  const [optimisticComments, addOptimistic] = useOptimistic(
+    comments,
     (state, newText: string) => [
       ...state,
-      { id: 'pending-' + Date.now(), text: newText, completed: false },
+      { id: 'pending-' + Date.now(), text: newText, author: 'You' },
     ]
   )
 
   async function handleAdd(text: string) {
-    addOptimistic(text)           // show immediately
-    const saved = await addTodoAction(text)  // send to server
-    setTodos(prev => [...prev, saved])       // replace with real data
+    addOptimistic(text)              // show immediately
+    const saved = await addCommentAction(text)  // send to server
+    setComments(prev => [...prev, saved])       // replace with real data
   }
 
   return (
     <ul>
-      {optimisticTodos.map(todo => (
-        <li key={todo.id} style={{ opacity: todo.id.startsWith('pending') ? 0.5 : 1 }}>
-          {todo.text}
+      {optimisticComments.map(comment => (
+        <li key={comment.id} style={{ opacity: comment.id.startsWith('pending') ? 0.5 : 1 }}>
+          {comment.text}
         </li>
       ))}
     </ul>
@@ -88,7 +88,7 @@ const [isPending, startTransition] = useTransition()
 function handleAdd(text: string) {
   startTransition(async () => {
     addOptimistic(text)
-    await addTodoAction(text)
+    await addCommentAction(text)
   })
 }
 ```
@@ -107,8 +107,8 @@ If you want to show an error message instead of silently reverting:
 async function handleAdd(text: string) {
   addOptimistic(text)
   try {
-    const saved = await addTodoAction(text)
-    setTodos(prev => [...prev, saved])
+    const saved = await addCommentAction(text)
+    setComments(prev => [...prev, saved])
   } catch {
     // optimistic item will disappear on next render
     setError('Failed to save. Please try again.')

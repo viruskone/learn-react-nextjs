@@ -50,15 +50,15 @@ Hybrid: static, but re-generated periodically or on-demand.
 // Revalidate every 60 seconds
 export const revalidate = 60
 
-export default async function TodosPage() {
-  const todos = await fetchTodos()
-  return <TodoList todos={todos} />
+export default async function PostsPage() {
+  const posts = await fetchPosts()
+  return <PostList posts={posts} />
 }
 ```
 
 Or per-fetch:
 ```tsx
-const data = await fetch('/api/todos', { next: { revalidate: 60 } })
+const data = await fetch('/api/posts', { next: { revalidate: 60 } })
 ```
 
 ---
@@ -71,13 +71,13 @@ In **Next.js 15**, `fetch()` is **NOT cached by default**. You now opt in to cac
 
 ```tsx
 // Next.js 15 — explicit cache opt-in
-const data = await fetch('/api/todos', { cache: 'force-cache' })
+const data = await fetch('/api/posts', { cache: 'force-cache' })
 
 // No cache (default in Next.js 15)
-const data = await fetch('/api/todos')
+const data = await fetch('/api/posts')
 
 // Revalidate periodically
-const data = await fetch('/api/todos', { next: { revalidate: 60 } })
+const data = await fetch('/api/posts', { next: { revalidate: 60 } })
 ```
 
 This is a breaking change from older tutorials — if you see code using `fetch` without cache options and it seems too aggressive in refetching, this is why.
@@ -86,16 +86,16 @@ This is a breaking change from older tutorials — if you see code using `fetch`
 
 ## revalidatePath and revalidateTag
 
-When you mutate data (add, update, delete a todo), you need to invalidate the cached version of the page so the next request fetches fresh data.
+When you mutate data (add, update, delete a record), you need to invalidate the cached version of the page so the next request fetches fresh data.
 
 ```tsx
 import { revalidatePath } from 'next/cache'
 
 // In a Server Action or Route Handler:
 export async function POST(request: Request) {
-  const { text } = await request.json()
-  await createTodo(text)
-  revalidatePath('/todos')  // ← invalidate the /todos page cache
+  const { title } = await request.json()
+  await createPost(title)
+  revalidatePath('/posts')  // ← invalidate the /posts page cache
   return Response.json({ success: true })
 }
 ```
@@ -104,10 +104,10 @@ export async function POST(request: Request) {
 
 ```tsx
 // Tagging a fetch:
-const data = await fetch('/api/todos', { next: { tags: ['todos'] } })
+const data = await fetch('/api/posts', { next: { tags: ['posts'] } })
 
 // Invalidating by tag:
-revalidateTag('todos')  // revalidates all fetches tagged 'todos'
+revalidateTag('posts')  // revalidates all fetches tagged 'posts'
 ```
 
 ---

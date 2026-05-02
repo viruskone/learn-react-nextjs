@@ -14,7 +14,7 @@ Check the build output — Next.js tells you which pages are static (○) vs dyn
 Route (app)               Size     First Load JS
 ┌ ○ /                     1.5 kB   88 kB
 ├ ○ /about                1.2 kB   87 kB
-└ ƒ /api/todos            0 B      0 B
+└ ƒ /api/posts            0 B      0 B
 ```
 
 ## Static vs Dynamic Routes

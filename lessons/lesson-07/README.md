@@ -40,11 +40,11 @@ If you read a variable inside the effect, it should be in the dependency array. 
 
 ```ts
 // Write
-localStorage.setItem("todos", JSON.stringify(todos));
+localStorage.setItem("notes", JSON.stringify(notes));
 
 // Read
-const raw = localStorage.getItem("todos");
-const todos = raw ? JSON.parse(raw) : [];
+const raw = localStorage.getItem("notes");
+const notes = raw ? JSON.parse(raw) : [];
 ```
 
 Since it's a side effect, both read and write go inside `useEffect`.
@@ -54,10 +54,10 @@ Since it's a side effect, both read and write go inside `useEffect`.
 To load from `localStorage` when the app starts, use a **lazy initializer** in `useState`:
 
 ```tsx
-const [todos, setTodos] = useState<Todo[]>(() => {
+const [notes, setNotes] = useState<string[]>(() => {
   if (typeof window === "undefined") return [];  // SSR guard
-  const raw = localStorage.getItem("todos");
-  return raw ? (JSON.parse(raw) as Todo[]) : [];
+  const raw = localStorage.getItem("notes");
+  return raw ? (JSON.parse(raw) as string[]) : [];
 });
 ```
 
@@ -65,12 +65,12 @@ The function passed to `useState` runs only once (on mount), which is exactly wh
 
 ## Persisting on Change
 
-Use `useEffect` with `todos` as a dependency to save whenever todos change:
+Use `useEffect` with the state variable as a dependency to save whenever it changes:
 
 ```tsx
 useEffect(() => {
-  localStorage.setItem("todos", JSON.stringify(todos));
-}, [todos]);
+  localStorage.setItem("notes", JSON.stringify(notes));
+}, [notes]);
 ```
 
 ## Cleanup

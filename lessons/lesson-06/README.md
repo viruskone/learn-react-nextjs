@@ -35,52 +35,51 @@ return <form onSubmit={handleSubmit}>...</form>;
 
 ## Generating Unique IDs
 
-When you add a new todo, it needs a unique `id`. A simple option is `crypto.randomUUID()` — it's built into modern browsers and Node.js:
+When you add a new item, it needs a unique `id`. A simple option is `crypto.randomUUID()` — it's built into modern browsers and Node.js:
 
 ```tsx
-const newTodo: Todo = {
+const newItem = {
   id: crypto.randomUUID(),
-  title: text.trim(),
-  completed: false,
+  text: input.trim(),
 };
 ```
 
 ## Clearing the Input After Submit
 
-After adding a todo, reset the input by setting state back to `""`:
+After submission, reset the input by setting state back to `""`:
 
 ```tsx
 function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
-  if (!text.trim()) return; // don't add empty todos
-  setTodos([...todos, { id: crypto.randomUUID(), title: text.trim(), completed: false }]);
+  if (!text.trim()) return; // ignore empty input
+  setItems([...items, { id: crypto.randomUUID(), text: text.trim() }]);
   setText(""); // clear the input
 }
 ```
 
-## Lifting the Add Logic Up
+## Lifting the Submit Logic Up
 
-The form component should not manage the todos array — that lives in `TodoApp`. Instead, the form receives an `onAdd` callback:
+The form component should not manage the parent's data array. Instead, it receives a callback:
 
 ```tsx
-interface AddTodoFormProps {
-  onAdd: (title: string) => void;
+interface CommentFormProps {
+  onSubmit: (text: string) => void;
 }
 
-function AddTodoForm({ onAdd }: AddTodoFormProps) {
+function CommentForm({ onSubmit }: CommentFormProps) {
   const [text, setText] = useState("");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!text.trim()) return;
-    onAdd(text.trim());
+    onSubmit(text.trim());
     setText("");
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a todo..." />
-      <button type="submit">Add</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Write a comment..." />
+      <button type="submit">Post</button>
     </form>
   );
 }

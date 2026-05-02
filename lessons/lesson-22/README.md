@@ -2,46 +2,46 @@
 
 ## Adding Delete
 
-Adding delete is straightforward: add a PATCH for toggling (already done) and a DELETE for removing.
+Adding delete is straightforward: add a PATCH for updating (already done) and a DELETE for removing.
 
-The DELETE endpoint returns 204 No Content — there's no body to parse. On the frontend, remove the todo from state directly after a successful response:
+The DELETE endpoint returns 204 No Content — there's no body to parse. On the frontend, remove the item from state directly after a successful response:
 
 ```tsx
-async function deleteTodo(id: string) {
-  await fetch(`/api/todos/${id}`, { method: "DELETE" });
-  setTodos((prev) => prev.filter((t) => t.id !== id));
+async function removePost(id: string) {
+  await fetch(`/api/posts/${id}`, { method: "DELETE" });
+  setPosts((prev) => prev.filter((p) => p.id !== id));
 }
 ```
 
 ## Passing Delete Down Through the Tree
 
-The delete handler needs to flow down just like the toggle handler did:
+The delete handler needs to flow down just like any other callback:
 
 ```
-useTodos (deleteTodo function)
-  → TodoApp (passes as prop)
-    → TodoList (onDelete prop, passes to each item)
-      → TodoItem (calls onDelete(id) on button click)
+usePosts (removePost function)
+  → App (passes as prop)
+    → PostList (onRemove prop, passes to each item)
+      → PostCard (calls onRemove(id) on button click)
 ```
 
-## Adding a Delete Button to TodoItem
+## Adding a Delete Button to the Item Component
 
 ```tsx
-interface TodoItemProps {
+interface PostCardProps {
   id: string;
   title: string;
-  completed: boolean;
+  published: boolean;
   onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
+  onRemove: (id: string) => void;
 }
 
-function TodoItem({ id, title, completed, onToggle, onDelete }: TodoItemProps) {
+function PostCard({ id, title, published, onToggle, onRemove }: PostCardProps) {
   return (
     <li className="flex items-center gap-2">
-      <input type="checkbox" checked={completed} onChange={() => onToggle(id)} />
-      <span className={completed ? "line-through flex-1" : "flex-1"}>{title}</span>
-      <button onClick={() => onDelete(id)} className="text-red-500">
-        Delete
+      <input type="checkbox" checked={published} onChange={() => onToggle(id)} />
+      <span className={published ? "line-through flex-1" : "flex-1"}>{title}</span>
+      <button onClick={() => onRemove(id)} className="text-red-500">
+        Remove
       </button>
     </li>
   );
@@ -55,10 +55,10 @@ A common UX pattern is to ask for confirmation:
 ```tsx
 <button
   onClick={() => {
-    if (confirm("Delete this todo?")) onDelete(id);
+    if (confirm("Remove this post?")) onRemove(id);
   }}
 >
-  Delete
+  Remove
 </button>
 ```
 
@@ -66,4 +66,4 @@ Or use a two-step "click to reveal delete button" approach for a cleaner UI. Kee
 
 ## Inline Editing (Optional)
 
-Inline editing is more complex: you need local state in `TodoItem` to track the edit mode and input value. When the user confirms the edit, call a `onEdit(id, newTitle)` callback. This is good practice but optional at this stage.
+Inline editing is more complex: you need local state in the item component to track edit mode and input value. When the user confirms the edit, call an `onEdit(id, newTitle)` callback. This is good practice but optional at this stage.

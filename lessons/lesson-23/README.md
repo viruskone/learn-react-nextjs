@@ -52,12 +52,12 @@ Pattern:
 ```tsx
 const [error, setError] = useState<string | null>(null);
 
-async function addTodo(title: string) {
+async function addComment(text: string) {
   try {
-    const res = await fetch("/api/todos", { ... });
+    const res = await fetch("/api/comments", { ... });
     if (!res.ok) throw new Error(`Server error: ${res.status}`);
-    const todo = await res.json();
-    setTodos((prev) => [...prev, todo]);
+    const comment = await res.json();
+    setComments((prev) => [...prev, comment]);
   } catch (err) {
     setError(err instanceof Error ? err.message : "Unknown error");
   }
@@ -69,7 +69,7 @@ async function addTodo(title: string) {
 A skeleton loader is a placeholder that mimics the shape of the content before it loads. Better UX than a spinner:
 
 ```tsx
-function TodoSkeleton() {
+function CardSkeleton() {
   return (
     <div className="animate-pulse">
       <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />

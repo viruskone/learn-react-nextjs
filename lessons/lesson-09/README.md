@@ -12,49 +12,45 @@ If you find yourself copying the same `useState` + `useEffect` block into multip
 
 Even if you only use it in one place, it can make a component much cleaner by moving the "how" out of the "what".
 
-## Example: useTodos
+## Example: useCounter
 
-Your `TodoApp` has grown to contain quite a bit of logic: state initialization, persistence, toggle handler, add handler. All of that can move into a `useTodos` hook:
+Imagine a component that has a count, can increment, decrement, and reset. All of that logic can move into a `useCounter` hook:
 
 ```tsx
-// src/hooks/useTodos.ts
-import { useState, useEffect } from "react";
-import type { Todo } from "@/types/todo";
+// src/hooks/useCounter.ts
+import { useState } from "react";
 
-export function useTodos() {
-  const [todos, setTodos] = useState<Todo[]>(() => {
-    if (typeof window === "undefined") return [];
-    const raw = localStorage.getItem("todos");
-    return raw ? (JSON.parse(raw) as Todo[]) : [];
-  });
+export function useCounter(initial = 0) {
+  const [count, setCount] = useState(initial);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  function addTodo(title: string) {
-    setTodos([...todos, { id: crypto.randomUUID(), title, completed: false }]);
+  function increment() {
+    setCount((c) => c + 1);
   }
 
-  function toggleTodo(id: string) {
-    setTodos(todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
+  function decrement() {
+    setCount((c) => c - 1);
   }
 
-  return { todos, addTodo, toggleTodo };
+  function reset() {
+    setCount(initial);
+  }
+
+  return { count, increment, decrement, reset };
 }
 ```
 
-Now `TodoApp` becomes clean:
+Now the component that uses it becomes clean:
 
 ```tsx
-function TodoApp() {
-  const { todos, addTodo, toggleTodo } = useTodos();
+function CounterWidget() {
+  const { count, increment, decrement, reset } = useCounter(0);
 
   return (
     <div>
-      <h1>My Todos</h1>
-      <AddTodoForm onAdd={addTodo} />
-      <TodoList todos={todos} onToggle={toggleTodo} />
+      <p>Count: {count}</p>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
@@ -70,4 +66,4 @@ These rules exist because React relies on the order hooks are called to track st
 
 ## What Can a Custom Hook Return?
 
-Anything you want — an object, an array, a single value, or nothing. The common convention is to return an object with named properties (like `{ todos, addTodo, toggleTodo }`) because it makes usage at the call site self-documenting.
+Anything you want — an object, an array, a single value, or nothing. The common convention is to return an object with named properties (like `{ count, increment, decrement }`) because it makes usage at the call site self-documenting.

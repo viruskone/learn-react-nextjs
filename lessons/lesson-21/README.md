@@ -2,21 +2,21 @@
 
 ## Replacing localStorage with the API
 
-So far, todos are stored in `localStorage` via the `useTodos` hook. Now we'll replace that with calls to our Route Handlers. The data source changes but the component tree stays the same.
+So far, data is stored in `localStorage` via a custom hook. Now we'll replace that with calls to our Route Handlers. The data source changes but the component tree stays the same.
 
 ## Client-Side Fetch Pattern
 
 In a Client Component, use `useEffect` to fetch data on mount and update state:
 
 ```tsx
-const [todos, setTodos] = useState<Todo[]>([]);
+const [posts, setPosts] = useState<Post[]>([]);
 const [isLoading, setIsLoading] = useState(true);
 
 useEffect(() => {
-  fetch("/api/todos")
+  fetch("/api/posts")
     .then((res) => res.json())
-    .then((data: Todo[]) => {
-      setTodos(data);
+    .then((data: Post[]) => {
+      setPosts(data);
       setIsLoading(false);
     });
 }, []);
@@ -26,13 +26,13 @@ useEffect(() => {
 
 ```tsx
 async function handleAdd(title: string) {
-  const res = await fetch("/api/todos", {
+  const res = await fetch("/api/posts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ title }),
   });
-  const newTodo: Todo = await res.json();
-  setTodos([...todos, newTodo]);
+  const newPost: Post = await res.json();
+  setPosts([...posts, newPost]);
 }
 ```
 
@@ -41,16 +41,16 @@ async function handleAdd(title: string) {
 Rather than waiting for the server to respond before updating the UI, you can update immediately and roll back if the request fails. This makes the app feel instant:
 
 ```tsx
-async function handleToggle(id: string) {
+async function handleLike(id: string) {
   // Update UI immediately
-  setTodos(todos.map((t) => t.id === id ? { ...t, completed: !t.completed } : t));
+  setPosts(posts.map((p) => p.id === id ? { ...p, liked: !p.liked } : p));
 
   // Then sync with server
-  const todo = todos.find((t) => t.id === id)!;
-  await fetch(`/api/todos/${id}`, {
+  const post = posts.find((p) => p.id === id)!;
+  await fetch(`/api/posts/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ completed: !todo.completed }),
+    body: JSON.stringify({ liked: !post.liked }),
   });
 }
 ```
@@ -65,12 +65,12 @@ Always handle fetch failures:
 const [error, setError] = useState<string | null>(null);
 
 useEffect(() => {
-  fetch("/api/todos")
+  fetch("/api/posts")
     .then((res) => {
       if (!res.ok) throw new Error("Failed to fetch");
       return res.json();
     })
-    .then(setTodos)
+    .then(setPosts)
     .catch((err: Error) => setError(err.message))
     .finally(() => setIsLoading(false));
 }, []);
@@ -79,6 +79,6 @@ if (isLoading) return <p>Loading...</p>;
 if (error) return <p className="text-red-500">{error}</p>;
 ```
 
-## Updating the useTodos Hook
+## Updating the Hook
 
-The cleanest approach is to update `useTodos` to call the API instead of using `localStorage`. This keeps all the logic in one place and leaves the components unchanged.
+The cleanest approach is to update your data hook to call the API instead of using `localStorage`. This keeps all the logic in one place and leaves the components unchanged.

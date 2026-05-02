@@ -55,7 +55,7 @@ This matches all paths except Next.js internals. You can also be more specific:
 
 ```tsx
 export const config = {
-  matcher: ['/todos/:path*', '/api/:path*'],
+  matcher: ['/dashboard/:path*', '/api/:path*'],
 }
 ```
 
@@ -68,7 +68,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (pathname === '/') {
-    return NextResponse.redirect(new URL('/todos', request.url))
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   return NextResponse.next()
@@ -84,12 +84,12 @@ export function middleware(request: NextRequest) {
 A rewrite changes what page is served without changing the URL the user sees:
 
 ```tsx
-if (pathname.startsWith('/old-todos')) {
-  return NextResponse.rewrite(new URL('/todos', request.url))
+if (pathname.startsWith('/old-blog')) {
+  return NextResponse.rewrite(new URL('/blog', request.url))
 }
 ```
 
-The user's browser still shows `/old-todos` but they see the `/todos` page.
+The user's browser still shows `/old-blog` but they see the `/blog` page.
 
 ---
 
@@ -128,7 +128,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get('auth-token')?.value
 
-  const isProtected = pathname.startsWith('/todos')
+  const isProtected = pathname.startsWith('/dashboard')
 
   if (isProtected && !token) {
     return NextResponse.redirect(new URL('/login', request.url))

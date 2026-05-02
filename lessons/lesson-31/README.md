@@ -91,28 +91,25 @@ import '@testing-library/jest-dom'
 ## Writing a Component Test
 
 ```tsx
-// components/TodoItem.test.tsx
+// components/Counter.test.tsx
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { TodoItem } from './TodoItem'
+import { Counter } from './Counter'
 
-const todo = { id: '1', text: 'Buy milk', completed: false }
-
-test('renders the todo text', () => {
-  render(<TodoItem todo={todo} onToggle={() => {}} onDelete={() => {}} />)
-  expect(screen.getByText('Buy milk')).toBeInTheDocument()
+test('renders initial count', () => {
+  render(<Counter initialCount={0} />)
+  expect(screen.getByText('0')).toBeInTheDocument()
 })
 
-test('calls onToggle when clicked', async () => {
-  const onToggle = vi.fn()
-  render(<TodoItem todo={todo} onToggle={onToggle} onDelete={() => {}} />)
-  await userEvent.click(screen.getByText('Buy milk'))
-  expect(onToggle).toHaveBeenCalledWith('1')
+test('increments count when + button clicked', async () => {
+  render(<Counter initialCount={0} />)
+  await userEvent.click(screen.getByRole('button', { name: '+' }))
+  expect(screen.getByText('1')).toBeInTheDocument()
 })
 
-test('shows completed style when completed', () => {
-  render(<TodoItem todo={{ ...todo, completed: true }} onToggle={() => {}} onDelete={() => {}} />)
-  expect(screen.getByText('Buy milk')).toHaveClass('line-through')
+test('applies a CSS class when count is negative', () => {
+  render(<Counter initialCount={-1} />)
+  expect(screen.getByText('-1')).toHaveClass('text-red-500')
 })
 ```
 
@@ -123,25 +120,19 @@ test('shows completed style when completed', () => {
 Use `renderHook` from RTL to test hooks in isolation:
 
 ```tsx
-// hooks/useTodos.test.ts
+// hooks/useCounter.test.ts
 import { renderHook, act } from '@testing-library/react'
-import { useTodos } from './useTodos'
+import { useCounter } from './useCounter'
 
-test('adds a todo', () => {
-  const { result } = renderHook(() => useTodos())
-  act(() => {
-    result.current.addTodo('Write tests')
-  })
-  expect(result.current.todos).toHaveLength(1)
-  expect(result.current.todos[0].text).toBe('Write tests')
+test('initializes with given value', () => {
+  const { result } = renderHook(() => useCounter(5))
+  expect(result.current.count).toBe(5)
 })
 
-test('toggles a todo', () => {
-  const { result } = renderHook(() => useTodos())
-  act(() => { result.current.addTodo('Test this') })
-  const id = result.current.todos[0].id
-  act(() => { result.current.toggleTodo(id) })
-  expect(result.current.todos[0].completed).toBe(true)
+test('increments count', () => {
+  const { result } = renderHook(() => useCounter(0))
+  act(() => { result.current.increment() })
+  expect(result.current.count).toBe(1)
 })
 ```
 
@@ -152,20 +143,22 @@ test('toggles a todo', () => {
 If your reducer is a plain function (from Lesson 10), it's trivially testable without any React tooling:
 
 ```ts
-// reducers/todoReducer.test.ts
-import { todoReducer } from './todoReducer'
+// reducers/counterReducer.test.ts
+import { counterReducer } from './counterReducer'
 
-test('ADD_TODO adds an item', () => {
-  const state = todoReducer([], { type: 'ADD_TODO', payload: 'Buy milk' })
-  expect(state).toHaveLength(1)
-  expect(state[0].text).toBe('Buy milk')
-  expect(state[0].completed).toBe(false)
+test('INCREMENT increases count by 1', () => {
+  const state = counterReducer(0, { type: 'INCREMENT' })
+  expect(state).toBe(1)
 })
 
-test('TOGGLE_TODO flips completed', () => {
-  const initial = [{ id: '1', text: 'Buy milk', completed: false }]
-  const state = todoReducer(initial, { type: 'TOGGLE_TODO', payload: '1' })
-  expect(state[0].completed).toBe(true)
+test('DECREMENT decreases count by 1', () => {
+  const state = counterReducer(5, { type: 'DECREMENT' })
+  expect(state).toBe(4)
+})
+
+test('RESET returns to zero', () => {
+  const state = counterReducer(42, { type: 'RESET' })
+  expect(state).toBe(0)
 })
 ```
 
@@ -188,15 +181,14 @@ npm install --save-dev @playwright/test
 ```
 
 ```ts
-// e2e/todos.spec.ts
+// e2e/counter.spec.ts
 import { test, expect } from '@playwright/test'
 
-test('can add a todo', async ({ page }) => {
-  await page.goto('http://localhost:3000/todos')
-  await page.fill('[placeholder="Add todo..."]', 'Write E2E tests')
-  await page.press('[placeholder="Add todo..."]', 'Enter')
-  await expect(page.getByText('Write E2E tests')).toBeVisible()
+test('counter increments on button click', async ({ page }) => {
+  await page.goto('http://localhost:3000')
+  await page.click('[aria-label="Increment"]')
+  await expect(page.getByText('1')).toBeVisible()
 })
 ```
 
-E2E tests are slow and brittle. Write a few for critical user flows (login, add todo, complete todo) and rely on unit tests for everything else.
+E2E tests are slow and brittle. Write a few for critical user flows (login, key interactions) and rely on unit tests for everything else.

@@ -5,13 +5,13 @@
 Once your app grows beyond a few components, you'll hit this situation: a piece of state lives at the top, but a deeply nested component needs it. The only way to pass it down is through every component in between — even ones that don't use it at all.
 
 ```
-TodoApp (has todos)
+App (has theme)
   └── MainSection
-        └── TodoList
-              └── TodoItem (actually needs todos)
+        └── Sidebar
+              └── ThemeButton (actually needs theme)
 ```
 
-If `MainSection` and `TodoList` don't care about `todos` but you still have to pass it through them, that's **prop drilling**. It's not wrong, but it gets painful fast.
+If `MainSection` and `Sidebar` don't care about the theme but you still have to pass it through them, that's **prop drilling**. It's not wrong, but it gets painful fast.
 
 ---
 
@@ -29,18 +29,17 @@ Three pieces:
 ## Step 1: Create the Context
 
 ```tsx
-// context/TodoContext.tsx
+// context/ThemeContext.tsx
 import { createContext } from 'react'
-import type { Todo } from '../types'
 
-type TodoContextValue = {
-  todos: Todo[]
-  addTodo: (text: string) => void
-  toggleTodo: (id: string) => void
-  deleteTodo: (id: string) => void
+type Theme = 'light' | 'dark'
+
+type ThemeContextValue = {
+  theme: Theme
+  toggleTheme: () => void
 }
 
-export const TodoContext = createContext<TodoContextValue | null>(null)
+export const ThemeContext = createContext<ThemeContextValue | null>(null)
 ```
 
 `null` is the default value — used when there's no Provider above in the tree. We'll guard against that below.
@@ -50,20 +49,19 @@ export const TodoContext = createContext<TodoContextValue | null>(null)
 ## Step 2: Create the Provider
 
 ```tsx
-// context/TodoContext.tsx (continued)
-import { useReducer } from 'react'
+// context/ThemeContext.tsx (continued)
+import { useState } from 'react'
 
-export function TodoProvider({ children }: { children: React.ReactNode }) {
-  const [todos, dispatch] = useReducer(todoReducer, [])
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<Theme>('light')
 
-  const value: TodoContextValue = {
-    todos,
-    addTodo: (text) => dispatch({ type: 'ADD_TODO', payload: text }),
-    toggleTodo: (id) => dispatch({ type: 'TOGGLE_TODO', payload: id }),
-    deleteTodo: (id) => dispatch({ type: 'DELETE_TODO', payload: id }),
+  function toggleTheme() {
+    setTheme((t) => (t === 'light' ? 'dark' : 'light'))
   }
 
-  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>
+  const value: ThemeContextValue = { theme, toggleTheme }
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
 ```
 
@@ -74,23 +72,19 @@ The Provider wraps part of your component tree and makes the value available to 
 ## Step 3: Consume with useContext
 
 ```tsx
-// components/TodoList.tsx
+// components/ThemeButton.tsx
 import { useContext } from 'react'
-import { TodoContext } from '../context/TodoContext'
+import { ThemeContext } from '../context/ThemeContext'
 
-function TodoList() {
-  const ctx = useContext(TodoContext)
-  if (!ctx) throw new Error('TodoList must be inside TodoProvider')
+function ThemeButton() {
+  const ctx = useContext(ThemeContext)
+  if (!ctx) throw new Error('ThemeButton must be inside ThemeProvider')
 
-  const { todos, toggleTodo } = ctx
+  const { theme, toggleTheme } = ctx
   return (
-    <ul>
-      {todos.map(todo => (
-        <li key={todo.id} onClick={() => toggleTodo(todo.id)}>
-          {todo.text}
-        </li>
-      ))}
-    </ul>
+    <button onClick={toggleTheme}>
+      Current theme: {theme}
+    </button>
   )
 }
 ```
@@ -99,20 +93,20 @@ The `null` check throws early if someone uses this component outside the Provide
 
 ---
 
-## Custom Hook: useTodoContext
+## Custom Hook: useThemeContext
 
-Rather than calling `useContext(TodoContext)` everywhere (with the null check each time), wrap it in a custom hook:
+Rather than calling `useContext(ThemeContext)` everywhere (with the null check each time), wrap it in a custom hook:
 
 ```tsx
-// context/TodoContext.tsx (add this)
-export function useTodoContext() {
-  const ctx = useContext(TodoContext)
-  if (!ctx) throw new Error('useTodoContext must be used inside TodoProvider')
+// context/ThemeContext.tsx (add this)
+export function useThemeContext() {
+  const ctx = useContext(ThemeContext)
+  if (!ctx) throw new Error('useThemeContext must be used inside ThemeProvider')
   return ctx
 }
 ```
 
-Now consumers just call `useTodoContext()` — clean and safe.
+Now consumers just call `useThemeContext()` — clean and safe.
 
 ---
 
@@ -120,13 +114,13 @@ Now consumers just call `useTodoContext()` — clean and safe.
 
 ```tsx
 // app/layout.tsx or main component
-import { TodoProvider } from './context/TodoContext'
+import { ThemeProvider } from './context/ThemeContext'
 
 export default function RootLayout({ children }) {
   return (
-    <TodoProvider>
+    <ThemeProvider>
       {children}
-    </TodoProvider>
+    </ThemeProvider>
   )
 }
 ```
