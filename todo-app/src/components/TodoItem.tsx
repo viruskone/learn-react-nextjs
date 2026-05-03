@@ -1,17 +1,14 @@
-"use client";
-
-import {useState} from "react";
-
 export interface TodoItemProps {
-    title: string;
-    completed: boolean;
+    id: string;
+    title: string,
+    completed: boolean,
+    onToggle: ((id: string) => void)
 }
 
-export default function TodoItem({title, completed}: TodoItemProps) {
-    const [isCompleted, setCompleted] = useState(completed);
+export default function TodoItem({id, title, completed, onToggle}: TodoItemProps) {
     return (
         <li>
-            <input type="checkbox" checked={isCompleted} onChange={() => setCompleted(!isCompleted)}/>
-            <span className={isCompleted ? "line-through" : ""}>{title}</span></li>
+            <input type="checkbox" checked={completed} onChange={() => onToggle(id)}/>
+            <span className={completed ? "line-through" : ""}>{title}</span></li>
     )
 };

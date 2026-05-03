@@ -34,7 +34,7 @@ Start or advance to a lesson in the React/Next.js course.
 ## Lesson N — [Title]
 
 ### Theory
-[Paste the full README.md content here]
+[Paste the full README.md content here VERBATIM — do not paraphrase, summarize, or rewrite any part of it]
 
 ### Your Task
 [Paste the task.md content here without details]
