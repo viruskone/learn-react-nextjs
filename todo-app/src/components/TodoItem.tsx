@@ -1,14 +1,13 @@
 export interface TodoItemProps {
-    id: string;
     title: string,
     completed: boolean,
-    onToggle: ((id: string) => void)
+    onToggle: (() => void)
 }
 
-export default function TodoItem({id, title, completed, onToggle}: TodoItemProps) {
+export default function TodoItem({title, completed, onToggle}: TodoItemProps) {
     return (
         <li>
-            <input type="checkbox" checked={completed} onChange={() => onToggle(id)}/>
+            <input type="checkbox" checked={completed} onChange={onToggle}/>
             <span className={completed ? "line-through" : ""}>{title}</span></li>
     )
 };

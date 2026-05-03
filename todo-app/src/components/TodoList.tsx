@@ -10,7 +10,7 @@ export default function TodoList({todos, onToggle}: TodoListProps) {
     return (
         todos.length > 0 ?
             <ul>
-                {todos.map(todo => (<TodoItem key={todo.id} id={todo.id} title={todo.title} completed={todo.completed} onToggle={onToggle}/>))}
+                {todos.map(todo => (<TodoItem key={todo.id} title={todo.title} completed={todo.completed} onToggle={() => onToggle(todo.id)}/>))}
             </ul> : <p>No todos yet!</p>
     )
 }
