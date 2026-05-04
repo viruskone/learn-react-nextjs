@@ -11,16 +11,22 @@ Add `revalidatePath` to your Route Handlers so the `/todos` page cache is invali
 1. **Add `revalidatePath` to your POST (create) handler**
 
    In `app/api/todos/route.ts`:
-   ```tsx
-   import { revalidatePath } from 'next/cache'
 
-   export async function POST(request: Request) {
-     const { text } = await request.json()
-     // ... create the todo
-     revalidatePath('/todos')
-     return Response.json(newTodo, { status: 201 })
-   }
-   ```
+<details>
+<summary>Show hint</summary>
+
+```tsx
+import { revalidatePath } from 'next/cache'
+
+export async function POST(request: Request) {
+  const { text } = await request.json()
+  // ... create the todo
+  revalidatePath('/todos')
+  return Response.json(newTodo, { status: 201 })
+}
+```
+
+</details>
 
 2. **Add `revalidatePath` to PATCH (toggle) and DELETE handlers**
 
@@ -34,9 +40,15 @@ Add `revalidatePath` to your Route Handlers so the `/todos` page cache is invali
 4. **Add `force-dynamic` to the todos page** (for now, to ensure it always renders fresh):
 
    In `app/todos/page.tsx`:
-   ```tsx
-   export const dynamic = 'force-dynamic'
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+export const dynamic = 'force-dynamic'
+```
+
+</details>
 
 5. **Observe caching in the terminal**
    - Start `npm run dev`

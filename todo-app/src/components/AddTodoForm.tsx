@@ -1,24 +1,28 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
+import {useTodosContext} from "@/hooks/useTodosContext";
 
-export interface AddTodoFormProps {
-    onAdd: (text: string) => void;
-}
+export default function AddTodoForm() {
 
-export default function AddTodoForm({onAdd}: AddTodoFormProps) {
-
+    const {addTodo} = useTodosContext()
     const [text, setText] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
 
     function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
         const title = text.trim();
         if (!title) return;
-        onAdd(title);
+        addTodo(title);
         setText('');
+        inputRef.current?.focus();
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" value={text} onChange={(e) => setText(e.target.value)}/>
+            <input
+                type="text"
+                value={text}
+                ref={inputRef}
+                onChange={(e) => setText(e.target.value)}/>
             <button type="submit">Dodaj</button>
         </form>
     )

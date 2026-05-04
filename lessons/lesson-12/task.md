@@ -10,30 +10,48 @@ Apply `React.memo`, `useCallback`, and `useMemo` to the Todo App. Then use React
 
 1. **Wrap `TodoItem` in `React.memo`**
 
-   ```tsx
-   const TodoItem = React.memo(function TodoItem({ todo, onToggle, onDelete }: Props) {
-     // ... existing JSX
-   })
-   ```
+<details>
+<summary>Show hint</summary>
+
+```tsx
+const TodoItem = React.memo(function TodoItem({ todo, onToggle, onDelete }: Props) {
+  // ... existing JSX
+})
+```
+
+</details>
 
 2. **Stabilise the callbacks** passed to `TodoItem`
 
    In the component that renders `TodoItem` (e.g. `TodoList` or `TodoApp`), wrap `toggleTodo` and `deleteTodo` with `useCallback`:
-   ```tsx
-   const handleToggle = useCallback((id: string) => {
-     toggleTodo(id)
-   }, [toggleTodo])
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+const handleToggle = useCallback((id: string) => {
+  toggleTodo(id)
+}, [toggleTodo])
+```
+
+</details>
 
 3. **Add a `useMemo` for a derived value**
 
    Somewhere in `TodoApp` (or the context provider), compute the completed count:
-   ```tsx
-   const completedCount = useMemo(
-     () => todos.filter(t => t.completed).length,
-     [todos]
-   )
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+const completedCount = useMemo(
+  () => todos.filter(t => t.completed).length,
+  [todos]
+)
+```
+
+</details>
+
    Display it somewhere visible (e.g. `"2 / 5 completed"`).
 
 4. **Verify in React DevTools Profiler**

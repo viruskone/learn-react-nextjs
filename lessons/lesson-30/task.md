@@ -32,54 +32,78 @@ Add GitHub OAuth login to the Todo App. Protect the `/todos` route so only logge
    ```
 
 5. **Create `auth.ts`** at the project root:
-   ```ts
-   import NextAuth from 'next-auth'
-   import GitHub from 'next-auth/providers/github'
 
-   export const { handlers, signIn, signOut, auth } = NextAuth({
-     providers: [GitHub],
-   })
-   ```
+<details>
+<summary>Show hint</summary>
+
+```ts
+import NextAuth from 'next-auth'
+import GitHub from 'next-auth/providers/github'
+
+export const { handlers, signIn, signOut, auth } = NextAuth({
+  providers: [GitHub],
+})
+```
+
+</details>
 
 6. **Create the Route Handler** at `app/api/auth/[...nextauth]/route.ts`:
-   ```ts
-   import { handlers } from '@/auth'
-   export const { GET, POST } = handlers
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```ts
+import { handlers } from '@/auth'
+export const { GET, POST } = handlers
+```
+
+</details>
 
 7. **Protect `/todos` with middleware** — update `middleware.ts`:
-   ```ts
-   export { auth as middleware } from '@/auth'
 
-   export const config = {
-     matcher: ['/todos/:path*'],
-   }
-   ```
+<details>
+<summary>Show hint</summary>
+
+```ts
+export { auth as middleware } from '@/auth'
+
+export const config = {
+  matcher: ['/todos/:path*'],
+}
+```
+
+</details>
 
 8. **Add sign-in / sign-out to your Navbar**:
-   ```tsx
-   import { auth, signIn, signOut } from '@/auth'
 
-   export default async function Navbar() {
-     const session = await auth()
-     return (
-       <nav>
-         {session ? (
-           <>
-             <span>{session.user?.name}</span>
-             <form action={async () => { 'use server'; await signOut() }}>
-               <button type="submit">Sign out</button>
-             </form>
-           </>
-         ) : (
-           <form action={async () => { 'use server'; await signIn('github') }}>
-             <button type="submit">Sign in with GitHub</button>
-           </form>
-         )}
-       </nav>
-     )
-   }
-   ```
+<details>
+<summary>Show hint</summary>
+
+```tsx
+import { auth, signIn, signOut } from '@/auth'
+
+export default async function Navbar() {
+  const session = await auth()
+  return (
+    <nav>
+      {session ? (
+        <>
+          <span>{session.user?.name}</span>
+          <form action={async () => { 'use server'; await signOut() }}>
+            <button type="submit">Sign out</button>
+          </form>
+        </>
+      ) : (
+        <form action={async () => { 'use server'; await signIn('github') }}>
+          <button type="submit">Sign in with GitHub</button>
+        </form>
+      )}
+    </nav>
+  )
+}
+```
+
+</details>
 
 9. **Test the flow**:
    - Visit `http://localhost:3000/todos` — should redirect to GitHub login

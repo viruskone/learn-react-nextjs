@@ -11,28 +11,40 @@ Add a font via `next/font` and an image via `next/image` to the Todo App. Then r
 1. **Set up a Google Font with `next/font`**
 
    In `app/layout.tsx`, replace any existing font setup:
-   ```tsx
-   import { Inter } from 'next/font/google'
 
-   const inter = Inter({
-     subsets: ['latin'],
-     display: 'swap',
-   })
+<details>
+<summary>Show hint</summary>
 
-   export default function RootLayout({ children }: { children: React.ReactNode }) {
-     return (
-       <html lang="en" className={inter.className}>
-         <body>{children}</body>
-       </html>
-     )
-   }
-   ```
+```tsx
+import { Inter } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+</details>
 
    If you're using Tailwind, use the CSS variable approach instead:
-   ```tsx
-   const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-   // Apply inter.variable to <html>
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+// Apply inter.variable to <html>
+```
+
+</details>
 
 2. **Add an image with `next/image`**
 
@@ -40,11 +52,16 @@ Add a font via `next/font` and an image via `next/image` to the Todo App. Then r
    - Save it to `public/logo.png` (or `public/logo.svg`)
    - Display it in your `Navbar` component:
 
-   ```tsx
-   import Image from 'next/image'
+<details>
+<summary>Show hint</summary>
 
-   <Image src="/logo.png" alt="Todo App logo" width={32} height={32} />
-   ```
+```tsx
+import Image from 'next/image'
+
+<Image src="/logo.png" alt="Todo App logo" width={32} height={32} />
+```
+
+</details>
 
 3. **Run `npm run build` and `npm start`** (Lighthouse requires a production build)
 

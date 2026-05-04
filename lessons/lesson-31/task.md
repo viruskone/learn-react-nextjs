@@ -15,32 +15,50 @@ Set up Vitest and React Testing Library. Write unit tests for `TodoItem` and the
    ```
 
 2. **Create `vitest.config.ts`** at the project root:
-   ```ts
-   import { defineConfig } from 'vitest/config'
-   import react from '@vitejs/plugin-react'
 
-   export default defineConfig({
-     plugins: [react()],
-     test: {
-       environment: 'jsdom',
-       setupFiles: ['./vitest.setup.ts'],
-       globals: true,
-     },
-   })
-   ```
+<details>
+<summary>Show hint</summary>
+
+```ts
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.ts'],
+    globals: true,
+  },
+})
+```
+
+</details>
 
 3. **Create `vitest.setup.ts`** at the project root:
-   ```ts
-   import '@testing-library/jest-dom'
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```ts
+import '@testing-library/jest-dom'
+```
+
+</details>
 
 4. **Add test scripts to `package.json`**:
-   ```json
-   "scripts": {
-     "test": "vitest",
-     "test:run": "vitest run"
-   }
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```json
+"scripts": {
+  "test": "vitest",
+  "test:run": "vitest run"
+}
+```
+
+</details>
 
 5. **Write tests for `TodoItem`**
 

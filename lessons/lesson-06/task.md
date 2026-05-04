@@ -23,9 +23,16 @@ Create `src/components/AddTodoForm.tsx`:
 
 Update `src/components/TodoApp.tsx`:
 - Write a `handleAdd(title: string)` function that appends a new `Todo` to the state:
-  ```ts
-  { id: crypto.randomUUID(), title, completed: false }
-  ```
+
+<details>
+<summary>Show hint</summary>
+
+```ts
+{ id: crypto.randomUUID(), title, completed: false }
+```
+
+</details>
+
 - Render `<AddTodoForm onAdd={handleAdd} />` above `<TodoList />`
 
 ### 3. Verify in the browser

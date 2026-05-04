@@ -16,27 +16,32 @@ Add a todo detail page at `/todos/[id]`. Clicking a todo in the list navigates t
 
 2. **Implement the detail page**
 
-   ```tsx
-   import { notFound } from 'next/navigation'
+<details>
+<summary>Show hint</summary>
 
-   type Props = {
-     params: Promise<{ id: string }>
-   }
+```tsx
+import { notFound } from 'next/navigation'
 
-   export default async function TodoDetailPage({ params }: Props) {
-     const { id } = await params
-     // fetch the todo — use your API route or data layer
-     const todo = await getTodoById(id)
-     if (!todo) notFound()
+type Props = {
+  params: Promise<{ id: string }>
+}
 
-     return (
-       <main>
-         <h1>{todo.text}</h1>
-         <p>Status: {todo.completed ? 'Completed' : 'Pending'}</p>
-       </main>
-     )
-   }
-   ```
+export default async function TodoDetailPage({ params }: Props) {
+  const { id } = await params
+  // fetch the todo — use your API route or data layer
+  const todo = await getTodoById(id)
+  if (!todo) notFound()
+
+  return (
+    <main>
+      <h1>{todo.text}</h1>
+      <p>Status: {todo.completed ? 'Completed' : 'Pending'}</p>
+    </main>
+  )
+}
+```
+
+</details>
 
    Implement `getTodoById(id)` — it can call your existing API route (`/api/todos`) and filter, or read from your data store directly.
 
@@ -46,30 +51,40 @@ Add a todo detail page at `/todos/[id]`. Clicking a todo in the list navigates t
    app/todos/[id]/not-found.tsx
    ```
 
-   ```tsx
-   import Link from 'next/link'
+<details>
+<summary>Show hint</summary>
 
-   export default function NotFound() {
-     return (
-       <div>
-         <p>Todo not found.</p>
-         <Link href="/todos">Back to list</Link>
-       </div>
-     )
-   }
-   ```
+```tsx
+import Link from 'next/link'
+
+export default function NotFound() {
+  return (
+    <div>
+      <p>Todo not found.</p>
+      <Link href="/todos">Back to list</Link>
+    </div>
+  )
+}
+```
+
+</details>
 
 4. **Update the todo list page** to link each item to its detail page
 
-   ```tsx
-   import Link from 'next/link'
+<details>
+<summary>Show hint</summary>
 
-   {todos.map(todo => (
-     <Link key={todo.id} href={`/todos/${todo.id}`}>
-       {todo.text}
-     </Link>
-   ))}
-   ```
+```tsx
+import Link from 'next/link'
+
+{todos.map(todo => (
+  <Link key={todo.id} href={`/todos/${todo.id}`}>
+    {todo.text}
+  </Link>
+))}
+```
+
+</details>
 
 5. **Test navigation**
    - Click a todo → should navigate to `/todos/<id>` and show the detail

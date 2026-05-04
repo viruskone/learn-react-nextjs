@@ -13,42 +13,60 @@ Add middleware that:
 1. **Create `middleware.ts`** at the project root (next to `app/`, `package.json`, etc.)
 
 2. **Add request logging** (only in development):
-   ```tsx
-   import { NextResponse } from 'next/server'
-   import type { NextRequest } from 'next/server'
 
-   export function middleware(request: NextRequest) {
-     if (process.env.NODE_ENV === 'development') {
-       console.log(`[middleware] ${request.method} ${request.nextUrl.pathname}`)
-     }
+<details>
+<summary>Show hint</summary>
 
-     return NextResponse.next()
-   }
-   ```
+```tsx
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[middleware] ${request.method} ${request.nextUrl.pathname}`)
+  }
+
+  return NextResponse.next()
+}
+```
+
+</details>
 
 3. **Add the root redirect**:
-   ```tsx
-   export function middleware(request: NextRequest) {
-     const { pathname } = request.nextUrl
 
-     if (process.env.NODE_ENV === 'development') {
-       console.log(`[middleware] ${request.method} ${pathname}`)
-     }
+<details>
+<summary>Show hint</summary>
 
-     if (pathname === '/') {
-       return NextResponse.redirect(new URL('/todos', request.url))
-     }
+```tsx
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-     return NextResponse.next()
-   }
-   ```
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[middleware] ${request.method} ${pathname}`)
+  }
+
+  if (pathname === '/') {
+    return NextResponse.redirect(new URL('/todos', request.url))
+  }
+
+  return NextResponse.next()
+}
+```
+
+</details>
 
 4. **Add the matcher config** to exclude Next.js internals:
-   ```tsx
-   export const config = {
-     matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
-   }
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+}
+```
+
+</details>
 
 5. **Test it**
    - Run `npm run dev`

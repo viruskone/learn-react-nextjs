@@ -11,38 +11,62 @@ Wrap the "add todo" Server Action with `useOptimistic` so the new item appears i
 1. **Make sure you're working in a Client Component** that receives the current todos list as a prop from a Server Component parent
 
 2. **Import `useOptimistic`**:
-   ```tsx
-   'use client'
-   import { useOptimistic, useState } from 'react'
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+'use client'
+import { useOptimistic, useState } from 'react'
+```
+
+</details>
 
 3. **Set up the optimistic state**:
-   ```tsx
-   const [todos, setTodos] = useState(initialTodos)
-   const [optimisticTodos, addOptimistic] = useOptimistic(
-     todos,
-     (state, newText: string) => [
-       ...state,
-       { id: 'pending-' + Date.now(), text: newText, completed: false },
-     ]
-   )
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+const [todos, setTodos] = useState(initialTodos)
+const [optimisticTodos, addOptimistic] = useOptimistic(
+  todos,
+  (state, newText: string) => [
+    ...state,
+    { id: 'pending-' + Date.now(), text: newText, completed: false },
+  ]
+)
+```
+
+</details>
 
 4. **Update your form submission handler**:
-   ```tsx
-   async function handleSubmit(text: string) {
-     addOptimistic(text)             // show immediately
-     const saved = await addTodoAction(text)  // call Server Action
-     setTodos(prev => [...prev, saved])       // sync with server result
-   }
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+async function handleSubmit(text: string) {
+  addOptimistic(text)             // show immediately
+  const saved = await addTodoAction(text)  // call Server Action
+  setTodos(prev => [...prev, saved])       // sync with server result
+}
+```
+
+</details>
 
 5. **Render `optimisticTodos` instead of `todos`**
 
 6. **Visual indicator for pending items**:
-   ```tsx
-   <li style={{ opacity: todo.id.startsWith('pending') ? 0.6 : 1 }}>
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+<li style={{ opacity: todo.id.startsWith('pending') ? 0.6 : 1 }}>
+```
+
+</details>
 
 7. **Test it**: Add a todo and watch it appear immediately with reduced opacity, then snap to full opacity once saved.
 

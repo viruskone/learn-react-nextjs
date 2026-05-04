@@ -10,46 +10,61 @@ Add proper metadata to the Todo App: a title template in the root layout, static
 
 1. **Update `app/layout.tsx`** to add a title template and description:
 
-   ```tsx
-   import type { Metadata } from 'next'
+<details>
+<summary>Show hint</summary>
 
-   export const metadata: Metadata = {
-     title: {
-       template: '%s | Todo App',
-       default: 'Todo App',
-     },
-     description: 'A simple todo app built with Next.js 15',
-   }
-   ```
+```tsx
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Todo App',
+    default: 'Todo App',
+  },
+  description: 'A simple todo app built with Next.js 15',
+}
+```
+
+</details>
 
 2. **Add metadata to `app/todos/page.tsx`**:
 
-   ```tsx
-   import type { Metadata } from 'next'
+<details>
+<summary>Show hint</summary>
 
-   export const metadata: Metadata = {
-     title: 'My Todos',
-     description: 'View and manage your todo list',
-   }
-   ```
+```tsx
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'My Todos',
+  description: 'View and manage your todo list',
+}
+```
+
+</details>
 
    After this, the browser tab should show **"My Todos | Todo App"**.
 
 3. **Add `generateMetadata` to `app/todos/[id]/page.tsx`**:
 
-   ```tsx
-   import type { Metadata } from 'next'
+<details>
+<summary>Show hint</summary>
 
-   export async function generateMetadata({ params }: Props): Promise<Metadata> {
-     const { id } = await params
-     const todo = await getTodoById(id)
-     if (!todo) return { title: 'Not Found' }
-     return {
-       title: todo.text,
-       description: `Status: ${todo.completed ? 'Completed' : 'Pending'}`,
-     }
-   }
-   ```
+```tsx
+import type { Metadata } from 'next'
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
+  const todo = await getTodoById(id)
+  if (!todo) return { title: 'Not Found' }
+  return {
+    title: todo.text,
+    description: `Status: ${todo.completed ? 'Completed' : 'Pending'}`,
+  }
+}
+```
+
+</details>
 
 4. **Verify in the browser**:
    - `/todos` tab should show "My Todos | Todo App"

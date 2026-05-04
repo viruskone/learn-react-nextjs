@@ -11,29 +11,53 @@ Improve the Add Todo form's UX: after the user adds a todo, auto-focus the text 
 1. **Open `TodoApp.tsx`** (or wherever your Add Todo form lives)
 
 2. **Import `useRef`** from React
-   ```tsx
-   import { useState, useRef } from 'react'
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+import { useState, useRef } from 'react'
+```
+
+</details>
 
 3. **Create the ref** for the input element
-   ```tsx
-   const inputRef = useRef<HTMLInputElement>(null)
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+const inputRef = useRef<HTMLInputElement>(null)
+```
+
+</details>
 
 4. **Attach it** to the `<input>` element
-   ```tsx
-   <input ref={inputRef} value={text} onChange={...} />
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+<input ref={inputRef} value={text} onChange={...} />
+```
+
+</details>
 
 5. **After adding a todo**, call `focus()` via the ref
-   ```tsx
-   function handleSubmit(e: React.FormEvent) {
-     e.preventDefault()
-     // your existing add-todo logic here
-     setText('')
-     inputRef.current?.focus()
-   }
-   ```
+
+<details>
+<summary>Show hint</summary>
+
+```tsx
+function handleSubmit(e: React.FormEvent) {
+  e.preventDefault()
+  // your existing add-todo logic here
+  setText('')
+  inputRef.current?.focus()
+}
+```
+
+</details>
 
 ---
 
