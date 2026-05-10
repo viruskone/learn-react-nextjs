@@ -58,7 +58,7 @@ export async function DELETE(
 }
 ```
 
-Note: In Next.js 15, `params` is a Promise — you must `await` it.
+Note: `params` is a Promise — always `await` it before destructuring.
 
 ## In-Memory Storage
 

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s | Todo App',
     default: 'Todo App',
   },
-  description: 'A simple todo app built with Next.js 15',
+  description: 'A simple todo app built with Next.js 16',
 }
 ```
 

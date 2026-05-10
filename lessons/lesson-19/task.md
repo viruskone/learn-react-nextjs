@@ -76,7 +76,7 @@ curl -X DELETE http://localhost:3000/api/todos/1
 
 ## Hints
 
-- `await params` before destructuring (Next.js 15 change): `const { id } = await params;`
+- `await params` before destructuring: `const { id } = await params;`
 - For DELETE with 204, return `new NextResponse(null, { status: 204 })` — you can't use `NextResponse.json(null)` for 204.
 - The in-memory `todos` array resets when the dev server restarts — that's expected.
 

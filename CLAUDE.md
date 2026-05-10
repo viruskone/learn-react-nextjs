@@ -19,7 +19,7 @@ The student builds a real **Todo App** step by step across lessons.
 
 ## Tech Stack
 
-- **Next.js 15** (App Router)
+- **Next.js 16** (App Router)
 - **React 19**
 - **TypeScript 5**
 - **Tailwind CSS 4**

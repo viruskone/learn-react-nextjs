@@ -1,8 +1,10 @@
-# Lesson 20 — Middleware
+# Lesson 20 — Proxy (Request Interception)
 
-## What is Middleware?
+## What is a Proxy?
 
-Middleware runs **before a request reaches its destination** — before a page renders, before a Route Handler executes, before static files are served. It sits at the edge of your application.
+A proxy runs **before a request reaches its destination** — before a page renders, before a Route Handler executes, before static files are served.
+
+> **Note:** In older Next.js tutorials you'll see `middleware.ts` with `export function middleware(...)`. In Next.js 16, this convention was renamed to `proxy.ts` / `export function proxy(...)`. The concept is identical — only the filename and export name changed.
 
 Use cases:
 - Redirect unauthenticated users to `/login`
@@ -13,23 +15,23 @@ Use cases:
 
 ---
 
-## Creating Middleware
+## Creating a Proxy
 
-Create `middleware.ts` at the **root of your project** (same level as `app/`, not inside it):
+Create `proxy.ts` at the **root of your project** (same level as `app/`, not inside it):
 
 ```
 my-app/
   app/
-  middleware.ts   ← here
+  proxy.ts    ← here
   package.json
 ```
 
 ```tsx
-// middleware.ts
+// proxy.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   console.log('Request:', request.method, request.nextUrl.pathname)
   return NextResponse.next()  // continue to the page/handler
 }
@@ -41,7 +43,7 @@ export function middleware(request: NextRequest) {
 
 ## Matcher Config
 
-By default, middleware runs on every request including `_next/static`, `_next/image`, favicon, etc. Use a `config` export to scope it:
+By default, the proxy runs on every request including `_next/static`, `_next/image`, favicon, etc. Use a `config` export to scope it:
 
 ```tsx
 export const config = {
@@ -64,7 +66,7 @@ export const config = {
 ## Redirects
 
 ```tsx
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (pathname === '/') {
@@ -96,7 +98,7 @@ The user's browser still shows `/old-blog` but they see the `/blog` page.
 ## Reading Cookies and Headers
 
 ```tsx
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get('auth-token')?.value
   const userAgent = request.headers.get('user-agent')
 
@@ -113,7 +115,7 @@ You can also **set** cookies and headers on the response:
 ```tsx
 const response = NextResponse.next()
 response.cookies.set('visited', 'true')
-response.headers.set('x-middleware-ran', '1')
+response.headers.set('x-proxy-ran', '1')
 return response
 ```
 
@@ -124,7 +126,7 @@ return response
 The most common real-world use: protect routes from unauthenticated access.
 
 ```tsx
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get('auth-token')?.value
 
@@ -146,8 +148,10 @@ In Lesson 30 (Authentication), you'll use this pattern with a real Auth.js sessi
 
 ---
 
-## Limitations
+## Runtime
 
-- Middleware runs in the **Edge Runtime** — no Node.js APIs. You can't use `fs`, `crypto` (Node version), or most npm packages that depend on Node internals.
-- Keep middleware lightweight — it runs on every matched request.
-- Can't import Server Components or call database queries directly.
+Unlike the old `middleware.ts` which ran on the Edge Runtime (no Node.js APIs), `proxy.ts` runs on the **Node.js runtime**. This means:
+- You can use `process.env.NODE_ENV` normally
+- You have access to Node.js built-ins like `crypto`
+- Keep it lightweight — it still runs on every matched request
+- You can't directly render Server Components or call database queries (use Route Handlers for that)

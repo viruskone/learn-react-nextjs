@@ -11,11 +11,13 @@ When you run `npm run build`, Next.js:
 Check the build output — Next.js tells you which pages are static (○) vs dynamic (ƒ):
 
 ```
-Route (app)               Size     First Load JS
-┌ ○ /                     1.5 kB   88 kB
-├ ○ /about                1.2 kB   87 kB
-└ ƒ /api/posts            0 B      0 B
+Route (app)
+┌ ○ /
+├ ○ /about
+└ ƒ /api/posts
 ```
+
+> Next.js 16 removed the `Size` and `First Load JS` columns from build output. Use Chrome Lighthouse or Vercel Analytics to measure actual payload sizes.
 
 ## Static vs Dynamic Routes
 
