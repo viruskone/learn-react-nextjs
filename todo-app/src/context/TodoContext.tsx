@@ -1,17 +1,15 @@
 "use client"
 
 import type {Todo} from "@/types/todo";
-import {createContext, ReactNode, useEffect, useReducer} from "react";
+import {createContext, ReactNode, useEffect, useReducer, useState} from "react";
 
 type TodoContextValue = {
     todos: Todo[],
     addTodo: (text: string) => void,
     removeTodo: (id: string) => void,
     toggleTodo: (id: string) => void,
-    setTodo: (todos: Todo[]) => void,
+    setTodo: (todos: Todo[]) => void
 }
-const todosKey = "todos";
-
 type Action =
     | { type: "ADD_TODO"; payload: string }
     | { type: "TOGGLE_TODO"; payload: string }
@@ -35,6 +33,7 @@ export const TodoContext = createContext<TodoContextValue | null>(null)
 
 export function TodoProvider({children}: { children: ReactNode }): ReactNode {
     const [todos, dispatch] = useReducer(todoReducer, []);
+    const [loading, setLoading] = useState<boolean>(true);
     const value: TodoContextValue = {
         todos,
         addTodo: title => dispatch({type: "ADD_TODO", payload: title}),
@@ -44,13 +43,22 @@ export function TodoProvider({children}: { children: ReactNode }): ReactNode {
     }
 
     useEffect(() => {
-        const raw = localStorage.getItem(todosKey)
-        if (raw) dispatch({type: "SET_TODO", payload: JSON.parse(raw) as Todo[]});
+        fetch('/api/todos')
+            .then(res => res.json())
+            .then(data => {
+                dispatch({type: "SET_TODO", payload: data as Todo[]})
+                setLoading(false)
+            })
     }, [])
 
     useEffect(() => {
-        localStorage.setItem(todosKey, JSON.stringify(todos));
-    }, [todos]);
+        if(loading) return
+        fetch('/api/todos', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(todos)
+        })
+    }, [loading, todos]);
 
     return (<TodoContext value={value}>{children}</TodoContext>)
 }

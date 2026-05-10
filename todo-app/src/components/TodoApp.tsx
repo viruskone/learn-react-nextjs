@@ -3,19 +3,23 @@
 import TodoList from "@/components/TodoList";
 import AddTodoForm from "@/components/AddTodoForm";
 import {useTodosContext} from "@/hooks/useTodosContext";
+import {useMemo} from "react";
 
 export default function TodoApp() {
 
     const {todos} = useTodosContext();
+    const count = useMemo(() => todos.filter(x => x.completed).length, [todos])
 
     return (
-        <main>
-            <h1>Todo app</h1>
-            <p>Current count: {todos.length}</p>
-            <AddTodoForm />
-            <TodoList />
-            <hr/>
-            <p>You have {todos.filter(x => x.completed).length} of {todos.length} todos completed.</p>
-        </main>
+        <div className="w-full">
+            <div className="mb-6 text-center">
+                <h1 className="text-3xl font-bold text-gray-900">My Todos</h1>
+                <p className="text-sm text-gray-400 mt-1">
+                    {count} of {todos.length} completed
+                </p>
+            </div>
+            <AddTodoForm/>
+            <TodoList/>
+        </div>
     )
 }
