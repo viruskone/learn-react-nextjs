@@ -7,7 +7,7 @@ import {useMemo} from "react";
 
 export default function TodoApp() {
 
-    const {todos} = useTodosContext();
+    const {todos, isLoading, error} = useTodosContext();
     const count = useMemo(() => todos.filter(x => x.completed).length, [todos])
 
     return (
@@ -19,7 +19,8 @@ export default function TodoApp() {
                 </p>
             </div>
             <AddTodoForm/>
-            <TodoList/>
+            {isLoading ? <p>Loading ...</p> : <TodoList/>}
+            {error && <p className="text-red-500">{error}</p>}
         </div>
     )
 }

@@ -9,7 +9,6 @@ export default function TodoList() {
     const {todos, toggleTodo} = useTodosContext()
 
     const toggleTodoCallback = useCallback((id:string)=>toggleTodo(id), [toggleTodo]);
-
     return (
         todos.length > 0 ? (
             <ul className="space-y-2">

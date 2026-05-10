@@ -2,16 +2,13 @@ import {Todo} from "@/types/todo";
 
 const TODO_API_URL = '/api/todos';
 
-async function fetchJson(url: string, body: BodyInit): Promise<Response> {
-    return await fetch(url, {
+export async function callAddTodo(title: string) {
+    const newTodo = await fetch(TODO_API_URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body,
-    })
-}
-
-export async function callAddTodo(title: string) {
-    await fetchJson(TODO_API_URL, JSON.stringify({title}))
+        body: JSON.stringify({title})
+    }).then(res => res.json()) as Todo
+    return newTodo
 }
 
 export async function callDeleteTodo(id: string) {

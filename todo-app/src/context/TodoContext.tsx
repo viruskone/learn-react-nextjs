@@ -6,13 +6,14 @@ import {callAddTodo, callDeleteTodo, callUpdateTodo} from "@/lib/api";
 
 type TodoContextValue = {
     todos: Todo[],
+    isLoading: boolean,
+    error: string | null,
     addTodo: (text: string) => Promise<void>,
     removeTodo: (id: string) => Promise<void>,
-    toggleTodo: (id: string) => Promise<void>,
-    //setTodo: (todos: Todo[]) => Promise<void>
+    toggleTodo: (id: string) => Promise<void>
 }
 type Action =
-    | { type: "ADD_TODO"; payload: string }
+    | { type: "ADD_TODO"; payload: Todo }
     | { type: "UPDATE_TODO"; payload: Todo }
     | { type: "DELETE_TODO"; payload: string }
     | { type: "SET_TODO"; payload: Todo[] }
@@ -20,7 +21,7 @@ type Action =
 export function todoReducer(state: Todo[], action: Action): Todo[] {
     switch (action.type) {
         case "ADD_TODO":
-            return [...state, {id: crypto.randomUUID(), title: action.payload, completed: false}]
+            return [...state, action.payload];
         case "UPDATE_TODO":
             return state.map(x => x.id === action.payload.id ? {...x, ...action.payload} : x)
         case "DELETE_TODO":
@@ -34,11 +35,15 @@ export const TodoContext = createContext<TodoContextValue | null>(null)
 
 export function TodoProvider({children}: { children: ReactNode }): ReactNode {
     const [todos, dispatch] = useReducer(todoReducer, []);
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<string|null>(null)
     const value: TodoContextValue = {
         todos,
+        isLoading,
+        error,
         addTodo: async (title) => {
-            await callAddTodo(title)
-            dispatch({type: "ADD_TODO", payload: title})
+            const todo = await callAddTodo(title)
+            dispatch({type: "ADD_TODO", payload: todo})
         },
         removeTodo: async (id) => {
             await callDeleteTodo(id)
@@ -60,6 +65,8 @@ export function TodoProvider({children}: { children: ReactNode }): ReactNode {
             .then(data => {
                 dispatch({type: "SET_TODO", payload: data as Todo[]})
             })
+            .catch(error => setError(error.message))
+            .finally(() => setIsLoading(false))
     }, [])
 
     return (<TodoContext value={value}>{children}</TodoContext>)
