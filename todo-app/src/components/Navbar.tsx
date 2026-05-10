@@ -11,6 +11,7 @@ interface NavLink {
 const pages: NavLink[] = [
     {path: "/", label: "Home"},
     {path: "/about", label: "About"},
+    {path: "/todos", label: "Todos"},
     {path: "/posts", label: "Posts"}
 ]
 

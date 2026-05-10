@@ -13,9 +13,10 @@ export default function AddTodoForm() {
         e.preventDefault();
         const title = text.trim();
         if (!title) return;
-        addTodo(title);
-        setText('');
-        inputRef.current?.focus();
+        addTodo(title).then(() => {
+            setText('');
+            inputRef.current?.focus();
+        })
     }
 
     return (

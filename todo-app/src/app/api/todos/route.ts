@@ -1,6 +1,5 @@
-import {deleteTodo, getTodos, saveTodo, saveTodos} from "@/lib/todos";
-import {NextResponse} from "next/server";
-import {Todo} from "@/types/todo";
+import {createTodo, getTodos} from "@/lib/todos";
+import {NextRequest, NextResponse} from "next/server";
 import {revalidatePath} from "next/cache";
 
 export async function GET() {
@@ -8,30 +7,11 @@ export async function GET() {
     return NextResponse.json(todos)
 }
 
-export async function POST(request: Request) {
-    const todos = await request.json() as Todo[];
-    if (todos) {
-        await saveTodos(todos);
+export async function POST(request: NextRequest) {
+    const todo = await request.json() as { title: string };
+    if (todo) {
+        const newTodo = await createTodo(todo.title);
         revalidatePath('/todos')
-        return NextResponse.json({ok: true});
+        return NextResponse.json(newTodo, {status: 201});
     } else return NextResponse.json({error: "Bad request"}, {status: 400});
-}
-
-export async function PATCH(request: Request, context: { params: Promise<{ id: string }> }) {
-    const {id} = await context.params
-    const todo = await request.json() as Partial<Todo>
-    await saveTodo(id, todo);
-    revalidatePath('/todos')
-    return NextResponse.json({ok: true});
-}
-
-export async function DELETE(request: Request, context: { params: Promise<{ id: string }> }) {
-    const {id} = await context.params
-    await deleteTodo(id);
-    revalidatePath('/todos')
-    return NextResponse.json({ok: true});
-}
-
-{
-
 }

@@ -1,5 +1,5 @@
 {
-  "currentLesson": 18,
+  "currentLesson": 19,
   "lessons": {
     "1":  { "status": "completed", "startedAt": "2026-05-01", "completedAt": "2026-05-02" },
     "2":  { "status": "completed", "startedAt": "2026-05-02", "completedAt": "2026-05-02" },
@@ -18,8 +18,8 @@
     "15": { "status": "completed", "startedAt": "2026-05-05", "completedAt": "2026-05-05" },
     "16": { "status": "completed", "startedAt": "2026-05-06", "completedAt": "2026-05-06" },
     "17": { "status": "completed", "startedAt": "2026-05-06", "completedAt": "2026-05-06" },
-    "18": { "status": "in_progress", "startedAt": "2026-05-06" },
-    "19": { "status": "not_started" },
+    "18": { "status": "completed", "startedAt": "2026-05-06", "completedAt": "2026-05-10" },
+    "19": { "status": "completed", "startedAt": "2026-05-10", "completedAt": "2026-05-10" },
     "20": { "status": "not_started" },
     "21": { "status": "not_started" },
     "22": { "status": "not_started" },

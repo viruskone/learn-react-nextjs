@@ -6,8 +6,6 @@ export const metadata: Metadata = {
     description: "A simple todo app built with Next.js and React"
 }
 
-export const dynamic = 'force-dynamic';
-
 export default function Home() {
     return (
         <TodoApp/>
