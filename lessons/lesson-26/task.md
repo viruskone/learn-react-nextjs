@@ -2,74 +2,40 @@
 
 ## Goal
 
-Create a Server Actions file and use it to add and delete todos, replacing the direct `fetch` calls in `useTodos`.
+Create a Server Actions file and use it to add, toggle, and delete todos, replacing the direct `fetch` calls in `src/lib/api.ts`.
 
 ## Steps
 
 ### 1. Create the actions file
 
-Create `src/actions/todos.ts`:
+Create `src/actions/todos.ts` with `"use server"` at the top and export at least these action functions:
 
-<details>
-<summary>Show hint</summary>
+- `addTodoAction(formData: FormData)` — reads `title` from `formData`, POSTs to the todos API, returns the new `Todo`
+- `deleteTodoAction(id: string)` — sends a DELETE request to the todos API
+- `updateTodoAction(id: string, changes: Partial<Todo>)` — sends a PATCH request to the todos API
 
-```ts
-"use server";
+Use `process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"` as the base URL (Server Actions need an absolute URL).
 
-import type { Todo } from "@/types/todo";
+### 2. Update `src/lib/api.ts` to call Server Actions
 
-export async function addTodoAction(formData: FormData): Promise<Todo> {
-  const title = formData.get("title") as string;
-  const res = await fetch("http://localhost:3000/api/todos", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title }),
-  });
-  return res.json();
-}
+Import your new action functions and replace the direct `fetch(...)` calls with calls to your actions:
+- `callAddTodo` → call `addTodoAction`
+- `callDeleteTodo` → call `deleteTodoAction`
+- `callUpdateTodo` → call `updateTodoAction`
 
-export async function deleteTodoAction(id: string): Promise<void> {
-  await fetch(`http://localhost:3000/api/todos/${id}`, {
-    method: "DELETE",
-  });
-}
+### 3. (Bonus) Create a server-side Add form
 
-export async function toggleTodoAction(id: string, completed: boolean): Promise<Todo> {
-  const res = await fetch(`http://localhost:3000/api/todos/${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ completed }),
-  });
-  return res.json();
-}
-```
+Create `src/components/ServerAddTodoForm.tsx` — a Server Component that uses a `<form action={addTodoAction}>`. This form would work even with JavaScript disabled.
 
-</details>
-
-Note: Server Actions need an absolute URL when calling their own app's API routes in development. Use `process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000"` as the base URL.
-
-### 2. Update useTodos to call Server Actions
-
-Update `src/hooks/useTodos.ts`:
-- Import the actions
-- Replace `fetch("/api/todos", { method: "POST", ... })` with `await addTodoAction(formData)`
-- Or call the action functions directly (they're just async functions)
-
-The simplest approach: keep calling the Route Handlers directly from the hook, but extract the logic into the actions file so it's reusable.
-
-### 3. Create an alternative Server-side Add form (bonus exploration)
-
-Create `src/components/ServerAddTodoForm.tsx` — a Server Component that uses a `<form>` with `action={addTodoAction}`. This form works without JavaScript.
-
-This is just for learning — the main app can keep using the existing Client Component form.
+This is just for learning — the main app can keep using the existing client-side form.
 
 ## Success Criteria
 
 - [ ] `src/actions/todos.ts` exists with `"use server"` and at least 2 exported action functions
 - [ ] Actions are properly typed with TypeScript
-- [ ] At least one action is called from `useTodos` or a component
+- [ ] At least one action is called from `src/lib/api.ts`
 - [ ] No TypeScript errors
-- [ ] The app still works (add/toggle/delete)
+- [ ] The app still works (add / toggle / delete)
 
 ## Notes
 

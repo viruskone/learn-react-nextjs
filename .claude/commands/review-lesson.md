@@ -11,7 +11,7 @@ Grade the student's work for their current lesson.
 
 3. Read the student's code in `todo-app/`:
    - Explore relevant files based on what the task requires (components, pages, hooks, etc.)
-   - Use `find todo-app/src -name "*.tsx" -o -name "*.ts"` to discover files
+   - Use `find todo-app/src -name "*.tsx" -o -name "*.ts"` to discover files or LSP to find references and code
    - Read each relevant file carefully
 
 4. Compare the student's code to the task requirements and produce a grading report:
@@ -33,12 +33,14 @@ Grade the student's work for their current lesson.
 
 ---
 
-5. After delivering the report:
-   - If score is **Excellent**: Offer to show the full reference approach and suggest running `/start-lesson` to move on.
-   - If score is **Good**: Encourage them to fix the gaps, then re-run `/review-lesson`.
-   - If score is **Needs Work**: Be encouraging but honest. Point to the most important thing to fix first.
+5. After delivering the report, update `todo-app/lesson-progress.json`:
+   - If score is **Good** or **Excellent**: mark the lesson as `"completed"` with `completedAt` = today's date.
+   - If score is **Needs Work**: leave the status as `"in_progress"`.
 
-6. If score is above **Needs Work** set lesson status as completed.
+6. After updating the progress file, follow up based on the score:
+   - If score is **Excellent**: Offer to show the full reference approach and suggest running `/start-lesson` to move on.
+   - If score is **Good**: Congratulate the student, note any remaining polish items, and suggest running `/start-lesson` to move on.
+   - If score is **Needs Work**: Be encouraging but honest. Point to the most important thing to fix first and ask them to re-run `/review-lesson`.
 
 ## Rules
 - Never show the full solution unless the score is Excellent OR the student explicitly asks "show me the solution".

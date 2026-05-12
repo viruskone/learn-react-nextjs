@@ -2,6 +2,8 @@ import {Todo} from "@/types/todo";
 import {readFile, writeFile,} from "fs/promises";
 import {randomUUID} from "node:crypto";
 
+const sleep = (ms: number) => new Promise(res => setTimeout(res, ms))
+
 export async function getTodos(): Promise<Todo[]> {
     try {
         const raw = await readFile('./todos.json', 'utf8');
@@ -14,6 +16,7 @@ export async function getTodos(): Promise<Todo[]> {
 }
 
 export async function saveTodos(todos: Todo[]): Promise<void> {
+    await sleep(2000)
     await writeFile('./todos.json', JSON.stringify(todos), {encoding: 'utf8'});
 }
 

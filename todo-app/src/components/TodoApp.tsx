@@ -4,10 +4,11 @@ import TodoList from "@/components/TodoList";
 import AddTodoForm from "@/components/AddTodoForm";
 import {useTodosContext} from "@/hooks/useTodosContext";
 import {useMemo} from "react";
+import TodoSkeleton from "@/components/TodoSkeleton";
 
 export default function TodoApp() {
 
-    const {todos, isLoading, error} = useTodosContext();
+    const {todos, isLoading, error, retry} = useTodosContext();
     const count = useMemo(() => todos.filter(x => x.completed).length, [todos])
 
     return (
@@ -19,8 +20,8 @@ export default function TodoApp() {
                 </p>
             </div>
             <AddTodoForm/>
-            {isLoading ? <p>Loading ...</p> : <TodoList/>}
-            {error && <p className="text-red-500">{error}</p>}
+            {isLoading ? <TodoSkeleton /> : <TodoList/>}
+            {error && <div><p className="text-red-500">{error}</p><button onClick={retry}>RETRY</button></div>}
         </div>
     )
 }

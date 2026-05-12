@@ -19,104 +19,73 @@ Add GitHub OAuth login to the Todo App. Protect the `/todos` route so only logge
    - Authorization callback URL: `http://localhost:3000/api/auth/callback/github`
    - Copy the Client ID and generate a Client Secret
 
-3. **Generate an auth secret**:
+3. **Generate an auth secret** using openssl:
    ```bash
-   npx auth secret
+   openssl rand -base64 32
    ```
-   This adds `AUTH_SECRET=...` to your `.env.local`.
 
-4. **Add GitHub credentials to `.env.local`**:
+4. **Create `.env.local`** in the project root and add:
    ```
+   AUTH_SECRET=<output from step 3>
    AUTH_GITHUB_ID=your-client-id
    AUTH_GITHUB_SECRET=your-client-secret
    ```
 
-5. **Create `auth.ts`** at the project root:
+5. **Create `src/auth.ts`**:
+   ```ts
+   import NextAuth from 'next-auth'
+   import GitHub from 'next-auth/providers/github'
 
-<details>
-<summary>Show hint</summary>
+   export const { handlers, signIn, signOut, auth } = NextAuth({
+     providers: [GitHub],
+   })
+   ```
 
-```ts
-import NextAuth from 'next-auth'
-import GitHub from 'next-auth/providers/github'
+6. **Create the Route Handler** at `src/app/api/auth/[...nextauth]/route.ts`:
+   ```ts
+   import { handlers } from '@/auth'
+   export const { GET, POST } = handlers
+   ```
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
-})
-```
+7. **Update `src/proxy.ts`** to protect `/todos` using the `auth` function.
 
-</details>
+   > **Note on Next.js 16**: `middleware.ts` was renamed to `proxy.ts` in Next.js 16. You already have `src/proxy.ts` from an earlier lesson — update it instead of creating a new file.
+   >
+   > `auth` from next-auth is compatible with the proxy convention. Export it as `proxy` and update the matcher to only cover `/todos`:
 
-6. **Create the Route Handler** at `app/api/auth/[...nextauth]/route.ts`:
+   ```ts
+   import { auth } from '@/auth'
 
-<details>
-<summary>Show hint</summary>
+   export const proxy = auth
 
-```ts
-import { handlers } from '@/auth'
-export const { GET, POST } = handlers
-```
+   export const config = {
+     matcher: ['/todos/:path*'],
+   }
+   ```
 
-</details>
+8. **Wrap your app with `SessionProvider`** in `src/app/layout.tsx`:
+   - Import `SessionProvider` from `next-auth/react`
+   - Wrap the body's children with it so client components can access the session
 
-7. **Protect `/todos` with middleware** — update `middleware.ts`:
+9. **Update `Navbar`** to show auth state:
 
-<details>
-<summary>Show hint</summary>
+   Your `Navbar` is already a client component — use `useSession` from `next-auth/react` to read the session, and `signIn`/`signOut` from `next-auth/react` for the buttons:
+   - If logged in: show `session.user?.name` and a "Sign out" button calling `signOut()`
+   - If not logged in: show a "Sign in with GitHub" button calling `signIn('github')`
 
-```ts
-export { auth as middleware } from '@/auth'
-
-export const config = {
-  matcher: ['/todos/:path*'],
-}
-```
-
-</details>
-
-8. **Add sign-in / sign-out to your Navbar**:
-
-<details>
-<summary>Show hint</summary>
-
-```tsx
-import { auth, signIn, signOut } from '@/auth'
-
-export default async function Navbar() {
-  const session = await auth()
-  return (
-    <nav>
-      {session ? (
-        <>
-          <span>{session.user?.name}</span>
-          <form action={async () => { 'use server'; await signOut() }}>
-            <button type="submit">Sign out</button>
-          </form>
-        </>
-      ) : (
-        <form action={async () => { 'use server'; await signIn('github') }}>
-          <button type="submit">Sign in with GitHub</button>
-        </form>
-      )}
-    </nav>
-  )
-}
-```
-
-</details>
-
-9. **Test the flow**:
-   - Visit `http://localhost:3000/todos` — should redirect to GitHub login
-   - Authorise the app on GitHub
-   - Should redirect back to `/todos`, now logged in
-   - Navbar should show your name and a sign-out button
+10. **Test the flow**:
+    - Visit `http://localhost:3000/todos` while logged out — should redirect to the Auth.js sign-in page
+    - Authorise the app on GitHub
+    - Should redirect back to `/todos`, now logged in
+    - Navbar should show your name and a sign-out button
 
 ---
 
 ## Success Criteria
 
-- [ ] `auth.ts` exists at the project root with GitHub provider configured
-- [ ] `app/api/auth/[...nextauth]/route.ts` exports the handlers
+- [ ] `src/auth.ts` exists with GitHub provider configured
+- [ ] `src/app/api/auth/[...nextauth]/route.ts` exports the handlers
+- [ ] `src/proxy.ts` uses `auth` as the proxy function and protects `/todos/:path*`
 - [ ] Visiting `/todos` while logged out redirects to the Auth.js sign-in page
 - [ ] After GitHub login, you are redirected back to `/todos`
 - [ ] The navbar shows the logged-in user's name
@@ -128,8 +97,8 @@ export default async function Navbar() {
 ## Hints
 
 - If you get a `redirect_uri_mismatch` error from GitHub, double-check the callback URL in your GitHub OAuth App settings matches exactly: `http://localhost:3000/api/auth/callback/github`
-- `auth()` in Server Components is a function call — don't forget the `()`: `const session = await auth()`
-- If you changed `middleware.ts` in Lesson 20, you're replacing its content with the Auth.js export — the logging and redirect from that lesson are no longer needed
+- `useSession` returns `{ data: session, status }` — check `status === 'loading'` if you want to show a spinner while the session loads
+- The old logging and `/` redirect logic from the previous proxy lesson are no longer needed — the new proxy.ts is just the auth wrapper
 
 ---
 

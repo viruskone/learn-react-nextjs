@@ -1,25 +1,16 @@
 import {Todo} from "@/types/todo";
-
-const TODO_API_URL = '/api/todos';
+import {addTodoAction, deleteTodoAction, updateTodoAction} from "@/actions/todos";
 
 export async function callAddTodo(title: string) {
-    const newTodo = await fetch(TODO_API_URL, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({title})
-    }).then(res => res.json()) as Todo
-    return newTodo
+    const fd = new FormData()
+    fd.append("title", title)
+    return await addTodoAction(fd);
 }
 
 export async function callDeleteTodo(id: string) {
-    await fetch(TODO_API_URL + '/' + id, {method: 'DELETE'})
+    await deleteTodoAction(id)
 }
 
 export async function callUpdateTodo(id: string, todoPartial: Partial<Todo>) {
-    await fetch(TODO_API_URL + '/' + id,
-        {
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(todoPartial)
-        })
+    await updateTodoAction(id, todoPartial)
 }

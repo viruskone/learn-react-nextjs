@@ -7,6 +7,7 @@ export async function GET() {
     return NextResponse.json(todos)
 }
 
+
 export async function POST(request: NextRequest) {
     const todo = await request.json() as { title: string };
     if (todo) {

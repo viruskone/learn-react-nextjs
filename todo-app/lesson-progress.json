@@ -1,5 +1,5 @@
 {
-  "currentLesson": 21,
+  "currentLesson": 30,
   "lessons": {
     "1":  { "status": "completed", "startedAt": "2026-05-01", "completedAt": "2026-05-02" },
     "2":  { "status": "completed", "startedAt": "2026-05-02", "completedAt": "2026-05-02" },
@@ -22,15 +22,15 @@
     "19": { "status": "completed", "startedAt": "2026-05-10", "completedAt": "2026-05-10" },
     "20": { "status": "completed", "startedAt": "2026-05-10", "completedAt": "2026-05-10" },
     "21": { "status": "completed", "startedAt": "2026-05-10", "completedAt": "2026-05-10" },
-    "22": { "status": "not_started" },
-    "23": { "status": "not_started" },
-    "24": { "status": "not_started" },
-    "25": { "status": "not_started" },
-    "26": { "status": "not_started" },
-    "27": { "status": "not_started" },
-    "28": { "status": "not_started" },
-    "29": { "status": "not_started" },
-    "30": { "status": "not_started" },
+    "22": { "status": "completed", "startedAt": "2026-05-11", "completedAt": "2026-05-11" },
+    "23": { "status": "completed", "startedAt": "2026-05-11", "completedAt": "2026-05-11" },
+    "24": { "status": "completed", "startedAt": "2026-05-11", "completedAt": "2026-05-11" },
+    "25": { "status": "completed", "startedAt": "2026-05-11", "completedAt": "2026-05-11" },
+    "26": { "status": "completed", "startedAt": "2026-05-11", "completedAt": "2026-05-11" },
+    "27": { "status": "completed", "startedAt": "2026-05-12", "completedAt": "2026-05-12" },
+    "28": { "status": "completed", "startedAt": "2026-05-12", "completedAt": "2026-05-12" },
+    "29": { "status": "completed", "startedAt": "2026-05-12", "completedAt": "2026-05-12" },
+    "30": { "status": "completed", "startedAt": "2026-05-12", "completedAt": "2026-05-12" },
     "31": { "status": "not_started" },
     "32": { "status": "not_started" }
   }

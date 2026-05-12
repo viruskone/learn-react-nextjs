@@ -2,73 +2,58 @@
 
 ## Goal
 
-Wrap the "add todo" Server Action with `useOptimistic` so the new item appears in the list instantly — before the server confirms the save.
+Wrap the "add todo" action with `useOptimistic` so the new item appears in the list instantly — before the server confirms the save.
+
+Your app already uses `TodoContext` with a `useReducer` for state. You'll add `useOptimistic` on top of that reducer state so additions feel instant.
 
 ---
 
 ## Steps
 
-1. **Make sure you're working in a Client Component** that receives the current todos list as a prop from a Server Component parent
+1. **Open `TodoContext.tsx`** — this is already a Client Component (`'use client'`), so `useOptimistic` is available here.
 
-2. **Import `useOptimistic`**:
+2. **Import `useOptimistic`** alongside the existing React imports:
+   ```tsx
+   import { createContext, ReactNode, useEffect, useReducer, useState, useOptimistic } from 'react'
+   ```
 
-<details>
-<summary>Show hint</summary>
+3. **Add `useOptimistic` below your existing `useReducer` call**:
+   ```tsx
+   const [optimisticTodos, addOptimistic] = useOptimistic(
+     todos,
+     (state, newTitle: string) => [
+       ...state,
+       { id: 'pending-' + Date.now(), title: newTitle, completed: false },
+     ]
+   )
+   ```
 
-```tsx
-'use client'
-import { useOptimistic, useState } from 'react'
-```
+4. **Update the `addTodo` function** to call `addOptimistic` immediately before the server call:
+   ```tsx
+   async function addTodo(title: string) {
+     addOptimistic(title)             // show immediately
+     try {
+       const todo = await callAddTodo(title)
+       dispatch({ type: 'ADD_TODO', payload: todo })
+     } catch (err) {
+       setError(err instanceof Error ? err.message : 'Unknown error')
+     }
+   }
+   ```
 
-</details>
+5. **Expose `optimisticTodos` instead of `todos` in the context value**:
+   ```tsx
+   const value: TodoContextValue = {
+     todos: optimisticTodos,   // <-- was: todos
+     ...
+   }
+   ```
 
-3. **Set up the optimistic state**:
+6. **Add a visual indicator for pending items** in `TodoItem.tsx`. The pending items have an ID that starts with `'pending-'`. Use that to dim them:
+   - Add an `opacity` style or a CSS class when `todo.id.startsWith('pending-')` is true
+   - Example: show the item at 60% opacity with italic text while saving
 
-<details>
-<summary>Show hint</summary>
-
-```tsx
-const [todos, setTodos] = useState(initialTodos)
-const [optimisticTodos, addOptimistic] = useOptimistic(
-  todos,
-  (state, newText: string) => [
-    ...state,
-    { id: 'pending-' + Date.now(), text: newText, completed: false },
-  ]
-)
-```
-
-</details>
-
-4. **Update your form submission handler**:
-
-<details>
-<summary>Show hint</summary>
-
-```tsx
-async function handleSubmit(text: string) {
-  addOptimistic(text)             // show immediately
-  const saved = await addTodoAction(text)  // call Server Action
-  setTodos(prev => [...prev, saved])       // sync with server result
-}
-```
-
-</details>
-
-5. **Render `optimisticTodos` instead of `todos`**
-
-6. **Visual indicator for pending items**:
-
-<details>
-<summary>Show hint</summary>
-
-```tsx
-<li style={{ opacity: todo.id.startsWith('pending') ? 0.6 : 1 }}>
-```
-
-</details>
-
-7. **Test it**: Add a todo and watch it appear immediately with reduced opacity, then snap to full opacity once saved.
+7. **Test it**: Add a todo — it should appear instantly in the list (dimmed), then become fully visible once saved.
 
 ---
 
@@ -77,18 +62,17 @@ async function handleSubmit(text: string) {
 - [ ] `useOptimistic` is imported from `'react'`
 - [ ] New todos appear in the list instantly on submission (before server response)
 - [ ] Pending todos are visually differentiated (opacity, italic, or a "saving..." label)
-- [ ] After the server action completes, the pending item is replaced with the real saved item (including server-generated ID)
-- [ ] If you throw an error in the Server Action (for testing), the optimistic item disappears
+- [ ] After the server action completes, the pending item is replaced with the real saved item (with a real ID)
 - [ ] No TypeScript errors
 
 ---
 
 ## Hints
 
-- `useOptimistic` only works in Client Components (`'use client'`)
-- The second argument to `useOptimistic` is the reducer function — it takes the current state and the value you passed to `addOptimistic`, and returns the new optimistic state
-- After the Server Action resolves, the optimistic todos automatically revert to the base `todos` state — so you must call `setTodos` to update the base state with the real result
-- If you're using a `<form>` with `action={serverAction}`, you'll need to convert it to a manual handler to use `useOptimistic` with it
+- `useOptimistic` must be called inside a Client Component — `TodoContext.tsx` already is one
+- The second argument is a reducer: it takes the current state + the value you pass to `addOptimistic`, and returns the new optimistic state
+- After `callAddTodo` resolves, `dispatch({ type: 'ADD_TODO' })` updates the real `todos` reducer state — and `useOptimistic` automatically reverts its overlay, so the real item takes over
+- If the server call throws, the optimistic item disappears on the next render (because `todos` never got the new item added)
 
 ---
 

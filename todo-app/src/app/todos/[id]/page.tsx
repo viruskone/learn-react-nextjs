@@ -1,6 +1,19 @@
 import {notFound} from "next/navigation";
 import {getTodoById} from "@/lib/todos";
 import DeleteTodoButton from "@/components/DeleteTodoButton";
+import {Metadata} from "next";
+
+type Props = {
+    params: Promise<{ id: string }>
+}
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+    const {id} = await params;
+    const todo = await getTodoById(id);
+    return {
+        title: todo?.title ?? "Not found",
+    }
+}
 
 export default async function TodoDetailPage(props: PageProps<'/todos/[id]'>) {
     const {id} = await props.params;
@@ -16,7 +29,7 @@ export default async function TodoDetailPage(props: PageProps<'/todos/[id]'>) {
                         {todo.completed ? "Completed" : "Pending"}
                     </span>
                 </p>
-                <DeleteTodoButton id={todo.id} />
+                <DeleteTodoButton id={todo.id}/>
             </div>
         </main>
     )

@@ -6,14 +6,21 @@ import {useCallback} from "react";
 
 export default function TodoList() {
 
-    const {todos, toggleTodo} = useTodosContext()
+    const {todos, toggleTodo, removeTodo} = useTodosContext()
 
-    const toggleTodoCallback = useCallback((id:string)=>toggleTodo(id), [toggleTodo]);
+    const toggleTodoCallback = useCallback((id: string) => toggleTodo(id), [toggleTodo]);
+    const removeCallback = useCallback((id: string) => removeTodo(id), [removeTodo]);
     return (
         todos.length > 0 ? (
             <ul className="space-y-2">
                 {todos.map(todo => (
-                    <TodoItem key={todo.id} id={todo.id} title={todo.title} completed={todo.completed} onToggle={toggleTodoCallback}/>
+                    <TodoItem
+                        key={todo.id}
+                        id={todo.id}
+                        title={todo.title}
+                        completed={todo.completed}
+                        onToggle={toggleTodoCallback}
+                        onDelete={removeCallback}/>
                 ))}
             </ul>
         ) : (

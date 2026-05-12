@@ -50,15 +50,17 @@ export const metadata: Metadata = {
 <details>
 <summary>Show hint</summary>
 
+The existing page already uses `PageProps<'/todos/[id]'>` — you can use the same type for `generateMetadata`:
+
 ```tsx
 import type { Metadata } from 'next'
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params
+export async function generateMetadata(props: PageProps<'/todos/[id]'>): Promise<Metadata> {
+  const { id } = await props.params
   const todo = await getTodoById(id)
   if (!todo) return { title: 'Not Found' }
   return {
-    title: todo.text,
+    title: todo.title,
     description: `Status: ${todo.completed ? 'Completed' : 'Pending'}`,
   }
 }
@@ -68,7 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 4. **Verify in the browser**:
    - `/todos` tab should show "My Todos | Todo App"
-   - `/todos/<id>` tab should show the todo text + "| Todo App"
+   - `/todos/<id>` tab should show the todo title + "| Todo App"
    - A non-existent ID should show "Not Found | Todo App"
 
 ---
@@ -77,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 - [ ] Root layout exports `metadata` with a `title.template` using `'%s | Todo App'`
 - [ ] `app/todos/page.tsx` exports static `metadata` with `title: 'My Todos'`
-- [ ] `app/todos/[id]/page.tsx` exports `generateMetadata` that returns the todo's text as the title
+- [ ] `app/todos/[id]/page.tsx` exports `generateMetadata` that returns the todo's `title` as the metadata title
 - [ ] `generateMetadata` handles the not-found case gracefully
 - [ ] Browser tab titles are correct for all three pages
 - [ ] No TypeScript errors
@@ -87,7 +89,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 ## Hints
 
 - `generateMetadata` must be in the same file as the `page.tsx` — not in a separate file
-- Both `generateMetadata` and the default page export receive the same `Props` (including `params`) — you can share the `Props` type between them
+- The existing page uses `PageProps<'/todos/[id]'>` — you can reuse that type for `generateMetadata` too
 - The `Metadata` type is imported from `'next'`, not from `'next/metadata'`
 
 ---

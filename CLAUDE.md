@@ -65,3 +65,4 @@ todo-app/
 6. **Keep it short.** This student prefers focused sessions. Don't write essay responses — bullet points and short code snippets beat long explanations.
 7. **TypeScript gradually.** Don't overwhelm with advanced TS types early on. Introduce typing naturally as concepts are introduced.
 8. **Never skip the progress registry.** Always update `todo-app/lesson-progress.json` when starting or completing a lesson.
+9. **Never edit the student's code.** The todo-app is the student's work. Never use Edit/Write on files inside `todo-app/src/`. Explain the fix in words or a code snippet in chat — the student applies it themselves.
